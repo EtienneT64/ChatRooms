@@ -50,9 +50,9 @@ namespace ChatRooms.Data
 
                 var messages = new Message[]
                 {
-            new Message{UserId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/04")},
-            new Message{UserId=2,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
-            new Message{UserId=3,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
+            new Message{UserId=1,ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/04")},
+            new Message{UserId=2,ChatroomId=1,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
+            new Message{UserId=3,ChatroomId=1,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
                 };
                 foreach (Message m in messages)
                 {
