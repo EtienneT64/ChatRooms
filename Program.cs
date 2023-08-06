@@ -10,7 +10,14 @@ var app = builder.Build();
 
 if (args.Length == 1 && args[0].ToLower() == "initialize")
 {
-    DbInitializer.Initialize(app);
+    try
+    {
+        DbInitializer.Initialize(app);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message); // placeholder
+    }
 }
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
