@@ -2,16 +2,13 @@
 
 namespace ChatRooms.Models
 {
-    //public enum Status
-    //{
-    //    Guest, Member, Admin
-    //}
+
     public class User
     {
         [Key]
         public int Id { get; set; }
 
-        [Required, StringLength(30)]
+        [Required, StringLength(30), MinLength(2)]
         public string Username { get; set; } = string.Empty;
 
         [Required, DataType(DataType.Password)]
@@ -25,8 +22,6 @@ namespace ChatRooms.Models
 
         [DataType(DataType.DateTime)]
         public DateTime RegisterDate { get; set; }
-
-        //public Status? Status { get; set; }
 
         public ICollection<Message> Messages { get; set; }
         public Chatroom Chatroom { get; set; }

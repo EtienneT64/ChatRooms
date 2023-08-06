@@ -1,9 +1,24 @@
+using ChatRooms.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+if (args.Length == 1 && args[0].ToLower() == "initialize")
+{
+    DbInitializer.Initialize(app);
+}
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddDbContext<ChatroomContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
