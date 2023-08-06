@@ -10,13 +10,25 @@ namespace ChatRooms.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<ChatroomContext>();
 
-                context.Database.EnsureCreated();
+                context?.Database.EnsureDeleted();
+                context?.Database.EnsureCreated();
 
                 // Look for any users
                 if (context.Users.Any())
                 {
                     return;   // DB has been seeded
                 }
+
+                var chatrooms = new Chatroom[]
+             {
+            new Chatroom{Name="Global Chat",Description="This is a chat for everyone! Be inclusive and respectful!",UserLimit=5, MsgLengthLimit=320},
+             };
+
+                foreach (Chatroom c in chatrooms)
+                {
+                    context.Chatrooms.Add(c);
+                }
+                context.SaveChanges();
 
                 var users = new User[]
                 {
@@ -48,16 +60,7 @@ namespace ChatRooms.Data
                 }
                 context.SaveChanges();
 
-                var chatrooms = new Chatroom[]
-                {
-            new Chatroom{Name="Global Chat",Description="This is a chat for everyone! Be inclusive and respectful!",UserLimit=5, MsgLengthLimit=320},
-                };
 
-                foreach (Chatroom c in chatrooms)
-                {
-                    context.Chatrooms.Add(c);
-                }
-                context.SaveChanges();
             }
         }
     }

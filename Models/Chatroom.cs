@@ -10,13 +10,13 @@ namespace ChatRooms.Models
         public string Name { get; set; }
 
         [Required]
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; }
 
         public int UserLimit { get; set; }
 
         public int MsgLengthLimit { get; set; }
 
-        public ICollection<User> Users { get; set; }
-        public ICollection<Message> Messages { get; set; }
+        public ICollection<User>? Users { get; set; }
+        public ICollection<Message>? Messages { get; set; }
     }
 }

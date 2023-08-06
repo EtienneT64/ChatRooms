@@ -14,17 +14,19 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
-if (args.Length == 1 && args[0].ToLower() == "initializedb")
-{
-    try
-    {
-        DbInitializer.Initialize(app);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Error: " + ex.Message); // placeholder
-    }
-}
+DbInitializer.Initialize(app);
+
+//if (args.Length == 1 && args[0].ToLower() == "initializedb")
+//{
+//    try
+//    {
+//        DbInitializer.Initialize(app);
+//    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine("Error: " + ex.Message); // placeholder
+//    }
+//}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
