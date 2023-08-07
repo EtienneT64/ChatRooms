@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ChatRooms.Data;
+﻿using ChatRooms.Data;
 using ChatRooms.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Controllers
 {
@@ -22,9 +17,9 @@ namespace ChatRooms.Controllers
         // GET: Chatrooms
         public async Task<IActionResult> Index()
         {
-              return _context.Chatrooms != null ? 
-                          View(await _context.Chatrooms.ToListAsync()) :
-                          Problem("Entity set 'ChatroomContext.Chatrooms'  is null.");
+            return _context.Chatrooms != null ?
+                        View(await _context.Chatrooms.ToListAsync()) :
+                        Problem("Entity set 'ChatroomContext.Chatrooms'  is null.");
         }
 
         // GET: Chatrooms/Details/5
@@ -43,6 +38,30 @@ namespace ChatRooms.Controllers
             }
 
             return View(chatroom);
+        }
+
+        // GET: Chatrooms/Chat/1
+        public async Task<IActionResult> Chat(int? id)
+        {
+            if (id == null || _context.Chatrooms == null)
+            {
+                return NotFound();
+            }
+
+            var chatroom = await _context.Chatrooms
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (chatroom == null)
+            {
+                return NotFound();
+            }
+
+
+            // Use LINQ to select messages with ChatroomId = 1
+            var messagesInChatroom = await _context.Messages
+                .Where(message => message.ChatroomId == id) // Filter messages by ChatroomId
+                .ToListAsync();
+
+            return View(messagesInChatroom);
         }
 
         // GET: Chatrooms/Create
@@ -150,14 +169,14 @@ namespace ChatRooms.Controllers
             {
                 _context.Chatrooms.Remove(chatroom);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ChatroomExists(int id)
         {
-          return (_context.Chatrooms?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Chatrooms?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

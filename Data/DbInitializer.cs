@@ -21,7 +21,9 @@ namespace ChatRooms.Data
 
                 var chatrooms = new Chatroom[]
              {
-            new Chatroom{Name="Global Chat",Description="This is a chat for everyone! Be inclusive and respectful!",UserLimit=5, MsgLengthLimit=320},
+            new Chatroom{Name="Global Chat 1",Description="This is a chat for everyone! Be inclusive and respectful!",UserLimit=5, MsgLengthLimit=320},
+             new Chatroom{Name="Global Chat 2",Description="This is a chat for everyone! Be inclusive and respectful!",UserLimit=5, MsgLengthLimit=320},
+              new Chatroom{Name="Global Chat 3",Description="This is a chat for everyone! Be inclusive and respectful!",UserLimit=5, MsgLengthLimit=320},
              };
 
                 foreach (Chatroom c in chatrooms)
@@ -51,8 +53,8 @@ namespace ChatRooms.Data
                 var messages = new Message[]
                 {
             new Message{UserId=1,ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/04")},
-            new Message{UserId=2,ChatroomId=1,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
-            new Message{UserId=3,ChatroomId=1,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
+            new Message{UserId=2,ChatroomId=2,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
+            new Message{UserId=3,ChatroomId=3,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
                 };
                 foreach (Message m in messages)
                 {

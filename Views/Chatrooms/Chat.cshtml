@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ChatRooms.Models.Message>
+
+@{
+    ViewData["Title"] = "Caht";
+}
+
+<h1>Chat</h1>
+
+@foreach(var item in Model)
+{
+
+    <p>@item.Id</p>
+    <p>@item.UserId</p>
+    <p>@item.ChatroomId</p>
+    <p>@item.Content</p>
+    <p>@item.MsgLength</p>
+    <p>@item.SendDate</p>
+}
+
+
