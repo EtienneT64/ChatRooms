@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ChatRooms.Migrations
 {
     /// <inheritdoc />
-    public partial class Identity : Migration
+    public partial class Intial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -206,7 +206,7 @@ namespace ChatRooms.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MsgLength = table.Column<int>(type: "int", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChatroomId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -216,8 +216,7 @@ namespace ChatRooms.Migrations
                         name: "FK_Messages_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Messages_Chatrooms_ChatroomId",
                         column: x => x.ChatroomId,
