@@ -41,7 +41,7 @@ namespace ChatRooms.Data
                 ChatroomId = 2,
             },
             new User{Username="Chad123",Password="chad123", DisplayName="Chad",DisplayNameColor="#fffaaa", RegisterDate=DateTime.Parse("2023/08/06"),
-                ChatroomId = 2,
+                ChatroomId = 3,
             },
                 };
                 foreach (User u in users)
