@@ -23,9 +23,9 @@ namespace ChatRooms.Models
         [DataType(DataType.DateTime)]
         public DateTime RegisterDate { get; set; }
 
-        //public int? ChatroomId { get; set; }
+        public int? ChatroomId { get; set; }
 
         public ICollection<Message>? Messages { get; set; }
-        public Chatroom? Chatroom { get; set; }
+        public ICollection<Chatroom>? Chatrooms { get; set; }
     }
 }

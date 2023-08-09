@@ -35,13 +35,13 @@ namespace ChatRooms.Data
                 var users = new User[]
                 {
             new User{Username="Bob123",Password="bob123", DisplayName="Bob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
-                //ChatroomId=1
+                ChatroomId=1,
             },
-            new User{Username="Larry123",Password="larry123", DisplayName="Larry",DisplayNameColor="#000000", RegisterDate=DateTime.Parse("2023/08/05"), 
-                //ChatroomId = 1
+            new User{Username="Larry123",Password="larry123", DisplayName="Larry",DisplayNameColor="#000000", RegisterDate=DateTime.Parse("2023/08/05"),
+                ChatroomId = 2,
             },
-            new User{Username="Chad123",Password="chad123", DisplayName="Chad",DisplayNameColor="#fffaaa", RegisterDate=DateTime.Parse("2023/08/06"), 
-                //ChatroomId = 1
+            new User{Username="Chad123",Password="chad123", DisplayName="Chad",DisplayNameColor="#fffaaa", RegisterDate=DateTime.Parse("2023/08/06"),
+                ChatroomId = 2,
             },
                 };
                 foreach (User u in users)
