@@ -32,29 +32,29 @@ namespace ChatRooms.Data
                 }
                 context.SaveChanges();
 
-                var users = new User[]
-                {
-            //new User{Username="Bob123",Password="bob123", DisplayName="Bob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
-            //    ChatroomId=1,
-            //},
-            // new User{Username="Lob123",Password="bob123", DisplayName="Lob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
-            //    ChatroomId=1,
-            //},
-            //  new User{Username="Clob123",Password="bob123", DisplayName="Clob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
-            //    ChatroomId=1,
-            //},
-            //new User{Username="Larry123",Password="larry123", DisplayName="Larry",DisplayNameColor="#000000", RegisterDate=DateTime.Parse("2023/08/05"),
-            //    ChatroomId = 2,
-            //},
-            //new User{Username="Chad123",Password="chad123", DisplayName="Chad",DisplayNameColor="#fffaaa", RegisterDate=DateTime.Parse("2023/08/06"),
-            //    ChatroomId = 3,
-            //},
-                };
-                foreach (User u in users)
-                {
-                    context.Users.Add(u);
-                }
-                context.SaveChanges();
+                //var users = new User[]
+                //{
+                //new User{Username="Bob123",Password="bob123", DisplayName="Bob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
+                //    ChatroomId=1,
+                //},
+                // new User{Username="Lob123",Password="bob123", DisplayName="Lob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
+                //    ChatroomId=1,
+                //},
+                //  new User{Username="Clob123",Password="bob123", DisplayName="Clob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
+                //    ChatroomId=1,
+                //},
+                //new User{Username="Larry123",Password="larry123", DisplayName="Larry",DisplayNameColor="#000000", RegisterDate=DateTime.Parse("2023/08/05"),
+                //    ChatroomId = 2,
+                //},
+                //new User{Username="Chad123",Password="chad123", DisplayName="Chad",DisplayNameColor="#fffaaa", RegisterDate=DateTime.Parse("2023/08/06"),
+                //    ChatroomId = 3,
+                //},
+                //};
+                //foreach (User u in users)
+                //{
+                //    context.Users.Add(u);
+                //}
+                //context.SaveChanges();
 
                 var messages = new Message[]
                 {
