@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ChatRooms.Data;
+using ChatRooms.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ChatRooms.Data;
-using ChatRooms.Models;
 
 namespace ChatRooms.Controllers
 {
@@ -59,7 +55,7 @@ namespace ChatRooms.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,ChatroomId,Content,MsgLength,SendDate")] Message message)
+        public async Task<IActionResult> Create([Bind("Id,ChatroomId,Content,MsgLength,SendDate")] Message message)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +64,7 @@ namespace ChatRooms.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", message.UserId);
+
             return View(message);
         }
 
@@ -86,7 +82,7 @@ namespace ChatRooms.Controllers
                 return NotFound();
             }
             ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", message.UserId);
+
             return View(message);
         }
 
@@ -95,7 +91,7 @@ namespace ChatRooms.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ChatroomId,Content,MsgLength,SendDate")] Message message)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ChatroomId,Content,MsgLength,SendDate")] Message message)
         {
             if (id != message.Id)
             {
@@ -123,7 +119,6 @@ namespace ChatRooms.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", message.UserId);
             return View(message);
         }
 
@@ -161,14 +156,14 @@ namespace ChatRooms.Controllers
             {
                 _context.Messages.Remove(message);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MessageExists(int id)
         {
-          return (_context.Messages?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Messages?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

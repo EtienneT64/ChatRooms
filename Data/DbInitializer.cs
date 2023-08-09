@@ -58,11 +58,11 @@ namespace ChatRooms.Data
 
                 var messages = new Message[]
                 {
-            new Message{UserId=1,ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/01")},
-            new Message{UserId=2,ChatroomId=1,Content="Hello my name is Lob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/02")},
-            new Message{UserId=3,ChatroomId=1,Content="Hello my name is Clob!", MsgLength=22, SendDate=DateTime.Parse("2023/08/03")},
-            new Message{UserId=4,ChatroomId=2,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
-            new Message{UserId=5,ChatroomId=3,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
+            new Message{ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/01")},
+            new Message{ChatroomId=1,Content="Hello my name is Lob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/02")},
+            new Message{ChatroomId=1,Content="Hello my name is Clob!", MsgLength=22, SendDate=DateTime.Parse("2023/08/03")},
+            new Message{ChatroomId=2,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
+            new Message{ChatroomId=3,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
                 };
                 foreach (Message m in messages)
                 {
