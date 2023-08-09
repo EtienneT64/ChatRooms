@@ -22,7 +22,6 @@
     <Folder Include="Data\Enum\" />
     <Folder Include="Helpers\" />
     <Folder Include="Migrations\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
