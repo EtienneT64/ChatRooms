@@ -14,7 +14,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
-DbInitializer.Initialize(app);
+//DbInitializer.Initialize(app);
 
 //if (args.Length == 1 && args[0].ToLower() == "initializedb")
 //{
