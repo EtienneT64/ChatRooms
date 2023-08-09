@@ -47,7 +47,7 @@ namespace ChatRooms.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chatrooms");
+                    b.ToTable("Chatrooms", (string)null);
                 });
 
             modelBuilder.Entity("ChatRooms.Models.Message", b =>
@@ -80,7 +80,7 @@ namespace ChatRooms.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("ChatRooms.Models.User", b =>
@@ -118,7 +118,7 @@ namespace ChatRooms.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ChatroomUser", b =>
@@ -133,7 +133,7 @@ namespace ChatRooms.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ChatroomUser");
+                    b.ToTable("ChatroomUser", (string)null);
                 });
 
             modelBuilder.Entity("ChatRooms.Models.Message", b =>
