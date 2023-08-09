@@ -9,8 +9,6 @@ namespace ChatRooms.Models
         [StringLength(7)]
         public string? DisplayNameColor { get; set; }
 
-        public int? ChatroomId { get; set; }
-
         public ICollection<Message>? Messages { get; set; }
         public ICollection<Chatroom>? Chatrooms { get; set; }
     }
