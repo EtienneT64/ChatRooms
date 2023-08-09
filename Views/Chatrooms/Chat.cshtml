@@ -21,45 +21,29 @@
                         </button>
                     </div>
 
+
+
                     <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
 
-                        <div class="d-flex flex-row justify-content-start">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                 alt="avatar 1" style="width: 45px; height: 100%;">
-                            <div>
-                                <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">Hi</p>
-                                <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">
-                                    How are you ...???
-                                </p>
-                                <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">
-                                    What are you doing
-                                    tomorrow? Can we come up a bar?
-                                </p>
-                                <p class="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
+                        @foreach (var item in Model)
+                        {
+                            <div class="d-flex flex-row justify-content-start">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                     alt="avatar 1" style="width: 45px; height: 100%;">
+                                <div>
+                                    <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">@item.Content</p>
+                                    <p class="small ms-3 mb-3 rounded-3 text-muted">@item.SendDate</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="divider d-flex align-items-center mb-4">
-                            <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Today</p>
-                        </div>
+                          
+                        }
+                       
 
-                        <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                            <div>
-                                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Hiii, I'm good.</p>
-                                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">How are you doing?</p>
-                                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                    Long time no see! Tomorrow
-                                    office. will
-                                    be free on sunday.
-                                </p>
-                                <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:06</p>
-                            </div>
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                 alt="avatar 1" style="width: 45px; height: 100%;">
-                        </div>
-
-
+                       
                     </div>
+
+
                     <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                              alt="avatar 3" style="width: 40px; height: 100%;">

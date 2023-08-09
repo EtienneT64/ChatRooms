@@ -37,6 +37,12 @@ namespace ChatRooms.Data
             new User{Username="Bob123",Password="bob123", DisplayName="Bob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
                 ChatroomId=1,
             },
+             new User{Username="Lob123",Password="bob123", DisplayName="Lob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
+                ChatroomId=1,
+            },
+              new User{Username="Clob123",Password="bob123", DisplayName="Clob",DisplayNameColor="#ffffff", RegisterDate=DateTime.Parse("2023/08/04"),
+                ChatroomId=1,
+            },
             new User{Username="Larry123",Password="larry123", DisplayName="Larry",DisplayNameColor="#000000", RegisterDate=DateTime.Parse("2023/08/05"),
                 ChatroomId = 2,
             },
@@ -52,9 +58,11 @@ namespace ChatRooms.Data
 
                 var messages = new Message[]
                 {
-            new Message{UserId=1,ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/04")},
-            new Message{UserId=2,ChatroomId=2,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
-            new Message{UserId=3,ChatroomId=3,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
+            new Message{UserId=1,ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/01")},
+            new Message{UserId=2,ChatroomId=1,Content="Hello my name is Lob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/02")},
+            new Message{UserId=3,ChatroomId=1,Content="Hello my name is Clob!", MsgLength=22, SendDate=DateTime.Parse("2023/08/03")},
+            new Message{UserId=4,ChatroomId=2,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
+            new Message{UserId=5,ChatroomId=3,Content="Hello my name is Chad!", MsgLength=22, SendDate=DateTime.Parse("2023/08/06")},
                 };
                 foreach (Message m in messages)
                 {
