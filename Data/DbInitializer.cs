@@ -58,7 +58,7 @@ namespace ChatRooms.Data
 
                 var messages = new Message[]
                 {
-            new Message{ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/01")},
+            new Message{ChatroomId=1,Content="Hello my name is Bob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/01"),},
             new Message{ChatroomId=1,Content="Hello my name is Lob!", MsgLength=21, SendDate=DateTime.Parse("2023/08/02")},
             new Message{ChatroomId=1,Content="Hello my name is Clob!", MsgLength=22, SendDate=DateTime.Parse("2023/08/03")},
             new Message{ChatroomId=2,Content="Hello my name is Larry!", MsgLength=23, SendDate=DateTime.Parse("2023/08/05")},
