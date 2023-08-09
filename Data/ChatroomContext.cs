@@ -1,9 +1,10 @@
 ﻿using ChatRooms.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Data
 {
-    public class ChatroomContext : DbContext
+    public class ChatroomContext : IdentityDbContext<User>
     {
         public ChatroomContext(DbContextOptions<ChatroomContext> options) : base(options)
         {
