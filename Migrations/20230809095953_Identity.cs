@@ -19,10 +19,6 @@ namespace ChatRooms.Migrations
                 name: "FK_Messages_Users_UserId",
                 table: "Messages");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Messages_UserId",
-                table: "Messages");
-
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Users",
                 table: "Users");
@@ -44,11 +40,13 @@ namespace ChatRooms.Migrations
                 table: "AspNetUsers",
                 newName: "UserName");
 
-            migrationBuilder.AddColumn<string>(
-                name: "UserId1",
+            migrationBuilder.AlterColumn<string>(
+                name: "UserId",
                 table: "Messages",
                 type: "nvarchar(450)",
-                nullable: true);
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int");
 
             migrationBuilder.AlterColumn<string>(
                 name: "UsersId",
@@ -289,11 +287,6 @@ namespace ChatRooms.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_UserId1",
-                table: "Messages",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -341,9 +334,9 @@ namespace ChatRooms.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Messages_AspNetUsers_UserId1",
+                name: "FK_Messages_AspNetUsers_UserId",
                 table: "Messages",
-                column: "UserId1",
+                column: "UserId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id");
         }
@@ -356,7 +349,7 @@ namespace ChatRooms.Migrations
                 table: "ChatroomUser");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Messages_AspNetUsers_UserId1",
+                name: "FK_Messages_AspNetUsers_UserId",
                 table: "Messages");
 
             migrationBuilder.DropTable(
@@ -377,10 +370,6 @@ namespace ChatRooms.Migrations
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Messages_UserId1",
-                table: "Messages");
-
             migrationBuilder.DropPrimaryKey(
                 name: "PK_AspNetUsers",
                 table: "AspNetUsers");
@@ -392,10 +381,6 @@ namespace ChatRooms.Migrations
             migrationBuilder.DropIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "UserId1",
-                table: "Messages");
 
             migrationBuilder.DropColumn(
                 name: "AccessFailedCount",
@@ -459,6 +444,16 @@ namespace ChatRooms.Migrations
                 newName: "Username");
 
             migrationBuilder.AlterColumn<int>(
+                name: "UserId",
+                table: "Messages",
+                type: "int",
+                nullable: false,
+                defaultValue: 0,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(450)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<int>(
                 name: "UsersId",
                 table: "ChatroomUser",
                 type: "int",
@@ -505,11 +500,6 @@ namespace ChatRooms.Migrations
                 name: "PK_Users",
                 table: "Users",
                 column: "Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_UserId",
-                table: "Messages",
-                column: "UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ChatroomUser_Users_UsersId",
