@@ -23,19 +23,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
-DbInitializer.Initialize(app);
+//DbInitializer.Initialize(app);
 
-//if (args.Length == 1 && args[0].ToLower() == "initializedb")
-//{
-//    try
-//    {
-//        DbInitializer.Initialize(app);
-//    }
-//    catch (Exception ex)
-//    {
-//        Console.WriteLine("Error: " + ex.Message); // placeholder
-//    }
-//}
+if (args.Length == 1 && args[0].ToLower() == "initializedb")
+{
+    //DbInitializer.Initialize(app);
+    await DbInitializer.SeedUsersAndRolesAsync(app);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
