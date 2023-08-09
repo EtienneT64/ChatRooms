@@ -60,7 +60,7 @@ namespace ChatRooms.Data
                             Content = "Hello everyone, how is it going!",
                             MsgLength = "Hello everyone, how is it going!".Length,
                             SendDate = DateTime.Parse("2023/08/01"),
-                            UserId = "",
+                            UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                             ChatroomId=1,
                         },
                          new Message()
@@ -68,7 +68,7 @@ namespace ChatRooms.Data
                             Content = "It not growing so great, my website is a disaster!",
                             MsgLength = "It not growing so great, my website is a disaster!".Length,
                             SendDate = DateTime.Parse("2023/08/02"),
-                            UserId = "",
+                            UserId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
                             ChatroomId=1,
                         },
                            new Message()
@@ -76,7 +76,7 @@ namespace ChatRooms.Data
                             Content = "Sucks to suck hey",
                             MsgLength = "Sucks to suck hey".Length,
                             SendDate = DateTime.Parse("2023/08/03"),
-                            UserId = "",
+                            UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                             ChatroomId=1,
                         },
                     }); ;
@@ -115,20 +115,20 @@ namespace ChatRooms.Data
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
-                string appUserEmail = "larrylow@gmail.com";
+                string appUserEmail = "liamventer460@gmail.com";
 
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
                 {
-                    var newUser = new User()
+                    var newAppUser = new User()
                     {
-                        UserName = "Larry Low",
+                        UserName = "LarryL",
                         Email = appUserEmail,
                         EmailConfirmed = true,
                         DisplayNameColor = "#0000FF"
                     };
-                    await userManager.CreateAsync(newUser, "LarryLow@12");
-                    await userManager.AddToRoleAsync(newUser, UserRoles.User);
+                    await userManager.CreateAsync(newAppUser, "Password@64");
+                    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
             }
         }
