@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChatRooms.Models
 {
@@ -6,10 +7,6 @@ namespace ChatRooms.Models
     {
         [Key]
         public int Id { get; set; }
-
-        //public int UserId { get; set; }
-
-        public int ChatroomId { get; set; }
 
         [Required]
         public string? Content { get; set; }
@@ -19,7 +16,12 @@ namespace ChatRooms.Models
         [DataType(DataType.DateTime)]
         public DateTime SendDate { get; set; }
 
+        [ForeignKey("User")]
+        public string? UserId { get; set; }
         public User User { get; set; }
+
+        [ForeignKey("Chatroom")]
+        public int ChatroomId { get; set; }
         public Chatroom Chatroom { get; set; }
     }
 }

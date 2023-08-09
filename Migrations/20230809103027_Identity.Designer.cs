@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatRooms.Migrations
 {
     [DbContext(typeof(ChatroomContext))]
-    [Migration("20230809101853_Identity")]
+    [Migration("20230809103027_Identity")]
     partial class Identity
     {
         /// <inheritdoc />
@@ -75,6 +75,7 @@ namespace ChatRooms.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -313,7 +314,9 @@ namespace ChatRooms.Migrations
 
                     b.HasOne("ChatRooms.Models.User", "User")
                         .WithMany("Messages")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Chatroom");
 
