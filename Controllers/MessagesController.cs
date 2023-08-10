@@ -54,7 +54,7 @@ namespace ChatRooms.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateMessageViewModel messageViewModel)
+        public async Task<IActionResult> CreateMessage(CreateMessageViewModel messageViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -70,12 +70,12 @@ namespace ChatRooms.Controllers
                 _messageRepository.Add(message);
                 return RedirectToAction("Chat", new { id = messageViewModel.ChatroomId }); // Redirect to Chat action
             }
-            else
+            var chatViewModel = new ChatViewModel
             {
-                ModelState.AddModelError("", "Error adding message");
-            }
-
-            return View(messageViewModel);
+                Messages = await _messageRepository.GetMessagesByChatroomId(messageViewModel.ChatroomId),
+                CreateMessage = messageViewModel
+            };
+            return View("Chat", chatViewModel);
         }
 
 
