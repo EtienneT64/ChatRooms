@@ -1,5 +1,6 @@
 ﻿using ChatRooms.Data;
 using ChatRooms.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace ChatRooms.Controllers
         }
 
         // GET: Chatrooms
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return _context.Chatrooms != null ?
