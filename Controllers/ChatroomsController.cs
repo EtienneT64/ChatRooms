@@ -66,6 +66,13 @@ namespace ChatRooms.Controllers
             return View(messagesInChatroom);
         }
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> SendMessage()
+        //{
+
+        //}
+
         // GET: Chatrooms/Create
         public IActionResult Create()
         {

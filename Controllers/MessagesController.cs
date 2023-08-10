@@ -1,5 +1,7 @@
 ﻿using ChatRooms.Data;
+using ChatRooms.Interfaces;
 using ChatRooms.Models;
+using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +11,12 @@ namespace ChatRooms.Controllers
     public class MessagesController : Controller
     {
         private readonly ChatroomContext _context;
+        private readonly IMessageRepository _messageRepository;
 
-        public MessagesController(ChatroomContext context)
+        public MessagesController(ChatroomContext context, IMessageRepository messageRepository)
         {
             _context = context;
+            _messageRepository = messageRepository;
         }
 
         // GET: Messages
@@ -42,12 +46,30 @@ namespace ChatRooms.Controllers
             return View(message);
         }
 
+
+        // GET: Chatrooms/Chat/1
         // GET: Messages/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
-            ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName");
-            return View();
+            if (id == null || _context.Chatrooms == null)
+            {
+                return NotFound();
+            }
+
+            var chatroom = await _context.Chatrooms
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (chatroom == null)
+            {
+                return NotFound();
+            }
+
+
+            // Use LINQ to select messages with ChatroomId = 1
+            var messagesInChatroom = await _context.Messages
+                .Where(message => message.ChatroomId == id) // Filter messages by ChatroomId
+                .ToListAsync();
+
+            return View(messagesInChatroom);
         }
 
         // POST: Messages/Create
@@ -55,17 +77,28 @@ namespace ChatRooms.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ChatroomId,Content,MsgLength,SendDate")] Message message)
+        public async Task<IActionResult> Create(CreateMessageViewModel messageViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(message);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
+                var message = new Message
+                {
+                    Content = messageViewModel.Content,
+                    MsgLength = messageViewModel.Content.Length,
+                    SendDate = messageViewModel.SendDate,
+                    UserId = messageViewModel.UserId,
+                    ChatroomId = messageViewModel.ChatroomId,
 
-            return View(message);
+                };
+                _messageRepository.Add(message);
+                return RedirectToAction("Create");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error adding message");
+            }
+
+            return View(messageViewModel);
         }
 
         // GET: Messages/Edit/5
