@@ -50,17 +50,53 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Chat(int id)
         {
             var messages = await _messageRepository.GetMessagesByChatroomId(id);
+            var currUserId = HttpContext.User.GetUserId();
+            var sendDate = DateTime.Now;
 
             var chatViewModel = new ChatViewModel
             {
                 Messages = messages,
                 CreateMessage = new CreateMessageViewModel
                 {
-                    ChatroomId = id
+                    ChatroomId = id,
+                    UserId = currUserId,
+                    SendDate = sendDate,
+
                 }
             };
 
             return View(chatViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Chat(CreateMessageViewModel messageViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var message = new Message
+                {
+                    Content = messageViewModel.Content,
+                    MsgLength = messageViewModel.Content.Length,
+                    SendDate = messageViewModel.SendDate,
+                    UserId = messageViewModel.UserId,
+                    ChatroomId = messageViewModel.ChatroomId,
+                };
+
+                _messageRepository.Add(message);
+                return RedirectToAction("Chat");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Message is invalid");
+                var chatViewModel = new ChatViewModel
+                {
+                    Messages = await _messageRepository.GetMessagesByChatroomId(messageViewModel.ChatroomId),
+                    CreateMessage = messageViewModel
+                };
+
+                return View(messageViewModel);
+            }
         }
 
         //[HttpPost]

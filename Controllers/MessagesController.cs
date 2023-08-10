@@ -1,6 +1,5 @@
 ﻿using ChatRooms.Interfaces;
 using ChatRooms.Models;
-using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,40 +51,40 @@ namespace ChatRooms.Controllers
         // POST: Messages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateMessage(CreateMessageViewModel messageViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                if (int.TryParse(HttpContext.Request.RouteValues["id"]?.ToString(), out int chatroomId))
-                {
-                    var message = new Message
-                    {
-                        Content = messageViewModel.Content,
-                        MsgLength = messageViewModel.Content.Length,
-                        SendDate = messageViewModel.SendDate,
-                        UserId = _userManager.GetUserId(User), // Get the UserId from UserManager
-                        ChatroomId = chatroomId,
-                    };
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> CreateMessage(CreateMessageViewModel messageViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //if (int.TryParse(HttpContext.Request.RouteValues["id"]?.ToString(), out int chatroomId))
+        //        //{
+        //        var message = new Message
+        //        {
+        //            Content = messageViewModel.Content,
+        //            MsgLength = messageViewModel.Content.Length,
+        //            SendDate = DateTime.Now,
+        //            UserId = _userManager.GetUserId(User), // Get the UserId from UserManager
+        //            ChatroomId = messageViewModel.ChatroomId,
+        //        };
 
-                    _messageRepository.Add(message);
-                    return RedirectToAction("Chat", "Chatrooms", new { id = chatroomId }); // Redirect to Chat action
+        //        _messageRepository.Add(message);
+        //        return RedirectToAction("Chat", "Chatrooms", new { id = 1 }); // Redirect to Chat action
 
 
 
-                }
-            }
+        //        //}
+        //    }
 
-            var chatViewModel = new ChatViewModel
-            {
-                Messages = await _messageRepository.GetMessagesByChatroomId(messageViewModel.ChatroomId),
-                CreateMessage = messageViewModel
-            };
+        //    var chatViewModel = new ChatViewModel
+        //    {
+        //        Messages = await _messageRepository.GetMessagesByChatroomId(messageViewModel.ChatroomId),
+        //        CreateMessage = messageViewModel
+        //    };
 
-            return RedirectToAction("Chat", "Chatrooms", new { id = messageViewModel.Id }); // Redirect to Chat action
+        //    return RedirectToAction("Chat", "Chatrooms", new { id = messageViewModel.Id }); // Redirect to Chat action
 
-        }
+        //}
 
 
         //// GET: Messages/Edit/5
