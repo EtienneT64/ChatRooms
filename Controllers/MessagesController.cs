@@ -58,24 +58,33 @@ namespace ChatRooms.Controllers
         {
             if (ModelState.IsValid)
             {
-                var message = new Message
+                if (int.TryParse(HttpContext.Request.RouteValues["id"]?.ToString(), out int chatroomId))
                 {
-                    Content = messageViewModel.Content,
-                    MsgLength = messageViewModel.Content.Length,
-                    SendDate = messageViewModel.SendDate,
-                    UserId = _userManager.GetUserId(User), // Get the UserId from UserManager
-                    ChatroomId = messageViewModel.ChatroomId,
-                };
+                    var message = new Message
+                    {
+                        Content = messageViewModel.Content,
+                        MsgLength = messageViewModel.Content.Length,
+                        SendDate = messageViewModel.SendDate,
+                        UserId = _userManager.GetUserId(User), // Get the UserId from UserManager
+                        ChatroomId = chatroomId,
+                    };
 
-                _messageRepository.Add(message);
-                return RedirectToAction("Chat", new { id = messageViewModel.ChatroomId }); // Redirect to Chat action
+                    _messageRepository.Add(message);
+                    return RedirectToAction("Chat", "Chatrooms", new { id = chatroomId }); // Redirect to Chat action
+
+
+
+                }
             }
+
             var chatViewModel = new ChatViewModel
             {
                 Messages = await _messageRepository.GetMessagesByChatroomId(messageViewModel.ChatroomId),
                 CreateMessage = messageViewModel
             };
-            return View("Chat", chatViewModel);
+
+            return RedirectToAction("Chat", "Chatrooms", new { id = messageViewModel.Id }); // Redirect to Chat action
+
         }
 
 

@@ -20,5 +20,6 @@ namespace ChatRooms.ViewModels
         public int ChatroomId { get; set; }
 
         public IEnumerable<Message> Messages { get; set; }
+
     }
 }

@@ -47,13 +47,18 @@
 
 
                     <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
-                        <form method="post" asp-action="Create">
-                         
-                            <input asp-for="" type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
-                                   placeholder="Type message">
-
-                            <a asp-controller="Message" asp-action="Create" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Send</a>
-                            <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Options</a>
+                        <form method="post" asp-controller="Messages" asp-action="CreateMessage">
+                            <input type="hidden" asp-for="CreateMessage.Id" />
+                            <input type="hidden" asp-for="CreateMessage.MsgLength" />
+                             <input type="hidden" asp-for="CreateMessage.SendDate" />
+                              <input type="hidden" asp-for="CreateMessage.UserId" />
+                            <input type="hidden" asp-for="CreateMessage.ChatroomId"/>
+                            <div class="form-group">
+                                <input asp-for="CreateMessage.Content" class="form-control form-control-lg" id="exampleFormControlInput1"
+                                       placeholder="Type message">
+                                <span asp-validation-for="CreateMessage.Content" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
                         </form>
                       
                     </div>
