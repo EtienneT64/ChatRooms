@@ -1,5 +1,7 @@
 ﻿using ChatRooms.Data;
+using ChatRooms.Interfaces;
 using ChatRooms.Models;
+using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +11,12 @@ namespace ChatRooms.Controllers
     public class ChatroomsController : Controller
     {
         private readonly ChatroomContext _context;
+        private readonly IMessageRepository _messageRepository;
 
-        public ChatroomsController(ChatroomContext context)
+        public ChatroomsController(ChatroomContext context, IMessageRepository messageRepository)
         {
             _context = context;
+            _messageRepository = messageRepository;
         }
 
         // GET: Chatrooms
@@ -43,27 +47,20 @@ namespace ChatRooms.Controllers
         }
 
         // GET: Chatrooms/Chat/1
-        public async Task<IActionResult> Chat(int? id)
+        public async Task<IActionResult> Chat(int id)
         {
-            if (id == null || _context.Chatrooms == null)
+            var messages = await _messageRepository.GetMessagesByChatroomId(id);
+
+            var chatViewModel = new ChatViewModel
             {
-                return NotFound();
-            }
+                Messages = messages,
+                CreateMessage = new CreateMessageViewModel
+                {
+                    ChatroomId = id
+                }
+            };
 
-            var chatroom = await _context.Chatrooms
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (chatroom == null)
-            {
-                return NotFound();
-            }
-
-
-            // Use LINQ to select messages with ChatroomId = 1
-            var messagesInChatroom = await _context.Messages
-                .Where(message => message.ChatroomId == id) // Filter messages by ChatroomId
-                .ToListAsync();
-
-            return View(messagesInChatroom);
+            return View(chatViewModel);
         }
 
         //[HttpPost]

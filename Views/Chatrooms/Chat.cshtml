@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Message>
+﻿@using ChatRooms.ViewModels;
+@model ChatViewModel
+
 
 @{
     ViewData["Title"] = "Chat";
@@ -25,14 +27,14 @@
 
                     <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
 
-                        @foreach (var item in Model)
+                        @foreach (var message in Model.Messages)
                         {
                             <div class="d-flex flex-row justify-content-start">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                                      alt="avatar 1" style="width: 45px; height: 100%;">
                                 <div>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">@item.Content</p>
-                                    <p class="small ms-3 mb-3 rounded-3 text-muted">@item.SendDate</p>
+                                    <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">@message.Content</p>
+                                    <p class="small ms-3 mb-3 rounded-3 text-muted">@message.SendDate</p>
                                 </div>
                             </div>
 
@@ -45,13 +47,15 @@
 
 
                     <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                             alt="avatar 3" style="width: 40px; height: 100%;">
-                        <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
-                               placeholder="Type message">
-                        <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
-                        <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
-                        <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>
+                        <form method="post" asp-action="Create">
+                         
+                            <input asp-for="" type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
+                                   placeholder="Type message">
+
+                            <a asp-controller="Message" asp-action="Create" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Send</a>
+                            <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Options</a>
+                        </form>
+                      
                     </div>
                 </div>
 
