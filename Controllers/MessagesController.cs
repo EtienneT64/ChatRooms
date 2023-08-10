@@ -1,5 +1,4 @@
-﻿using ChatRooms.Data;
-using ChatRooms.Interfaces;
+﻿using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -10,39 +9,26 @@ namespace ChatRooms.Controllers
 {
     public class MessagesController : Controller
     {
-        private readonly ChatroomContext _context;
+        //private readonly ChatroomContext _context;
         private readonly IMessageRepository _messageRepository;
 
-        public MessagesController(ChatroomContext context, IMessageRepository messageRepository)
+        public MessagesController(IMessageRepository messageRepository)
         {
-            _context = context;
+            //_context = context;
             _messageRepository = messageRepository;
         }
 
         // GET: Messages
         public async Task<IActionResult> Index()
         {
-            var chatroomContext = _context.Messages.Include(m => m.Chatroom).Include(m => m.User);
-            return View(await chatroomContext.ToListAsync());
+            IEnumerable<Message> messages = await _messageRepository.GetAll();
+            return View(messages);
         }
 
         // GET: Messages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Messages == null)
-            {
-                return NotFound();
-            }
-
-            var message = await _context.Messages
-                .Include(m => m.Chatroom)
-                .Include(m => m.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-
+            Message message = await _messageRepository.GetByIdAsync(id);
             return View(message);
         }
 
@@ -51,7 +37,7 @@ namespace ChatRooms.Controllers
         // GET: Messages/Create
         public async Task<IActionResult> Create(int? id)
         {
-            if (id == null || _context.Chatrooms == null)
+            if (id == null || _messageRepository.Chatrooms == null)
             {
                 return NotFound();
             }

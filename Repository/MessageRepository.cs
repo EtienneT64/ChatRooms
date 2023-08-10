@@ -1,6 +1,7 @@
 ﻿using ChatRooms.Data;
 using ChatRooms.Interfaces;
 using ChatRooms.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Repository
 {
@@ -19,22 +20,28 @@ namespace ChatRooms.Repository
 
         public bool Delete(Message message)
         {
-            throw new NotImplementedException();
+            _context.Remove(message);
+            return Save();
         }
 
-        public Task<IEnumerable<Message>> GetAll()
+        public async Task<IEnumerable<Message>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Messages.ToListAsync();
         }
 
-        public Task<User> GetByIdAsync(int id)
+        public async Task<Message> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Messages.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public Task<User> GetByIdAsyncNoTracking(int id)
+        public async Task<Message> GetByIdAsyncNoTracking(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Messages.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+        public async Task<Message> GetChatroomByIdAsync(int? id)
+        {
+           var chatroomId = 
         }
 
         public bool Save()
@@ -45,7 +52,8 @@ namespace ChatRooms.Repository
 
         public bool Update(Message message)
         {
-            throw new NotImplementedException();
+            _context.Update(message);
+            return Save();
         }
     }
 }
