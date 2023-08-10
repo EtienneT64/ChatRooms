@@ -14,7 +14,7 @@ namespace ChatRooms.Repository
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<List<Message>> GetAllUserChatrooms()
+        public async Task<List<Chatroom>> GetAllUserChatrooms()
         {
             throw new NotImplementedException();
         }
