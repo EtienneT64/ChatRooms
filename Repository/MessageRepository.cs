@@ -43,7 +43,7 @@ namespace ChatRooms.Repository
         {
             return await _context.Messages
                 .Where(message => message.ChatroomId == id)
-                .ToListAsync();
+                .Take(10).ToListAsync();
         }
 
         public bool Save()
