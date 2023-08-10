@@ -7,7 +7,7 @@ namespace ChatRooms.Interfaces
         Task<IEnumerable<Message>> GetAll();
         Task<Message> GetByIdAsync(int? id);
         Task<Message> GetByIdAsyncNoTracking(int? id);
-        Task<Message> GetChatroomByIdAsync(int? id);
+        Task<IEnumerable<Message>> GetMessagesByChatroomId(int? id);
 
         bool Add(Message message);
         bool Update(Message message);

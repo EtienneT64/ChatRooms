@@ -29,19 +29,21 @@ namespace ChatRooms.Repository
             return await _context.Messages.ToListAsync();
         }
 
-        public async Task<Message> GetByIdAsync(int id)
+        public async Task<Message> GetByIdAsync(int? id)
         {
             return await _context.Messages.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<Message> GetByIdAsyncNoTracking(int id)
+        public async Task<Message> GetByIdAsyncNoTracking(int? id)
         {
             return await _context.Messages.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<Message> GetChatroomByIdAsync(int? id)
+        public async Task<IEnumerable<Message>> GetMessagesByChatroomId(int? id)
         {
-           var chatroomId = 
+            return await _context.Messages
+                .Where(message => message.ChatroomId == id)
+                .ToListAsync();
         }
 
         public bool Save()
