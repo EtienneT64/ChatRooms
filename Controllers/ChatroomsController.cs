@@ -95,7 +95,7 @@ namespace ChatRooms.Controllers
                     CreateMessage = messageViewModel
                 };
 
-                return View(messageViewModel);
+                return View(chatViewModel);
             }
         }
 
