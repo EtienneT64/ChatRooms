@@ -6,7 +6,7 @@ namespace ChatRooms.Controllers
     public class DashboardController : Controller
     {
         private readonly ChatroomContext _context;
-        public DashboardController(ChatroomContext context, )
+        public DashboardController(ChatroomContext context)
         {
             _context = context;
         }
