@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ChatRooms.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ChatRooms.ViewModels
 {
@@ -17,5 +18,7 @@ namespace ChatRooms.ViewModels
         public string? UserId { get; set; }
 
         public int ChatroomId { get; set; }
+
+        public IEnumerable<Message> Messages { get; set; }
     }
 }

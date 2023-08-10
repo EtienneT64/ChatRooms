@@ -58,37 +58,17 @@ namespace ChatRooms.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Retrieve the chatroomId from the RouteData dictionary
-                if (int.TryParse(HttpContext.Request.RouteValues["id"]?.ToString(), out int chatroomId))
+                var message = new Message
                 {
-                    var currentUser = await _userManager.GetUserAsync(User);
+                    Content = messageViewModel.Content,
+                    MsgLength = messageViewModel.Content.Length,
+                    SendDate = messageViewModel.SendDate,
+                    UserId = _userManager.GetUserId(User), // Get the UserId from UserManager
+                    ChatroomId = messageViewModel.ChatroomId,
+                };
 
-                    if (currentUser != null)
-                    {
-                        var message = new Message
-                        {
-                            Content = messageViewModel.Content,
-                            MsgLength = messageViewModel.Content.Length,
-                            SendDate = messageViewModel.SendDate,
-                            UserId = currentUser.Id,
-                            ChatroomId = chatroomId,
-                        };
-
-                        _messageRepository.Add(message);
-                        return RedirectToAction("Create");
-                    }
-
-                    else
-                    {
-                        // User not found (not logged in or other issue)
-                        ModelState.AddModelError("", "User not found");
-                    }
-
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid chatroom ID");
-                }
+                _messageRepository.Add(message);
+                return RedirectToAction("Chat", new { id = messageViewModel.ChatroomId }); // Redirect to Chat action
             }
             else
             {
@@ -97,6 +77,7 @@ namespace ChatRooms.Controllers
 
             return View(messageViewModel);
         }
+
 
         //// GET: Messages/Edit/5
         //public async Task<IActionResult> Edit(int? id)

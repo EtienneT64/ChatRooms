@@ -6,3 +6,5 @@ Add chatroom owner role and make it specific to the chatrooms that the users cre
 
 Change email to username
 
+# Create ViewModels
+
