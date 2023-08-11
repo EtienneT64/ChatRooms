@@ -6,7 +6,7 @@
     ViewData["Title"] = "Chat";
 }
 
-<h1>Chatroom X</h1>
+<h1>@Model.ChatroomName</h1>
 
 <section style="background-color: #eee;">
     <div class="container py-5">
@@ -58,6 +58,7 @@
                              <button type="submit"  class="btn btn-primary">Send</button>
 
                         </form>
+                        <input type="hidden" id="chatroomName" value="@Model.ChatroomName" />
                         <input type="hidden" id="userInput" value="@User.Identity.Name" />
                         <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
 

@@ -46,6 +46,8 @@ namespace ChatRooms.Controllers
 
             var chatViewModel = new ChatViewModel
             {
+                ChatroomId = id,
+                ChatroomName = _chatroomRepository.GetNameById(id),
                 Messages = messages,
                 CreateMessage = new CreateMessageViewModel
                 {
