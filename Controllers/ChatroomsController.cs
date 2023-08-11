@@ -1,8 +1,10 @@
-﻿using ChatRooms.Interfaces;
+﻿using ChatRooms.Hubs;
+using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ChatRooms.Controllers
 {
@@ -10,11 +12,13 @@ namespace ChatRooms.Controllers
     {
         private readonly IChatroomRepository _chatroomRepository;
         private readonly IMessageRepository _messageRepository;
+        private readonly IHubContext<ChatHub> _chatHubContext;
 
-        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository)
+        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IHubContext<ChatHub> chatHubContext)
         {
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
+            _chatHubContext = chatHubContext;
         }
 
         // GET: Chatrooms
@@ -52,6 +56,9 @@ namespace ChatRooms.Controllers
                 }
             };
 
+            // Join the user to the chatroom
+            await _chatHubContext.Groups.AddToGroupAsync(HttpContext.Connection.Id, _chatroomRepository.GetNameById(id));
+
             return View(chatViewModel);
         }
 
@@ -72,7 +79,12 @@ namespace ChatRooms.Controllers
                 };
 
                 _messageRepository.Add(message);
-                return RedirectToAction("Chat");
+
+                await _chatHubContext.Clients.Group(_chatroomRepository.GetNameById(messageViewModel.ChatroomId))
+            .SendAsync("ReceiveMessage", User.Identity.Name, messageViewModel.Content);
+
+
+                return RedirectToAction("Chat", new { id = messageViewModel.ChatroomId });
             }
             else
             {
