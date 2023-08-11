@@ -41,11 +41,12 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Chat(int id)
         {
             var messages = await _chatroomRepository.GetMessagesByChatroomId(id);
-            var currUserId = HttpContext.User.GetUserId();
             var sendDate = DateTime.Now;
+            var currUserId = HttpContext.User.GetUserId();
 
             var chatViewModel = new ChatViewModel
             {
+                UserId = HttpContext.User.GetUserId(),
                 ChatroomId = id,
                 ChatroomName = _chatroomRepository.GetNameById(id),
                 Messages = messages,
@@ -59,7 +60,7 @@ namespace ChatRooms.Controllers
             };
 
             // Join the user to the chatroom
-            await _chatHubContext.Groups.AddToGroupAsync(HttpContext.Connection.Id, _chatroomRepository.GetNameById(id));
+            await _chatHubContext.Groups.AddToGroupAsync(HttpContext.Connection.Id, id.ToString());
 
             return View(chatViewModel);
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ChatRooms.Interfaces;
+using ChatRooms.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatRooms.Hubs
@@ -6,24 +8,54 @@ namespace ChatRooms.Hubs
     [Authorize]
     public class ChatHub : Hub
     {
-        public Task JoinRoom(string chatroomName)
+        private readonly IMessageRepository _messageRepository;
+
+        public ChatHub(IMessageRepository messageRepository)
         {
-            return Groups.AddToGroupAsync(Context.ConnectionId, chatroomName);
+            _messageRepository = messageRepository;
+        }
+        public Task JoinRoom(int chatroomId)
+        {
+            return Groups.AddToGroupAsync(Context.ConnectionId, chatroomId.ToString());
         }
 
-        public Task LeaveRoom(string chatroomName)
+        public Task LeaveRoom(int chatroomId)
         {
-            return Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomName);
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomId.ToString());
         }
 
-        public async Task SendMessageToGroup(string chatroomName, string message)
+        public async Task SendMessageToGroup(int chatroomId, string userId, string messageContent)
         {
-            await Clients.Group(chatroomName).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
+            var message = new Message
+            {
+                Content = messageContent,
+                MsgLength = messageContent.Length,
+                SendDate = DateTime.Now,
+                UserId = userId,
+                ChatroomId = chatroomId
+            };
+
+            _messageRepository.Add(message);
+
+
+            await Clients.Group(chatroomId.ToString()).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
+            //await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity, message);
         }
 
-        public async Task SendMessage(string user, string message)
+        public async Task SendMessage(int chatroomId, string userId, string messageContent)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            var message = new Message
+            {
+                Content = messageContent,
+                MsgLength = messageContent.Length,
+                SendDate = DateTime.Now,
+                UserId = userId,
+                ChatroomId = chatroomId
+            };
+
+            _messageRepository.Add(message);
+            //await Clients.All.SendAsync("ReceiveMessage", user, message);
+            await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity.Name, messageContent);
         }
     }
 }
