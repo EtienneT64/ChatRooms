@@ -20,5 +20,10 @@ namespace ChatRooms.Hubs
         {
             await Clients.Group(chatroomName).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
         }
+
+        public async Task SendMessage(string user, string message)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", user, message);
+        }
     }
 }
