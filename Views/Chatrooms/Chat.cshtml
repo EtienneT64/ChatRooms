@@ -58,7 +58,7 @@
                              <button type="submit"  class="btn btn-primary">Send</button>
 
                         </form>
-                        <div class="col-5"><input type="text" id="userInput" /></div>
+                        <input type="hidden" id="userInput" value="@User.Identity.Name" />
                         <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
 
                         <input type="button" id="sendButton" value="Send Message" />
