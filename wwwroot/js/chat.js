@@ -14,12 +14,18 @@ connection.on("ReceiveMessage", function (user, message) {
     li.textContent = `${user}: ${message}`;
 
     //clearing code
-    
+
 });
 
 connection.start().then(function () {
-    connection.invoke("JoinRoom", chatroomId)
     document.getElementById("sendButton").disabled = false;
+
+    var chatroomId = document.getElementById("chatroomId").value;
+    var userId = document.getElementById("userId").value;
+
+    connection.invoke("JoinRoom", Number(chatroomId)).catch(function (err) {
+        return console.error(err.toString());
+    });
 
 }).catch(function (err) {
     return console.error(err.toString());
@@ -40,8 +46,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         });
 
         // Optionally, you could also clear the input field here
-         document.getElementById("messageContent").value = '';
-     
+        document.getElementById("messageContent").value = '';
 
         event.preventDefault();
     } else {
@@ -52,7 +57,6 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         //errorElement.textContent = "Please enter a message before sending.";
         //document.getElementById("errorContainer").appendChild(errorElement);
 
-        messageContentElement.classList.add("text-danger");
         console.error("blank message")
     }
 });

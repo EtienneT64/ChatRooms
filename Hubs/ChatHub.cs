@@ -43,7 +43,7 @@ namespace ChatRooms.Hubs
             _messageRepository.Add(message);
 
 
-            await Clients.Group(chatroomId.ToString()).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
+            await Clients.Group(chatroomId.ToString()).SendAsync("ReceiveMessage", Context.User.Identity.Name, messageContent);
             //await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity, message);
         }
 
