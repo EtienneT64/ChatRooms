@@ -55,8 +55,15 @@
                                        placeholder="Type message">
                                 <span asp-validation-for="CreateMessage.Content" class="text-danger"></span>
                             </div>
-                            <button type="submit" class="btn btn-primary">Send</button>
+                             <button type="submit" id="sendButton" value="Send Message" class="btn btn-primary">Send</button>
+
                         </form>
+                                                      
+                                                            <div class="row p-1">
+                                    <div class="col-6">
+                                        <ul id="messagesList"></ul>
+                                    </div>
+                                </div>
                       
                     </div>
                 </div>
@@ -66,6 +73,9 @@
 
     </div>
 </section>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
 
 
 
