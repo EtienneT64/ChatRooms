@@ -5,8 +5,10 @@ namespace ChatRooms.Interfaces
     public interface IChatroomRepository
     {
         Task<IEnumerable<Chatroom>> GetAll();
-        Task<Chatroom> GetByIdAsync(int id);
-        Task<Chatroom> GetByIdAsyncNoTracking(int id);
+        Task<Chatroom> GetByIdAsync(int? id);
+        Task<Chatroom> GetByIdAsyncNoTracking(int? id);
+        Task<IEnumerable<Message>> GetMessagesByChatroomId(int? id);
+        public string? GetNameById(int id);
 
         bool Add(Chatroom chatroom);
         bool Update(Chatroom chatroom);
