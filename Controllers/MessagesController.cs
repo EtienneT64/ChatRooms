@@ -1,169 +1,188 @@
-﻿using ChatRooms.Data;
+﻿using ChatRooms.Interfaces;
 using ChatRooms.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Controllers
 {
     public class MessagesController : Controller
     {
-        private readonly ChatroomContext _context;
+        //private readonly ChatroomContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public MessagesController(ChatroomContext context)
+        private readonly IMessageRepository _messageRepository;
+
+        public MessagesController(IMessageRepository messageRepository, UserManager<User> userManager)
         {
-            _context = context;
+            //_context = context;
+            _messageRepository = messageRepository;
+            _userManager = userManager;
         }
 
         // GET: Messages
         public async Task<IActionResult> Index()
         {
-            var chatroomContext = _context.Messages.Include(m => m.Chatroom).Include(m => m.User);
-            return View(await chatroomContext.ToListAsync());
+            IEnumerable<Message> messages = await _messageRepository.GetAll();
+            return View(messages);
         }
 
         // GET: Messages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Messages == null)
-            {
-                return NotFound();
-            }
-
-            var message = await _context.Messages
-                .Include(m => m.Chatroom)
-                .Include(m => m.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-
+            Message message = await _messageRepository.GetByIdAsync(id);
             return View(message);
         }
 
+
+        // GET: Chatrooms/Chat/1
         // GET: Messages/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
-            ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName");
-            return View();
+            if (id == null || _messageRepository.GetMessagesByChatroomId == null)
+            {
+                return NotFound();
+            }
+
+            // Use LINQ to select messages with ChatroomId = 1
+            var messagesInChatroom = _messageRepository.GetMessagesByChatroomId(id);
+            return View(messagesInChatroom);
         }
 
         // POST: Messages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ChatroomId,Content,MsgLength,SendDate")] Message message)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(message);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> CreateMessage(CreateMessageViewModel messageViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //if (int.TryParse(HttpContext.Request.RouteValues["id"]?.ToString(), out int chatroomId))
+        //        //{
+        //        var message = new Message
+        //        {
+        //            Content = messageViewModel.Content,
+        //            MsgLength = messageViewModel.Content.Length,
+        //            SendDate = DateTime.Now,
+        //            UserId = _userManager.GetUserId(User), // Get the UserId from UserManager
+        //            ChatroomId = messageViewModel.ChatroomId,
+        //        };
 
-            return View(message);
-        }
+        //        _messageRepository.Add(message);
+        //        return RedirectToAction("Chat", "Chatrooms", new { id = 1 }); // Redirect to Chat action
 
-        // GET: Messages/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Messages == null)
-            {
-                return NotFound();
-            }
 
-            var message = await _context.Messages.FindAsync(id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-            ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
 
-            return View(message);
-        }
+        //        //}
+        //    }
 
-        // POST: Messages/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ChatroomId,Content,MsgLength,SendDate")] Message message)
-        {
-            if (id != message.Id)
-            {
-                return NotFound();
-            }
+        //    var chatViewModel = new ChatViewModel
+        //    {
+        //        Messages = await _messageRepository.GetMessagesByChatroomId(messageViewModel.ChatroomId),
+        //        CreateMessage = messageViewModel
+        //    };
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(message);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MessageExists(message.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
-            return View(message);
-        }
+        //    return RedirectToAction("Chat", "Chatrooms", new { id = messageViewModel.Id }); // Redirect to Chat action
 
-        // GET: Messages/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Messages == null)
-            {
-                return NotFound();
-            }
+        //}
 
-            var message = await _context.Messages
-                .Include(m => m.Chatroom)
-                .Include(m => m.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
 
-            return View(message);
-        }
+        //// GET: Messages/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _context.Messages == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        // POST: Messages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Messages == null)
-            {
-                return Problem("Entity set 'ChatroomContext.Messages'  is null.");
-            }
-            var message = await _context.Messages.FindAsync(id);
-            if (message != null)
-            {
-                _context.Messages.Remove(message);
-            }
+        //    var message = await _context.Messages.FindAsync(id);
+        //    if (message == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //    return View(message);
+        //}
 
-        private bool MessageExists(int id)
-        {
-            return (_context.Messages?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        //// POST: Messages/Edit/5
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,ChatroomId,Content,MsgLength,SendDate")] Message message)
+        //{
+        //    if (id != message.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(message);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!MessageExists(message.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["ChatroomId"] = new SelectList(_context.Chatrooms, "Id", "Description", message.ChatroomId);
+        //    return View(message);
+        //}
+
+        //// GET: Messages/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || _context.Messages == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var message = await _context.Messages
+        //        .Include(m => m.Chatroom)
+        //        .Include(m => m.User)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (message == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(message);
+        //}
+
+        //// POST: Messages/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_context.Messages == null)
+        //    {
+        //        return Problem("Entity set 'ChatroomContext.Messages'  is null.");
+        //    }
+        //    var message = await _context.Messages.FindAsync(id);
+        //    if (message != null)
+        //    {
+        //        _context.Messages.Remove(message);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        //private bool MessageExists(int id)
+        //{
+        //    return (_context.Messages?.Any(e => e.Id == id)).GetValueOrDefault();
+        //}
     }
 }

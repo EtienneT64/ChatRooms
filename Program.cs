@@ -1,5 +1,7 @@
 using ChatRooms.Data;
+using ChatRooms.Interfaces;
 using ChatRooms.Models;
+using ChatRooms.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSignalR();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddDbContext<ChatroomContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -20,7 +22,6 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();

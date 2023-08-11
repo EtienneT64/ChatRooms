@@ -1,18 +1,25 @@
-﻿using ChatRooms.Data;
+﻿using ChatRooms.Interfaces;
+using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatRooms.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly ChatroomContext _context;
-        public DashboardController(ChatroomContext context)
+        private readonly IDashboardRepository _dashboardRepositiory;
+
+        public DashboardController(IDashboardRepository dashboardRepositiory)
         {
-            _context = context;
+            _dashboardRepositiory = dashboardRepositiory;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var userMessages = await _dashboardRepositiory.GetAllUserMessages();
+            var dashboardViewModel = new DashboardViewModel()
+            {
+                Messages = userMessages
+            };
+            return View(dashboardViewModel);
         }
     }
 }
