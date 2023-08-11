@@ -15,10 +15,6 @@ connection.on("ReceiveMessage", function (user, message) {
 
     //clearing code
     document.getElementById("messageContent").value = ''; // Clear the input field
-
-    // Scroll to the bottom
-    var messagesList = document.getElementById("messagesList");
-    messagesList.scrollTop = messagesList.scrollHeight;
 });
 
 connection.start().then(function () {
