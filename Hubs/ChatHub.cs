@@ -14,15 +14,20 @@ namespace ChatRooms.Hubs
         {
             _messageRepository = messageRepository;
         }
-        public Task JoinRoom(int chatroomId)
+        public async Task JoinRoom(int chatroomId)
         {
-            return Groups.AddToGroupAsync(Context.ConnectionId, chatroomId.ToString());
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatroomId.ToString());
+
+            await Clients.Group(chatroomId.ToString()).SendAsync("Send", $"{Context.ConnectionId} has joined the group {chatroomId.ToString()}.");
         }
 
-        public Task LeaveRoom(int chatroomId)
+        public async Task LeaveRoom(int chatroomId)
         {
-            return Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomId.ToString());
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomId.ToString());
+
+            await Clients.Group(chatroomId.ToString()).SendAsync("Send", $"{Context.ConnectionId} has left the group {chatroomId.ToString()}.");
         }
+
 
         public async Task SendMessageToGroup(int chatroomId, string userId, string messageContent)
         {
