@@ -47,6 +47,7 @@ namespace ChatRooms.Controllers
         }
 
         // GET: Chatrooms/Chat/1
+        [Authorize]
         public async Task<IActionResult> Chat(int id)
         {
             var messages = await _messageRepository.GetMessagesByChatroomId(id);
@@ -70,6 +71,7 @@ namespace ChatRooms.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Chat(CreateMessageViewModel messageViewModel)
         {
             if (ModelState.IsValid)
