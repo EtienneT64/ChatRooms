@@ -10,6 +10,7 @@ namespace ChatRooms.Models
         public string? DisplayNameColor { get; set; }
 
         public ICollection<Message>? Messages { get; set; }
-        public ICollection<Chatroom>? Chatrooms { get; set; }
+        public virtual ICollection<Chatroom>? Chatrooms { get; set; }
+        public ICollection<Connection>? Connections { get; set; }
     }
 }

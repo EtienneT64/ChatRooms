@@ -1,4 +1,5 @@
 using ChatRooms.Data;
+using ChatRooms.Hubs;
 using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using ChatRooms.Repository;
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IChatroomRepository, ChatroomRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddDbContext<ChatroomContext>(options =>
 {
@@ -59,5 +62,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
 name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapHub<ChatHub>("/chatHub");
+
 app.Run();

@@ -6,7 +6,7 @@
     ViewData["Title"] = "Chat";
 }
 
-<h1>Chatroom X</h1>
+<h1>@Model.ChatroomName</h1>
 
 <section style="background-color: #eee;">
     <div class="container py-5">
@@ -27,37 +27,41 @@
 
                     <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px; max-height: 400px; overflow-y: auto;">
 
-                        @foreach (var message in Model.Messages)
-                        {
                             <div class="d-flex flex-row justify-content-start">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                     alt="avatar 1" style="width: 45px; height: 100%;">
+                               
                                 <div>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">@message.Content</p>
-                                    <p class="small ms-3 mb-3 rounded-3 text-muted">@message.SendDate</p>
+                                <ul id="messagesList" style="overflow-anchor: none;">
+                                  
+                               
+                                     
+                                  
+                                    
+                                    </ul>
+                                <div id="anchor" style="overflow-anchor: auto; height: 1px;"></div>
+                                   
                                 </div>
                             </div>
-
-                          
-                        }
                        
                     </div>
 
                     <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
-                        <form method="post" asp-controller="Chatrooms" asp-action="Chat">
+                        <form method="post" id="messageForm" asp-controller="Chatrooms" asp-action="Chat">
                             <input type="hidden" id="ChatroomId" name="ChatroomId" asp-for="CreateMessage.ChatroomId" />
                             <input type="hidden" id="UserId" name="UserId" asp-for="CreateMessage.UserId" />
                             <input type="hidden" id="MsgLength" name="MsgLength" asp-for="CreateMessage.MsgLength" />
                             <input type="hidden" id="SendDate" name="SendDate" asp-for="CreateMessage.SendDate" />
 
                             <div class="form-group">
-                                <input type="text" id="Content" name="Content" asp-for="CreateMessage.Content" class="form-control form-control-lg"
+                                <input type="text" id="messageContent" name="Content" asp-for="CreateMessage.Content" class="form-control form-control-lg w-100"
                                        placeholder="Type message">
                                 <span asp-validation-for="CreateMessage.Content" class="text-danger"></span>
                             </div>
-                            <button type="submit" class="btn btn-primary">Send</button>
+                             <input type="button" id="sendButton" value="Send" class="btn btn-primary" />
+
                         </form>
-                      
+                        <input type="hidden" id="chatroomId" value="@Model.ChatroomId" />
+                        <input type="hidden" id="userId" value="@Model.UserId" />
+
                     </div>
                 </div>
 
@@ -66,8 +70,10 @@
 
     </div>
 </section>
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
+
 
 
 
