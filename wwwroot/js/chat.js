@@ -60,3 +60,4 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         console.error("blank message")
     }
 });
+
