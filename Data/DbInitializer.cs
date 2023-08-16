@@ -20,7 +20,7 @@ namespace ChatRooms.Data
                         new Chatroom()
                         {
                             Name = "Global Chat X",
-                            //Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+                            //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "This is the town square, all are welcome, free speech",
                             UserLimit = 50,
                             MsgLengthLimit = 320,
@@ -29,7 +29,7 @@ namespace ChatRooms.Data
                         new Chatroom()
                         {
                             Name = "Fortnite",
-                            //Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+                            //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "We love fortnite Poggers",
                             UserLimit = 25,
                             MsgLengthLimit = 280,
@@ -38,7 +38,7 @@ namespace ChatRooms.Data
                        new Chatroom()
                         {
                             Name = "Baldurs Gate 3",
-                            //Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+                            //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "Dungeons and dragons game with roll playing and dice rolling",
                             UserLimit = 49,
                             MsgLengthLimit = 269,
@@ -48,7 +48,7 @@ namespace ChatRooms.Data
                     });
                     context.SaveChanges();
                 }
-                //Races
+                //Messages
                 if (!context.Messages.Any())
                 {
                     context.Messages.AddRange(new List<Message>()
@@ -77,7 +77,7 @@ namespace ChatRooms.Data
                             UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                             ChatroomId=1,
                         },
-                    }); ;
+                    });
                     context.SaveChanges();
                 }
             }
@@ -104,12 +104,14 @@ namespace ChatRooms.Data
                 {
                     var newAdminUser = new User()
                     {
+                        Id = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
                         UserName = "etienneT",
                         Email = adminUserEmail,
                         EmailConfirmed = true,
-                        DisplayNameColor = "#FFD700"
+                        DisplayNameColor = "#FFD700",
+                        //ProfileImageUrl = xyz
                     };
-                    await userManager.CreateAsync(newAdminUser, "Password@64");
+                    await userManager.CreateAsync(newAdminUser, "qwerty12");
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
@@ -120,13 +122,33 @@ namespace ChatRooms.Data
                 {
                     var newAppUser = new User()
                     {
-                        UserName = "LarryL",
+                        Id = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
+                        UserName = "liamV",
                         Email = appUserEmail,
                         EmailConfirmed = true,
-                        DisplayNameColor = "#0000FF"
+                        DisplayNameColor = "#0000FF",
+                        //ProfileImageUrl = xyz
                     };
-                    await userManager.CreateAsync(newAppUser, "Password@64");
+                    await userManager.CreateAsync(newAppUser, "qwerty12");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+                }
+
+                string appUserEmail2 = "test@gmail.com";
+
+                var appUser2 = await userManager.FindByEmailAsync(appUserEmail2);
+                if (appUser2 == null)
+                {
+                    var newAppUser2 = new User()
+                    {
+                        Id = "a6e31363-fc72-4f7e-9238-7f6cada1e68c",
+                        UserName = "liamV",
+                        Email = appUserEmail,
+                        EmailConfirmed = true,
+                        DisplayNameColor = "#0000FF",
+                        //ProfileImageUrl = xyz
+                    };
+                    await userManager.CreateAsync(newAppUser2, "qwerty12");
+                    await userManager.AddToRoleAsync(newAppUser2, UserRoles.User);
                 }
             }
         }

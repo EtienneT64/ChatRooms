@@ -8,9 +8,8 @@ namespace ChatRooms.Models
     {
         [StringLength(7)]
         public string? DisplayNameColor { get; set; }
-
+        public string? ProfileImageUrl { get; set; }
         public ICollection<Message>? Messages { get; set; }
-        public virtual ICollection<Chatroom>? Chatrooms { get; set; }
-        public ICollection<Connection>? Connections { get; set; }
+        public ICollection<Chatroom>? Chatrooms { get; set; }
     }
 }

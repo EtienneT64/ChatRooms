@@ -14,6 +14,7 @@ namespace ChatRooms.Controllers
         {
             _dashboardRepository = dashboardRepositiory;
             _httpContextAccessor = httpContextAccessor;
+            _photoService = photoService;
         }
         public async Task<IActionResult> Index()
         {
@@ -27,8 +28,16 @@ namespace ChatRooms.Controllers
 
         public async Task<IActionResult> EditUserProfile()
         {
-
-            return View();
+            var currUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+            var user = await _dashboardRepository.GetUserById(currUserId);
+            if (user == null) return View("Error");
+            var editUserViewModel = new EditUserDashboardViewModel()
+            {
+                Id = currUserId,
+                DisplayNameColor = user.DisplayNameColor,
+                ProfileImageUrl = user.ProfileImageUrl
+            };
+            return View(editUserViewModel);
         }
     }
 }

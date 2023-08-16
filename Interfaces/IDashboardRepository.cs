@@ -6,5 +6,6 @@ namespace ChatRooms.Interfaces
     {
         Task<List<Chatroom>> GetAllUserChatrooms();
         Task<List<Message>> GetAllUserMessages();
+        Task<User> GetUserById(string id);
     }
 }

@@ -24,7 +24,10 @@ namespace ChatRooms.Repository
             var currUser = _httpContextAccessor.HttpContext?.User;
             var userMessages = _context.Messages.Where(c => c.User.Id == currUser.ToString());
             return userMessages.ToList();
-
+        }
+        public async Task<User> GetUserById(string id)
+        {
+            return await _context.Users.FindAsync(id);
         }
     }
 }
