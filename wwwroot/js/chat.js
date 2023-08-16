@@ -48,6 +48,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     //connection.invoke("SendMessageToGroup", chatroomName, message).catch(function (err) {
     //    return console.error(err.toString());
     //});
+
+    //for database: tinymce.activeEditor.getContent({ format: 'text' });
     if (messageContent.trim() !== "") { // Check if message content is not empty or just whitespace
         connection.invoke("SendMessageToGroup", Number(chatroomId), userId, messageContent).catch(function (err) {
             return console.error(err.toString());
@@ -55,6 +57,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
         // Optionally, you could also clear the input field here
         document.getElementById("messageContent").value = '';
+        //resetContent('messageContent');
+        tinyMCE.activeEditor.setContent('');
 
         event.preventDefault();
     } else {
