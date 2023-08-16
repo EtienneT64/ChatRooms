@@ -34,12 +34,15 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
+DbInitializer.CreateDatabase(app);
+await DbInitializer.SeedUsersAndRolesAsync(app);
 DbInitializer.Initialize(app);
 
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
 {
-    //DbInitializer.Initialize(app);
+    DbInitializer.CreateDatabase(app);
     await DbInitializer.SeedUsersAndRolesAsync(app);
+    DbInitializer.Initialize(app);
 }
 
 // Configure the HTTP request pipeline.

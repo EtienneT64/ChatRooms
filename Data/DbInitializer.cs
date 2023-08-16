@@ -5,6 +5,86 @@ namespace ChatRooms.Data
 {
     public class DbInitializer
     {
+        public static void CreateDatabase(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<ChatroomContext>();
+
+                context?.Database.EnsureCreated();
+            }
+        }
+
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                //Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                //Users
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                string adminUserEmail = "etiennetheunissen64@gmail.com";
+
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
+                {
+                    var newAdminUser = new User()
+                    {
+                        Id = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
+                        UserName = "etienneT",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true,
+                        DisplayNameColor = "#FFD700",
+                        //ProfileImageUrl = xyz
+                    };
+                    await userManager.CreateAsync(newAdminUser, "Password@64");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
+
+                string appUserEmail = "liamventer460@gmail.com";
+
+                var appUser = await userManager.FindByEmailAsync(appUserEmail);
+                if (appUser == null)
+                {
+                    var newAppUser = new User()
+                    {
+                        Id = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
+                        UserName = "liamV",
+                        Email = appUserEmail,
+                        EmailConfirmed = true,
+                        DisplayNameColor = "#0000FF",
+                        //ProfileImageUrl = xyz
+                    };
+                    await userManager.CreateAsync(newAppUser, "Password@64");
+                    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+                }
+
+                string appUserEmail2 = "test@gmail.com";
+
+                var appUser2 = await userManager.FindByEmailAsync(appUserEmail2);
+                if (appUser2 == null)
+                {
+                    var newAppUser2 = new User()
+                    {
+                        Id = "a6e31363-fc72-4f7e-9238-7f6cada1e68c",
+                        UserName = "liamV",
+                        Email = appUserEmail,
+                        EmailConfirmed = true,
+                        DisplayNameColor = "#0000FF",
+                        //ProfileImageUrl = xyz
+                    };
+                    await userManager.CreateAsync(newAppUser2, "Password@64");
+                    await userManager.AddToRoleAsync(newAppUser2, UserRoles.User);
+                }
+            }
+        }
+
         public static void Initialize(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
@@ -79,76 +159,6 @@ namespace ChatRooms.Data
                         },
                     });
                     context.SaveChanges();
-                }
-            }
-        }
-
-        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
-        {
-            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
-            {
-                //Roles
-                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-                //Users
-                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                string adminUserEmail = "etiennetheunissen64@gmail.com";
-
-                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
-                if (adminUser == null)
-                {
-                    var newAdminUser = new User()
-                    {
-                        Id = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
-                        UserName = "etienneT",
-                        Email = adminUserEmail,
-                        EmailConfirmed = true,
-                        DisplayNameColor = "#FFD700",
-                        //ProfileImageUrl = xyz
-                    };
-                    await userManager.CreateAsync(newAdminUser, "qwerty12");
-                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
-                }
-
-                string appUserEmail = "liamventer460@gmail.com";
-
-                var appUser = await userManager.FindByEmailAsync(appUserEmail);
-                if (appUser == null)
-                {
-                    var newAppUser = new User()
-                    {
-                        Id = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
-                        UserName = "liamV",
-                        Email = appUserEmail,
-                        EmailConfirmed = true,
-                        DisplayNameColor = "#0000FF",
-                        //ProfileImageUrl = xyz
-                    };
-                    await userManager.CreateAsync(newAppUser, "qwerty12");
-                    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
-                }
-
-                string appUserEmail2 = "test@gmail.com";
-
-                var appUser2 = await userManager.FindByEmailAsync(appUserEmail2);
-                if (appUser2 == null)
-                {
-                    var newAppUser2 = new User()
-                    {
-                        Id = "a6e31363-fc72-4f7e-9238-7f6cada1e68c",
-                        UserName = "liamV",
-                        Email = appUserEmail,
-                        EmailConfirmed = true,
-                        DisplayNameColor = "#0000FF",
-                        //ProfileImageUrl = xyz
-                    };
-                    await userManager.CreateAsync(newAppUser2, "qwerty12");
-                    await userManager.AddToRoleAsync(newAppUser2, UserRoles.User);
                 }
             }
         }
