@@ -23,7 +23,7 @@
                         </button>
                     </div>
 
-
+                    
 
                     <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px; max-height: 400px; overflow-y: auto;">
 
@@ -52,8 +52,8 @@
                             <input type="hidden" id="SendDate" name="SendDate" asp-for="CreateMessage.SendDate" />
 
                             <div class="form-group">
-                                <input type="text" id="messageContent" name="Content" asp-for="CreateMessage.Content" class="form-control form-control-lg w-100"
-                                       placeholder="Type message">
+                                <textarea type="text" id="messageContent" name="Content" asp-for="CreateMessage.Content" class="form-control form-control-lg w-100t"
+                                       placeholder="Type message" contenteditable="true"></textarea>
                                 <span asp-validation-for="CreateMessage.Content" class="text-danger"></span>
                             </div>
                              <input type="button" id="sendButton" value="Send" class="btn btn-primary" />
@@ -75,6 +75,8 @@
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
+<script src="https://cdn.tiny.cloud/1/vn4al8wrt0tehfuzhq2hhee80ufojm8bp90wb8onjk7rwjta/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="~/js/tinymceInit.js"></script>
 
 
 
