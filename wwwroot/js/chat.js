@@ -36,7 +36,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var chatroomId = document.getElementById("chatroomId").value;
     var userId = document.getElementById("userId").value;
     var messageContentElement = document.getElementById("messageContent");
-    var messageContent = messageContentElement.value;
+    var messageContent = tinymce.get('messageContent').getContent();
     //connection.invoke("SendMessageToGroup", chatroomName, message).catch(function (err) {
     //    return console.error(err.toString());
     //});
