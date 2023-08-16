@@ -11,11 +11,19 @@ connection.on("ReceiveMessage", function (user, message) {
     // We can assign user-supplied strings to an element's textContent because it
     // is not interpreted as markup. If you're assigning in any other way, you 
     // should be aware of possible script injection concerns.
-    li.textContent = `${user}: ${message}`;
+    //var formattedMessage = formatMessage(message); // Function to format the message
+    li.innerHTML = `${user}: ${message}`;
 
-    //clearing code
+    // Clearing code
 
 });
+
+//function formatMessage(message) {
+//    var formattedMessage = message
+//        //.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Replace **text** with <strong>text</strong>
+//        //.replace(/\*(.*?)\*/g, '<em>$1</em>'); // Replace *text* with <em>text</em>
+//    return formattedMessage;
+//}
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
