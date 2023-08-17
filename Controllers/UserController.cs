@@ -24,6 +24,7 @@ namespace ChatRooms.Controllers
                     Id = user.Id,
                     UserName = user.UserName,
                     DisplayNameColor = user.DisplayNameColor,
+                    ProfileImageUrl = user.ProfileImageUrl,
                 };
                 result.Add(userViewModel);
             }
