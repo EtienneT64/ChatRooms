@@ -1,6 +1,7 @@
 ﻿using ChatRooms.Data;
 using ChatRooms.Interfaces;
 using ChatRooms.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Repository
 {
@@ -28,6 +29,23 @@ namespace ChatRooms.Repository
         public async Task<User> GetUserById(string id)
         {
             return await _context.Users.FindAsync(id);
+        }
+
+        public async Task<User> GetByIdNoTracking(string id)
+        {
+            return await _context.Users.Where(u => u.Id == id).AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public bool Update(User user)
+        {
+            _context.Users.Update(user);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using ChatRooms.Interfaces;
+using ChatRooms.Models;
 using ChatRooms.ViewModels;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatRooms.Controllers
@@ -15,6 +17,12 @@ namespace ChatRooms.Controllers
             _dashboardRepository = dashboardRepositiory;
             _httpContextAccessor = httpContextAccessor;
             _photoService = photoService;
+        }
+        private void MapUserEdit(User user, EditUserDashboardViewModel editVM, ImageUploadResult photoResult)
+        {
+            user.Id = editVM.Id;
+            user.DisplayNameColor = editVM.DisplayNameColor;
+            user.ProfileImageUrl = photoResult.Url.ToString();
         }
         public async Task<IActionResult> Index()
         {
@@ -38,6 +46,46 @@ namespace ChatRooms.Controllers
                 ProfileImageUrl = user.ProfileImageUrl
             };
             return View(editUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUserProfile(EditUserDashboardViewModel editVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit profile");
+                return View("EditUserProfile", editVM);
+            }
+
+            var user = await _dashboardRepository.GetByIdNoTracking(editVM.Id);
+
+            if (user.ProfileImageUrl == "" || user.ProfileImageUrl == null)
+            {
+                var photoResult = await _photoService.AddPhotoAsync(editVM.Image);
+
+                MapUserEdit(user, editVM, photoResult);
+
+                _dashboardRepository.Update(user);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                try
+                {
+                    await _photoService.DeletePhotoAsync(user.ProfileImageUrl);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Could not delete photo");
+                    return View(editVM);
+                }
+                var photoResult = await _photoService.AddPhotoAsync(editVM.Image);
+
+                MapUserEdit(user, editVM, photoResult);
+
+                _dashboardRepository.Update(user);
+                return RedirectToAction("Index");
+            }
         }
     }
 }
