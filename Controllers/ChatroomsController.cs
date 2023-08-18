@@ -224,5 +224,12 @@ namespace ChatRooms.Controllers
         //{
         //    return (_context.Chatrooms?.Any(e => e.Id == id)).GetValueOrDefault();
         //}
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var chatroomDetails = await _chatroomRepository.GetByIdAsync(id);
+            if (chatroomDetails == null) return View("Error");
+            return View(chatroomDetails);
+        }
     }
 }

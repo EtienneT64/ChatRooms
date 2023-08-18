@@ -33,3 +33,6 @@ Perhaps make the primary key the name
 
 Enable a user to create and manage a chatroom
 
+# Create chatroom validation script
+
+This is to ensure messages adhere to the chatroom rules
