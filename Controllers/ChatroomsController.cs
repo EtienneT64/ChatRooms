@@ -225,11 +225,24 @@ namespace ChatRooms.Controllers
         //    return (_context.Chatrooms?.Any(e => e.Id == id)).GetValueOrDefault();
         //}
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             var chatroomDetails = await _chatroomRepository.GetByIdAsync(id);
             if (chatroomDetails == null) return View("Error");
             return View(chatroomDetails);
         }
+
+        // POST: Chatrooms/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var chatRoomDetails = await _chatroomRepository.GetByIdAsync(id);
+            if (chatRoomDetails == null) return View("Error");
+
+            _chatroomRepository.Delete(chatRoomDetails);
+            return RedirectToAction("Index");
+        }
+
     }
 }
