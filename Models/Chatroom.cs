@@ -17,7 +17,7 @@ namespace ChatRooms.Models
         public int MsgLengthLimit { get; set; }
         public string? ChatroomImageUrl { get; set; }
 
-        public virtual ICollection<User>? Users { get; set; }
+        public ICollection<User>? Users { get; set; }
         public ICollection<Message>? Messages { get; set; }
     }
 }

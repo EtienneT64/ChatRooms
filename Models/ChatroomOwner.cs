@@ -8,5 +8,8 @@ namespace ChatRooms.Models
         public int ChatroomId { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
+
+        public User? User { get; set; }
+        public Chatroom? Chatroom { get; set; }
     }
 }
