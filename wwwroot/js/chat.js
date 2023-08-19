@@ -5,6 +5,8 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
+let userLeftByButton = false;
+
 connection.on("ReceiveMessage", function (user, timeStamp, message) {
     var li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
@@ -60,5 +62,20 @@ document.getElementById("leaveButton").addEventListener("click", function (event
     connection.invoke("LeaveRoom", chatroomName).catch(function (err) {
         return console.error(err.toString());
     });
+
+    userLeftByButton = true;
+});
+
+// Detect when the user is navigating away from the page
+window.addEventListener("beforeunload", function (event) {
+    // Invoke the LeaveRoom method
+    var chatroomName = document.getElementById("chatroomName").value;
+
+    if (!userLeftByButton) {
+        connection.invoke("LeaveRoom", chatroomName).catch(function (err) {
+            console.error(err.toString());
+        });
+    }
+   
 });
 
