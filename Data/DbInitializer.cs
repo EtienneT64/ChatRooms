@@ -29,17 +29,15 @@ namespace ChatRooms.Data
 
                 //Users
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                string adminUserEmail = "etiennetheunissen64@gmail.com";
+                string adminUserName = "etienneT";
 
-                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                var adminUser = await userManager.FindByNameAsync(adminUserName);
                 if (adminUser == null)
                 {
                     var newAdminUser = new User()
                     {
                         Id = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
                         UserName = "etienneT",
-                        Email = adminUserEmail,
-                        EmailConfirmed = true,
                         UserNameColor = "#FFD700",
                         //ProfileImageUrl = xyz
                     };
@@ -47,17 +45,15 @@ namespace ChatRooms.Data
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
-                string appUserEmail = "liamventer460@gmail.com";
+                string appUserName = "liamV";
 
-                var appUser = await userManager.FindByEmailAsync(appUserEmail);
+                var appUser = await userManager.FindByNameAsync(appUserName);
                 if (appUser == null)
                 {
                     var newAppUser = new User()
                     {
                         Id = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                         UserName = "liamV",
-                        Email = appUserEmail,
-                        EmailConfirmed = true,
                         UserNameColor = "#0000FF",
                         //ProfileImageUrl = xyz
                     };
@@ -65,17 +61,15 @@ namespace ChatRooms.Data
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
 
-                string appUserEmail2 = "test@gmail.com";
+                string appUserName2 = "test";
 
-                var appUser2 = await userManager.FindByEmailAsync(appUserEmail2);
+                var appUser2 = await userManager.FindByNameAsync(appUserName2);
                 if (appUser2 == null)
                 {
                     var newAppUser2 = new User()
                     {
                         Id = "a6e31363-fc72-4f7e-9238-7f6cada1e68c",
                         UserName = "test",
-                        Email = appUserEmail,
-                        EmailConfirmed = true,
                         UserNameColor = "#0000FF",
                         //ProfileImageUrl = xyz
                     };
