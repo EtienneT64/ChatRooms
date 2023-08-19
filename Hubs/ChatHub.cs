@@ -1,4 +1,5 @@
-﻿using ChatRooms.Interfaces;
+﻿using ChatRooms.Helpers;
+using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -9,42 +10,44 @@ namespace ChatRooms.Hubs
     public class ChatHub : Hub
     {
         private readonly IMessageRepository _messageRepository;
+        private readonly IChatroomRepository _chatroomRepository;
 
-        public ChatHub(IMessageRepository messageRepository)
+        public ChatHub(IMessageRepository messageRepository, IChatroomRepository chatroomRepository)
         {
             _messageRepository = messageRepository;
+            _chatroomRepository = chatroomRepository;
         }
-        public async Task JoinRoom(int chatroomId)
+        public async Task JoinRoom(string chatroomName)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, chatroomId.ToString());
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatroomName);
 
-            await Clients.Group(chatroomId.ToString()).SendAsync("Send", $"{Context.ConnectionId} has joined the group {chatroomId.ToString()}.");
-        }
-
-        public async Task LeaveRoom(int chatroomId)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomId.ToString());
-
-            await Clients.Group(chatroomId.ToString()).SendAsync("Send", $"{Context.ConnectionId} has left the group {chatroomId.ToString()}.");
+            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has joined the group {chatroomName}.");
         }
 
-
-        public async Task SendMessageToGroup(int chatroomId, string userId, string messageContent)
+        public async Task LeaveRoom(string chatroomName)
         {
-            var message = new Message
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomName);
+
+            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has left the group {chatroomName}.");
+        }
+
+
+        public async Task SendMessageToGroup(string chatroomName, string userId, string messageContent)
+        {
+            var chatroom = await _chatroomRepository.GetByNameAsync(chatroomName);
+            var newMessage = new Message
             {
                 Content = messageContent,
                 Length = messageContent.Length,
                 TimeStamp = DateTime.Now,
                 UserId = userId,
-                ChatroomId = chatroomId
+                ChatroomId = chatroom.Id,
             };
 
-            _messageRepository.Add(message);
+            _messageRepository.Add(newMessage);
 
-
-            await Clients.Group(chatroomId.ToString()).SendAsync("ReceiveMessage", Context.User.Identity.Name, DateTime.Now, messageContent);
-            //await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity, message);
+            string messageTimeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
+            await Clients.Group(chatroomName).SendAsync("ReceiveMessage", Context.User.Identity.Name, messageTimeStamp, messageContent);
         }
 
         //public async Task SendMessage(int chatroomId, string userId, string messageContent)

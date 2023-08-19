@@ -17,13 +17,11 @@
                 <div class="card" id="chat2">
                     <div class="card-header d-flex justify-content-between align-items-center p-3">
                         <h5 class="mb-0">Chat</h5>
-                        <button type="button" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark">
-                            Let's Chat
-                            App
-                        </button>
+                        <a asp-area="" asp-controller="Chatrooms" asp-action="Index" id="leaveButton" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark">
+                            Leave
+                        </a>
                     </div>
 
-                    
 
                     <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px; max-height: 400px; overflow-y: auto;">
 
@@ -32,11 +30,7 @@
                                 <div>
                                 <ul id="messagesList" style="overflow-anchor: none;">
                                   
-                               
-                                     
-                                  
-                                    
-                                    </ul>
+                                </ul>
                                 <div id="anchor" style="overflow-anchor: auto; height: 1px;"></div>
                                    
                                 </div>
@@ -54,11 +48,11 @@
                             <div class="form-group">
                                 <textarea type="text" id="messageContent" name="Content" asp-for="CreateMessage.Content" class="form-control form-control-lg w-100t"
                                        placeholder="Type message" contenteditable="true"></textarea>
-                                <span asp-validation-for="CreateMessage.Content" class="text-danger"></span>
+                                <span asp-validation-for="CreateMessage.Content" id="messageContentValidation" class="text-danger"></span>
                             </div>
                              <input type="button" id="sendButton" value="Send" class="btn btn-primary" />
                         </form>
-                        <input type="hidden" id="chatroomId" value="@Model.ChatroomId" />
+                        <input type="hidden" id="chatroomName" value="@Model.ChatroomName" />
                         <input type="hidden" id="userId" value="@Model.UserId" />
 
                     </div>

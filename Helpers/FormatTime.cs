@@ -2,7 +2,7 @@
 {
     public class FormatTime
     {
-        static string FormatTimeStamp(DateTime messageTime, DateTime currentTime)
+        public static string FormatTimeStamp(DateTime messageTime, DateTime currentTime)
         {
             //DateTime currentTime = DateTime.Now;
 

@@ -40,14 +40,14 @@ namespace ChatRooms.Repository
             return await _context.Chatrooms.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public string? GetNameById(int id)
+        public async Task<Chatroom> GetByNameAsync(string? chatroomName)
         {
-            var chatroom = _context.Chatrooms
-                .Where(c => c.Id == id)
-                .Select(c => c.Name)
-                .FirstOrDefault();
+            return await _context.Chatrooms.FirstOrDefaultAsync(i => i.Name == chatroomName);
+        }
 
-            return chatroom;
+        public async Task<Chatroom> GetByNameAsyncNoTracking(string? chatroomName)
+        {
+            return await _context.Chatrooms.AsNoTracking().FirstOrDefaultAsync(i => i.Name == chatroomName);
         }
 
         public async Task<IEnumerable<Message>> GetMessagesByChatroomId(int? id)

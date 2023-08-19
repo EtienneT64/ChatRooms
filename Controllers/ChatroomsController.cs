@@ -43,12 +43,13 @@ namespace ChatRooms.Controllers
             var messages = await _chatroomRepository.GetMessagesByChatroomId(id);
             var sendDate = DateTime.Now;
             var currUserId = HttpContext.User.GetUserId();
+            var chatroom = await _chatroomRepository.GetByIdAsync(id);
 
             var chatViewModel = new ChatViewModel
             {
                 UserId = HttpContext.User.GetUserId(),
                 ChatroomId = id,
-                ChatroomName = _chatroomRepository.GetNameById(id),
+                ChatroomName = chatroom.Name,
                 Messages = messages,
                 CreateMessage = new CreateMessageViewModel
                 {
@@ -83,7 +84,8 @@ namespace ChatRooms.Controllers
 
                 _messageRepository.Add(message);
 
-                await _chatHubContext.Clients.Group(_chatroomRepository.GetNameById(messageViewModel.ChatroomId))
+                var chatroom = await _chatroomRepository.GetByIdAsync(messageViewModel.ChatroomId);
+                await _chatHubContext.Clients.Group(chatroom.Name)
             .SendAsync("ReceiveMessage", User.Identity.Name, messageViewModel.Content);
 
 
