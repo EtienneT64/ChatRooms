@@ -29,7 +29,7 @@ namespace ChatRooms.Controllers
         {
             if (!ModelState.IsValid) return View(loginViewModel);
 
-            var user = await _userManager.FindByEmailAsync(loginViewModel.EmailAddress);
+            var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
 
             if (user != null)
             {
@@ -64,23 +64,25 @@ namespace ChatRooms.Controllers
         {
             if (!ModelState.IsValid) return View(registerViewModel);
 
-            var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
+            var user = await _userManager.FindByNameAsync(registerViewModel.UserName);
             if (user != null)
             {
-                TempData["Error"] = "This email address is already in use";
+                TempData["Error"] = "This username is already in use";
                 return View(registerViewModel);
             }
             var newUser = new User()
             {
-                Email = registerViewModel.EmailAddress,
-                UserName = registerViewModel.EmailAddress
+                UserName = registerViewModel.UserName
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 
             if (newUserResponse.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+                return RedirectToAction("Index", "Home");
+            }
 
-            return RedirectToAction("Index", "Home");
+            return View(registerViewModel);
         }
 
         [HttpPost]

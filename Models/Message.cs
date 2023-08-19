@@ -11,10 +11,10 @@ namespace ChatRooms.Models
         [Required]
         public string? Content { get; set; }
 
-        public int MsgLength { get; set; }
+        public int Length { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime SendDate { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         [ForeignKey("User")]
         public string? UserId { get; set; }

@@ -7,7 +7,7 @@ namespace ChatRooms.Models
     public class User : IdentityUser
     {
         [StringLength(7)]
-        public string? DisplayNameColor { get; set; }
+        public string? UserNameColor { get; set; }
         public string? ProfileImageUrl { get; set; }
         public ICollection<Message>? Messages { get; set; }
         public ICollection<Chatroom>? Chatrooms { get; set; }
