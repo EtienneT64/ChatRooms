@@ -34,8 +34,8 @@ namespace ChatRooms.Hubs
             var message = new Message
             {
                 Content = messageContent,
-                MsgLength = messageContent.Length,
-                SendDate = DateTime.Now,
+                Length = messageContent.Length,
+                TimeStamp = DateTime.Now,
                 UserId = userId,
                 ChatroomId = chatroomId
             };
@@ -43,24 +43,24 @@ namespace ChatRooms.Hubs
             _messageRepository.Add(message);
 
 
-            await Clients.Group(chatroomId.ToString()).SendAsync("ReceiveMessage", Context.User.Identity.Name, messageContent);
+            await Clients.Group(chatroomId.ToString()).SendAsync("ReceiveMessage", Context.User.Identity.Name, DateTime.Now, messageContent);
             //await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity, message);
         }
 
-        public async Task SendMessage(int chatroomId, string userId, string messageContent)
-        {
-            var message = new Message
-            {
-                Content = messageContent,
-                MsgLength = messageContent.Length,
-                SendDate = DateTime.Now,
-                UserId = userId,
-                ChatroomId = chatroomId
-            };
+        //public async Task SendMessage(int chatroomId, string userId, string messageContent)
+        //{
+        //    var message = new Message
+        //    {
+        //        Content = messageContent,
+        //        MsgLength = messageContent.Length,
+        //        SendDate = DateTime.Now,
+        //        UserId = userId,
+        //        ChatroomId = chatroomId
+        //    };
 
-            _messageRepository.Add(message);
-            //await Clients.All.SendAsync("ReceiveMessage", user, message);
-            await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity.Name, messageContent);
-        }
+        //    _messageRepository.Add(message);
+        //    //await Clients.All.SendAsync("ReceiveMessage", user, message);
+        //    await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity.Name, messageContent);
+        //}
     }
 }
