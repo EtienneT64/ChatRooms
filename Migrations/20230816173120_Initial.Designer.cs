@@ -101,7 +101,7 @@ namespace ChatRooms.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DisplayNameColor")
+                    b.Property<string>("UserNameColor")
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");
 

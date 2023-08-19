@@ -75,8 +75,8 @@ namespace ChatRooms.Controllers
                 var message = new Message
                 {
                     Content = messageViewModel.Content,
-                    MsgLength = messageViewModel.Content.Length,
-                    SendDate = messageViewModel.SendDate,
+                    Length = messageViewModel.Content.Length,
+                    TimeStamp = messageViewModel.SendDate,
                     UserId = messageViewModel.UserId,
                     ChatroomId = messageViewModel.ChatroomId,
                 };

@@ -40,7 +40,7 @@ namespace ChatRooms.Data
                         UserName = "etienneT",
                         Email = adminUserEmail,
                         EmailConfirmed = true,
-                        DisplayNameColor = "#FFD700",
+                        UserNameColor = "#FFD700",
                         //ProfileImageUrl = xyz
                     };
                     await userManager.CreateAsync(newAdminUser, "Password@64");
@@ -58,7 +58,7 @@ namespace ChatRooms.Data
                         UserName = "liamV",
                         Email = appUserEmail,
                         EmailConfirmed = true,
-                        DisplayNameColor = "#0000FF",
+                        UserNameColor = "#0000FF",
                         //ProfileImageUrl = xyz
                     };
                     await userManager.CreateAsync(newAppUser, "Password@64");
@@ -76,7 +76,7 @@ namespace ChatRooms.Data
                         UserName = "liamV",
                         Email = appUserEmail,
                         EmailConfirmed = true,
-                        DisplayNameColor = "#0000FF",
+                        UserNameColor = "#0000FF",
                         //ProfileImageUrl = xyz
                     };
                     await userManager.CreateAsync(newAppUser2, "Password@64");
@@ -102,7 +102,6 @@ namespace ChatRooms.Data
                             Name = "Global Chat X",
                             //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "This is the town square, all are welcome, free speech",
-                            UserLimit = 50,
                             MsgLengthLimit = 320,
 
                          },
@@ -111,7 +110,6 @@ namespace ChatRooms.Data
                             Name = "Fortnite",
                             //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "We love fortnite Poggers",
-                            UserLimit = 25,
                             MsgLengthLimit = 280,
 
                          },
@@ -120,7 +118,6 @@ namespace ChatRooms.Data
                             Name = "Baldurs Gate 3",
                             //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "Dungeons and dragons game with roll playing and dice rolling",
-                            UserLimit = 49,
                             MsgLengthLimit = 269,
 
                          },
@@ -136,24 +133,24 @@ namespace ChatRooms.Data
                         new Message()
                         {
                             Content = "Hello everyone, how is it going!",
-                            MsgLength = "Hello everyone, how is it going!".Length,
-                            SendDate = DateTime.Parse("2023/08/01"),
+                            Length = "Hello everyone, how is it going!".Length,
+                            TimeStamp = DateTime.Parse("2023/08/01"),
                             UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                             ChatroomId=1,
                         },
                          new Message()
                         {
                             Content = "It not growing so great, my website is a disaster!",
-                            MsgLength = "It not growing so great, my website is a disaster!".Length,
-                            SendDate = DateTime.Parse("2023/08/02"),
+                            Length = "It not growing so great, my website is a disaster!".Length,
+                            TimeStamp = DateTime.Parse("2023/08/02"),
                             UserId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
                             ChatroomId=1,
                         },
                            new Message()
                         {
                             Content = "Sucks to suck hey",
-                            MsgLength = "Sucks to suck hey".Length,
-                            SendDate = DateTime.Parse("2023/08/03"),
+                            Length = "Sucks to suck hey".Length,
+                            TimeStamp = DateTime.Parse("2023/08/03"),
                             UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                             ChatroomId=1,
                         },
