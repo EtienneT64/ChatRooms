@@ -73,7 +73,7 @@ namespace ChatRooms.Data
                     var newAppUser2 = new User()
                     {
                         Id = "a6e31363-fc72-4f7e-9238-7f6cada1e68c",
-                        UserName = "liamV",
+                        UserName = "test",
                         Email = appUserEmail,
                         EmailConfirmed = true,
                         UserNameColor = "#0000FF",
@@ -103,6 +103,7 @@ namespace ChatRooms.Data
                             //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "This is the town square, all are welcome, free speech",
                             MsgLengthLimit = 320,
+                            OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
 
                          },
                         new Chatroom()
@@ -111,6 +112,7 @@ namespace ChatRooms.Data
                             //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "We love fortnite Poggers",
                             MsgLengthLimit = 280,
+                            OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
 
                          },
                        new Chatroom()
@@ -119,7 +121,7 @@ namespace ChatRooms.Data
                             //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
                             Description = "Dungeons and dragons game with roll playing and dice rolling",
                             MsgLengthLimit = 269,
-
+                            OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
                          },
 
                     });

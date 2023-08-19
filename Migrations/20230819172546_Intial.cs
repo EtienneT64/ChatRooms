@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ChatRooms.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Intial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,7 @@ namespace ChatRooms.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DisplayNameColor = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
+                    UserNameColor = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
                     ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -60,9 +60,9 @@ namespace ChatRooms.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserLimit = table.Column<int>(type: "int", nullable: false),
                     MsgLengthLimit = table.Column<int>(type: "int", nullable: false),
-                    ChatroomImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ChatroomImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -206,8 +206,8 @@ namespace ChatRooms.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MsgLength = table.Column<int>(type: "int", nullable: false),
-                    SendDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Length = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChatroomId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -265,6 +265,12 @@ namespace ChatRooms.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chatrooms_Name",
+                table: "Chatrooms",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChatroomUser_UsersId",

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatRooms.Migrations
 {
     [DbContext(typeof(ChatroomContext))]
-    [Migration("20230816173120_Initial")]
-    partial class Initial
+    [Migration("20230819172546_Intial")]
+    partial class Intial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,10 +48,14 @@ namespace ChatRooms.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("UserLimit")
-                        .HasColumnType("int");
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Chatrooms");
                 });
@@ -71,10 +75,10 @@ namespace ChatRooms.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MsgLength")
+                    b.Property<int>("Length")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("SendDate")
+                    b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
@@ -100,10 +104,6 @@ namespace ChatRooms.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserNameColor")
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -147,6 +147,10 @@ namespace ChatRooms.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserNameColor")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
 
                     b.HasKey("Id");
 
