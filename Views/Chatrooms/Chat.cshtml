@@ -42,8 +42,8 @@
                         <form method="post" id="messageForm" asp-controller="Chatrooms" asp-action="Chat">
                             <input type="hidden" id="ChatroomId" name="ChatroomId" asp-for="CreateMessage.ChatroomId" />
                             <input type="hidden" id="UserId" name="UserId" asp-for="CreateMessage.UserId" />
-                            <input type="hidden" id="MsgLength" name="MsgLength" asp-for="CreateMessage.MsgLength" />
-                            <input type="hidden" id="SendDate" name="SendDate" asp-for="CreateMessage.SendDate" />
+                            <input type="hidden" id="MsgLength" name="MsgLength" asp-for="CreateMessage.Length" />
+                            <input type="hidden" id="SendDate" name="SendDate" asp-for="CreateMessage.TimeStamp" />
 
                             <div class="form-group">
                                 <textarea type="text" id="messageContent" name="Content" asp-for="CreateMessage.Content" class="form-control form-control-lg w-100t"

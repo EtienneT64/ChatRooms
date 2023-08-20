@@ -55,7 +55,7 @@ namespace ChatRooms.Controllers
                 {
                     ChatroomId = id,
                     UserId = currUserId,
-                    SendDate = sendDate,
+                    TimeStamp = sendDate,
 
                 }
             };
@@ -77,7 +77,7 @@ namespace ChatRooms.Controllers
                 {
                     Content = messageViewModel.Content,
                     Length = messageViewModel.Content.Length,
-                    TimeStamp = messageViewModel.SendDate,
+                    TimeStamp = messageViewModel.TimeStamp,
                     UserId = messageViewModel.UserId,
                     ChatroomId = messageViewModel.ChatroomId,
                 };

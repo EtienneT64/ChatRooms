@@ -23,7 +23,7 @@ namespace ChatRooms.Controllers
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    DisplayNameColor = user.UserNameColor,
+                    UserNameColor = user.UserNameColor,
                     ProfileImageUrl = user.ProfileImageUrl,
                 };
                 result.Add(userViewModel);

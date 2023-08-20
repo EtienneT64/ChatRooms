@@ -62,8 +62,8 @@ namespace ChatRooms.Controllers
         //        var message = new Message
         //        {
         //            Content = messageViewModel.Content,
-        //            MsgLength = messageViewModel.Content.Length,
-        //            SendDate = DateTime.Now,
+        //            Length = messageViewModel.Content.Length,
+        //            TimeStamp = DateTime.Now,
         //            UserId = _userManager.GetUserId(User), // Get the UserId from UserManager
         //            ChatroomId = messageViewModel.ChatroomId,
         //        };
@@ -110,7 +110,7 @@ namespace ChatRooms.Controllers
         //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,ChatroomId,Content,MsgLength,SendDate")] Message message)
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,ChatroomId,Content,Length,TimeStamp")] Message message)
         //{
         //    if (id != message.Id)
         //    {

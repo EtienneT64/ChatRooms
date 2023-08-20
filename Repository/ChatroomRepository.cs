@@ -50,13 +50,6 @@ namespace ChatRooms.Repository
             return await _context.Chatrooms.AsNoTracking().FirstOrDefaultAsync(i => i.Name == chatroomName);
         }
 
-        public async Task<IEnumerable<Message>> GetMessagesByChatroomId(int? id)
-        {
-            return await _context.Messages
-                .Where(message => message.ChatroomId == id)
-                .ToListAsync();
-        }
-
         public bool Save()
         {
             var saved = _context.SaveChanges();

@@ -55,8 +55,8 @@ namespace ChatRooms.Hubs
         //    var message = new Message
         //    {
         //        Content = messageContent,
-        //        MsgLength = messageContent.Length,
-        //        SendDate = DateTime.Now,
+        //        Length = messageContent.Length,
+        //        TimeStamp = DateTime.Now,
         //        UserId = userId,
         //        ChatroomId = chatroomId
         //    };
