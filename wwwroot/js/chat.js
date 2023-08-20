@@ -25,9 +25,9 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
     const userId = document.getElementById("userId").value;
     const messageContentElement = document.getElementById('messageContent');
     const messageContent = tinymce.get('messageContent').getContent();
+    const messageContentText = tinymce.activeEditor.getContent({ format: 'text' });
 
-    //tinymce.activeEditor.getContent({ format: 'text' });
-    if (messageContent.trim() !== "") { // Check if message content is not empty or just whitespace
+    if (messageContentText.trim() !== "") { // Check if message content is not empty or just whitespace
         connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch((err) => {
             return console.error(err.toString());
         });
