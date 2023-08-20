@@ -21,14 +21,14 @@ namespace ChatRooms.Hubs
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatroomName);
 
-            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has joined the group {chatroomName}.");
+            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has joined the ChatRoom {chatroomName}.");
         }
 
         public async Task LeaveRoom(string chatroomName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomName);
 
-            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has left the group {chatroomName}.");
+            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has left the ChatRoom {chatroomName}.");
         }
 
 

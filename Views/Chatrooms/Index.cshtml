@@ -5,7 +5,6 @@
 
 <div class="text-center">
     <h1 class="display-4">Chatrooms</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
 <div class="album py-5 bg-light">
@@ -23,8 +22,8 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
-                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
-                                    <a asp-controller="Messages" asp-action="Create" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Enter</a>
+                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Enter</a>
+                                    <a asp-controller="Messages" asp-action="Save" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Save</a>
                                     <!-- placeholder -->
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("admin")) {
                                          <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
