@@ -1,48 +1,34 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+let userLeftByButton = false;
 
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
-let userLeftByButton = false;
-
-connection.on("ReceiveMessage", function (user, timeStamp, message) {
-    var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    li.innerHTML = `${user} ${timeStamp} ${message}`;
-});
-
-connection.on("Send", function (message) {
-    var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    li.innerHTML = `${message}`;
-});
-
-connection.start().then(function () {
+connection.start().then(() => {
     document.getElementById("sendButton").disabled = false;
 
-    var chatroomName = document.getElementById("chatroomName").value;
+    const chatroomName = document.getElementById("chatroomName").value;
 
-    connection.invoke("JoinRoom", chatroomName).catch(function (err) {
+    connection.invoke("JoinRoom", chatroomName).catch((err) => {
         return console.error(err.toString());
     });
 
-}).catch(function (err) {
+}).catch((err) => {
     return console.error(err.toString());
 });
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
+document.getElementById("sendButton").addEventListener("click", (event) => {
 
-    var chatroomName = document.getElementById("chatroomName").value;
-    var userId = document.getElementById("userId").value;
-    var messageContentElement = document.getElementById('messageContent');
-    var messageContent = tinymce.get('messageContent').getContent();
+    const chatroomName = document.getElementById("chatroomName").value;
+    const userId = document.getElementById("userId").value;
+    const messageContentElement = document.getElementById('messageContent');
+    const messageContent = tinymce.get('messageContent').getContent();
 
-    //Just text
     //tinymce.activeEditor.getContent({ format: 'text' });
     if (messageContent.trim() !== "") { // Check if message content is not empty or just whitespace
-        connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch(function (err) {
+        connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch((err) => {
             return console.error(err.toString());
         });
 
@@ -57,9 +43,21 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     }
 });
 
-document.getElementById("leaveButton").addEventListener("click", function (event) {
-    var chatroomName = document.getElementById("chatroomName").value;
-    connection.invoke("LeaveRoom", chatroomName).catch(function (err) {
+connection.on("ReceiveMessage", (user, timeStamp, message) => {
+    const li = document.createElement("li");
+    document.getElementById("messagesList").appendChild(li);
+    li.innerHTML = `${user} ${timeStamp} ${message}`;
+});
+
+connection.on("Send", (message) => {
+    const li = document.createElement("li");
+    document.getElementById("messagesList").appendChild(li);
+    li.innerHTML = `${message}`;
+});
+
+document.getElementById("leaveButton").addEventListener("click",(event) => {
+    const chatroomName = document.getElementById("chatroomName").value;
+    connection.invoke("LeaveRoom", chatroomName).catch((err) => {
         return console.error(err.toString());
     });
 
@@ -67,12 +65,12 @@ document.getElementById("leaveButton").addEventListener("click", function (event
 });
 
 // Detect when the user is navigating away from the page
-window.addEventListener("beforeunload", function (event) {
+window.addEventListener("beforeunload", (event) => {
     // Invoke the LeaveRoom method
-    var chatroomName = document.getElementById("chatroomName").value;
+    const chatroomName = document.getElementById("chatroomName").value;
 
     if (!userLeftByButton) {
-        connection.invoke("LeaveRoom", chatroomName).catch(function (err) {
+        connection.invoke("LeaveRoom", chatroomName).catch((err) => {
             console.error(err.toString());
         });
     }
