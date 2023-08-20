@@ -46,24 +46,8 @@ namespace ChatRooms.Hubs
 
             _messageRepository.Add(newMessage);
 
-            string messageTimeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
+            string messageTimeStamp = FormatTime.FormatTimeStamp(newMessage.TimeStamp, DateTime.Now);
             await Clients.Group(chatroomName).SendAsync("ReceiveMessage", Context.User.Identity.Name, messageTimeStamp, messageContent);
         }
-
-        //public async Task SendMessage(int chatroomId, string userId, string messageContent)
-        //{
-        //    var message = new Message
-        //    {
-        //        Content = messageContent,
-        //        Length = messageContent.Length,
-        //        TimeStamp = DateTime.Now,
-        //        UserId = userId,
-        //        ChatroomId = chatroomId
-        //    };
-
-        //    _messageRepository.Add(message);
-        //    //await Clients.All.SendAsync("ReceiveMessage", user, message);
-        //    await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity.Name, messageContent);
-        //}
     }
 }
