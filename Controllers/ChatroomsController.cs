@@ -31,7 +31,7 @@ namespace ChatRooms.Controllers
             return View(chatrooms);
         }
 
-        // GET: Chatrooms/Details/5
+        // GET: Chatrooms/Details/1
         public async Task<IActionResult> Details(int? id)
         {
 
@@ -53,7 +53,6 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Chat(int id)
         {
             var messages = await _messageRepository.GetMessagesByChatroomId(id);
-            var currUserId = HttpContext.User.GetUserId();
             var chatroom = await _chatroomRepository.GetByIdAsync(id);
 
             var chatViewModel = new ChatViewModel
@@ -67,141 +66,11 @@ namespace ChatRooms.Controllers
             return View(chatViewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Chat(CreateMessageViewModel messageViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var message = new Message
-                {
-                    Content = messageViewModel.Content,
-                    Length = messageViewModel.Content.Length,
-                    TimeStamp = messageViewModel.TimeStamp,
-                    UserId = messageViewModel.UserId,
-                    ChatroomId = messageViewModel.ChatroomId,
-                };
-
-                _messageRepository.Add(message);
-
-                var chatroom = await _chatroomRepository.GetByIdAsync(messageViewModel.ChatroomId);
-                await _chatHubContext.Clients.Group(chatroom.Name)
-            .SendAsync("ReceiveMessage", User.Identity.Name, messageViewModel.Content);
-
-
-                return RedirectToAction("Chat", new { id = messageViewModel.ChatroomId });
-            }
-            else
-            {
-                ModelState.AddModelError("", "Message is invalid");
-                var chatViewModel = new ChatViewModel
-                {
-                    Messages = await _messageRepository.GetMessagesByChatroomId(messageViewModel.ChatroomId),
-                    CreateMessage = messageViewModel
-                };
-
-                return View(chatViewModel);
-            }
-        }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> SendMessage()
-        //{
-
-        //}
-
-        // GET: Chatrooms/Create
-        public IActionResult Create(int? id)
-        {
-            if (id == null || _chatroomRepository.GetMessagesByChatroomId == null)
-            {
-                return NotFound();
-            }
-
-
-            var messagesInChatroom = _chatroomRepository.GetMessagesByChatroomId(id);
-            return View(messagesInChatroom);
-        }
-
-        //// POST: Chatrooms/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create()
-        //{
-
-        //}
-
-        //// GET: Chatrooms/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Chatrooms == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var chatroom = await _context.Chatrooms.FindAsync(id);
-        //    if (chatroom == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(chatroom);
-        //}
-
-        //// POST: Chatrooms/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,UserLimit,MsgLengthLimit")] Chatroom chatroom)
-        //{
-        //    if (id != chatroom.Id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(chatroom);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!ChatroomExists(chatroom.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(chatroom);
-        //}
-
-        //// GET: Chatrooms/Delete/5
         //public async Task<IActionResult> Delete(int? id)
         //{
-        //    if (id == null || _context.Chatrooms == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var chatroom = await _context.Chatrooms
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (chatroom == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(chatroom);
+        //    var chatroomDetails = await _chatroomRepository.GetByIdAsync(id);
+        //    if (chatroomDetails == null) return View("Error");
+        //    return View(chatroomDetails);
         //}
 
         //// POST: Chatrooms/Delete/5
@@ -209,43 +78,12 @@ namespace ChatRooms.Controllers
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> DeleteConfirmed(int id)
         //{
-        //    if (_context.Chatrooms == null)
-        //    {
-        //        return Problem("Entity set 'ChatroomContext.Chatrooms'  is null.");
-        //    }
-        //    var chatroom = await _context.Chatrooms.FindAsync(id);
-        //    if (chatroom != null)
-        //    {
-        //        _context.Chatrooms.Remove(chatroom);
-        //    }
+        //    var chatRoomDetails = await _chatroomRepository.GetByIdAsync(id);
+        //    if (chatRoomDetails == null) return View("Error");
 
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
+        //    _chatroomRepository.Delete(chatRoomDetails);
+        //    return RedirectToAction("Index");
         //}
-
-        //private bool ChatroomExists(int id)
-        //{
-        //    return (_context.Chatrooms?.Any(e => e.Id == id)).GetValueOrDefault();
-        //}
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            var chatroomDetails = await _chatroomRepository.GetByIdAsync(id);
-            if (chatroomDetails == null) return View("Error");
-            return View(chatroomDetails);
-        }
-
-        // POST: Chatrooms/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var chatRoomDetails = await _chatroomRepository.GetByIdAsync(id);
-            if (chatRoomDetails == null) return View("Error");
-
-            _chatroomRepository.Delete(chatRoomDetails);
-            return RedirectToAction("Index");
-        }
 
     }
 }
