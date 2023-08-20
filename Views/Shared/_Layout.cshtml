@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Chat Rooms</title>
+    <title>@ViewData["Title"] - ChatRooms</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ChatRooms.styles.css" asp-append-version="true" />
@@ -15,11 +15,11 @@
             <div class="container-fluid">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chat Rooms</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index">Chat Rooms</a>
                 }
                 else
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="Login">Chat Rooms</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chat Rooms</a>
                 }
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -32,10 +32,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Chatters</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Chatrooms" asp-action="Index">Chatrooms</a>
@@ -51,7 +48,9 @@
                         }
                         else
                         {
-                           
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>

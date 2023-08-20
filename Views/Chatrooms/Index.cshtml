@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Chatroom>
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<User> UserManager
+@model IEnumerable<Chatroom>
 @{
     ViewData["Title"] = "Chatrooms";
 }
@@ -15,21 +17,24 @@
             {
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                        @if (@item.ChatroomImageUrl != null)
+                        {
+                            <img class="card-img-top" src="@item.ChatroomImageUrl" alt="Chatroom Banner">
+                        }
+                        else
+                        {
+                            <img class="card-img-top" src="~/images/banner-placeholder.png" alt="Card image cap">
+                        }
+                        
                         <div class="card-body">
                             <h2 class="text-left">@item.Name</h2>
                             <p class="card-text">@item.Description</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
-                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Enter</a>
-                                    <a asp-controller="Messages" asp-action="Save" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Save</a>
-                                    <!-- placeholder -->
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin")) {
-                                         <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                     }
+                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
+                                    <a asp-controller="Messages" asp-action="Save" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Pin</a>
                                 </div>
-                                <small class="text-muted">9 members</small>
                             </div>
                         </div>
                     </div>

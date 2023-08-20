@@ -1,8 +1,8 @@
-﻿using CloudinaryDotNet;
+﻿using ChatRooms.Helpers;
+using ChatRooms.Interfaces;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
-using ChatRooms.Helpers;
-using ChatRooms.Interfaces;
 
 namespace ChatRooms.Services
 {

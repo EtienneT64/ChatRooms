@@ -14,13 +14,15 @@ namespace ChatRooms.Controllers
         private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
         private readonly IHubContext<ChatHub> _chatHubContext;
+        private readonly IPhotoService _photoService;
 
-        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext)
+        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext, IPhotoService photoService)
         {
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
             _userRepository = userRepository;
             _chatHubContext = chatHubContext;
+            _photoService = photoService;
         }
 
         // GET: Chatrooms
@@ -32,18 +34,22 @@ namespace ChatRooms.Controllers
         }
 
         // GET: Chatrooms/Details/1
-        public async Task<IActionResult> Details(int? id)
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
         {
 
             Chatroom chatroom = await _chatroomRepository.GetByIdAsync(id);
-            var user = await _userRepository.GetUserByIdAsync(chatroom.OwnerId);
+            var ownerId = chatroom.OwnerId;
+            var user = await _userRepository.GetUserByIdAsync(ownerId);
             var chatroomDetailsVM = new ChatroomDetailsViewModel
             {
+                Id = id,
                 Name = chatroom.Name,
                 Description = chatroom.Description,
                 MsgLengthLimit = chatroom.MsgLengthLimit,
                 ChatroomImageUrl = chatroom.ChatroomImageUrl,
                 OwnerUserName = user.UserName,
+                OwnerId = ownerId,
             };
             return View(chatroomDetailsVM);
         }
@@ -66,24 +72,116 @@ namespace ChatRooms.Controllers
             return View(chatViewModel);
         }
 
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    var chatroomDetails = await _chatroomRepository.GetByIdAsync(id);
-        //    if (chatroomDetails == null) return View("Error");
-        //    return View(chatroomDetails);
-        //}
+        // GET: Chatrooms/Edit/1
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var chatroom = await _chatroomRepository.GetByIdAsync(id);
+            if (chatroom == null) return View("Error");
+            var ownerId = chatroom.OwnerId;
 
-        //// POST: Chatrooms/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var chatRoomDetails = await _chatroomRepository.GetByIdAsync(id);
-        //    if (chatRoomDetails == null) return View("Error");
+            if (HttpContext.User.GetUserId() != ownerId)
+            {
+                return RedirectToAction("Index");
+            }
 
-        //    _chatroomRepository.Delete(chatRoomDetails);
-        //    return RedirectToAction("Index");
-        //}
+            var user = await _userRepository.GetUserByIdAsync(ownerId);
+            var chatroomDetailsVM = new ChatroomDetailsViewModel
+            {
+                Name = chatroom.Name,
+                Description = chatroom.Description,
+                MsgLengthLimit = chatroom.MsgLengthLimit,
+                ChatroomImageUrl = chatroom.ChatroomImageUrl,
+                OwnerUserName = user.UserName,
+                OwnerId = ownerId,
+            };
+            return View(chatroomDetailsVM);
+        }
+
+        // POST: Chatrooms/Edit/1
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, ChatroomDetailsViewModel chatRoomDetailsVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit chatroom");
+                return View("Edit", chatRoomDetailsVM);
+            }
+
+            var userChatroom = await _chatroomRepository.GetByIdAsyncNoTracking(id);
+
+            if (userChatroom == null)
+            {
+                return View("Error");
+            }
+
+            var photoResult = await _photoService.AddPhotoAsync(chatRoomDetailsVM.Image);
+
+            if (photoResult.Error != null)
+            {
+                ModelState.AddModelError("Image", "Photo upload failed");
+                return View(chatRoomDetailsVM);
+            }
+
+            if (!string.IsNullOrEmpty(userChatroom.ChatroomImageUrl))
+            {
+                _ = _photoService.DeletePhotoAsync(userChatroom.ChatroomImageUrl);
+            }
+
+            var chatroom = new Chatroom
+            {
+                Id = id,
+                Name = chatRoomDetailsVM.Name,
+                Description = chatRoomDetailsVM.Description,
+                MsgLengthLimit = chatRoomDetailsVM.MsgLengthLimit,
+                ChatroomImageUrl = photoResult.Url.ToString(),
+                OwnerId = chatRoomDetailsVM.OwnerId,
+            };
+
+            _chatroomRepository.Update(chatroom);
+
+            return RedirectToAction("Index");
+        }
+
+        // GET: Chatrooms/Delete/1
+        [Authorize]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            var chatroom = await _chatroomRepository.GetByIdAsync(id);
+            if (chatroom == null) return View("Error");
+            var ownerId = chatroom.OwnerId;
+
+            if (HttpContext.User.GetUserId() != ownerId)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(ownerId);
+            var chatroomDetailsVM = new ChatroomDetailsViewModel
+            {
+                Name = chatroom.Name,
+                Description = chatroom.Description,
+                MsgLengthLimit = chatroom.MsgLengthLimit,
+                ChatroomImageUrl = chatroom.ChatroomImageUrl,
+                OwnerUserName = user.UserName,
+                OwnerId = ownerId,
+            };
+            return View(chatroomDetailsVM);
+        }
+
+        // POST: Chatrooms/Delete/1
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var chatRoomDetails = await _chatroomRepository.GetByIdAsync(id);
+            if (chatRoomDetails == null) return View("Error");
+
+            _chatroomRepository.Delete(chatRoomDetails);
+            return RedirectToAction("Index");
+        }
 
     }
 }

@@ -11,6 +11,7 @@ namespace ChatRooms.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<ChatroomContext>();
 
+                context?.Database.EnsureDeleted();
                 context?.Database.EnsureCreated();
             }
         }
@@ -94,7 +95,7 @@ namespace ChatRooms.Data
                         new Chatroom()
                         {
                             Name = "Global Chat X",
-                            //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692533555/glbz9vizpsqt9hwateb6.webp",
                             Description = "This is the town square, all are welcome, free speech",
                             MsgLengthLimit = 320,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
@@ -103,7 +104,7 @@ namespace ChatRooms.Data
                         new Chatroom()
                         {
                             Name = "Fortnite",
-                            //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692532935/j1on5owlohilcs53phad.jpg",
                             Description = "We love fortnite Poggers",
                             MsgLengthLimit = 280,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
@@ -112,7 +113,7 @@ namespace ChatRooms.Data
                        new Chatroom()
                         {
                             Name = "Baldurs Gate 3",
-                            //ChatroomImageUrl = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692532380/ka3n1304vzib1u8ctsvd.webp",
                             Description = "Dungeons and dragons game with roll playing and dice rolling",
                             MsgLengthLimit = 269,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
