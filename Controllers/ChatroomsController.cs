@@ -12,12 +12,14 @@ namespace ChatRooms.Controllers
     {
         private readonly IChatroomRepository _chatroomRepository;
         private readonly IMessageRepository _messageRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IHubContext<ChatHub> _chatHubContext;
 
-        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IHubContext<ChatHub> chatHubContext)
+        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext)
         {
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
+            _userRepository = userRepository;
             _chatHubContext = chatHubContext;
         }
 
@@ -32,16 +34,25 @@ namespace ChatRooms.Controllers
         // GET: Chatrooms/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             Chatroom chatroom = await _chatroomRepository.GetByIdAsync(id);
-            return View(chatroom);
+            var user = await _userRepository.GetUserByIdAsync(chatroom.OwnerId);
+            var chatroomDetailsVM = new ChatroomDetailsViewModel
+            {
+                Name = chatroom.Name,
+                Description = chatroom.Description,
+                MsgLengthLimit = chatroom.MsgLengthLimit,
+                ChatroomImageUrl = chatroom.ChatroomImageUrl,
+                OwnerUserName = user.UserName,
+            };
+            return View(chatroomDetailsVM);
         }
 
         // GET: Chatrooms/Chat/1
         [Authorize]
         public async Task<IActionResult> Chat(int id)
         {
-            var messages = await _chatroomRepository.GetMessagesByChatroomId(id);
-            var sendDate = DateTime.Now;
+            var messages = await _messageRepository.GetMessagesByChatroomId(id);
             var currUserId = HttpContext.User.GetUserId();
             var chatroom = await _chatroomRepository.GetByIdAsync(id);
 
@@ -51,17 +62,7 @@ namespace ChatRooms.Controllers
                 ChatroomId = id,
                 ChatroomName = chatroom.Name,
                 Messages = messages,
-                CreateMessage = new CreateMessageViewModel
-                {
-                    ChatroomId = id,
-                    UserId = currUserId,
-                    TimeStamp = sendDate,
-
-                }
             };
-
-            // Join the user to the chatroom
-            await _chatHubContext.Groups.AddToGroupAsync(HttpContext.Connection.Id, id.ToString());
 
             return View(chatViewModel);
         }

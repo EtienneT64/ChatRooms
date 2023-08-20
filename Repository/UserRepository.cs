@@ -15,20 +15,22 @@ namespace ChatRooms.Repository
         }
         public bool Add(User user)
         {
-            throw new NotImplementedException();
+            _context.Add(user);
+            return Save();
         }
 
         public bool Delete(User user)
         {
-            throw new NotImplementedException();
+            _context.Remove(user);
+            return Save();
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User> GetUserById(string id)
+        public async Task<User> GetUserByIdAsync(string? id)
         {
             return await _context.Users.FindAsync(id);
         }

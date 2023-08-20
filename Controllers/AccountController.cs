@@ -10,11 +10,9 @@ namespace ChatRooms.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly ChatroomContext _context;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ChatroomContext context)
         {
-            _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
         }

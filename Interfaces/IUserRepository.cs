@@ -4,8 +4,8 @@ namespace ChatRooms.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllUsers();
-        Task<User> GetUserById(string id);
+        Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<User> GetUserByIdAsync(string id);
         bool Add(User user);
         bool Update(User user);
         bool Delete(User user);

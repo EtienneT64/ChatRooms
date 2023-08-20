@@ -15,7 +15,7 @@ namespace ChatRooms.Controllers
         [HttpGet("Users")]
         public async Task<IActionResult> Index()
         {
-            var users = await _userRepository.GetAllUsers();
+            var users = await _userRepository.GetAllUsersAsync();
             List<UserViewModel> result = new List<UserViewModel>();
             foreach (var user in users)
             {
@@ -33,7 +33,7 @@ namespace ChatRooms.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
-            var user = await _userRepository.GetUserById(id);
+            var user = await _userRepository.GetUserByIdAsync(id);
             var userDetailViewModel = new UserDetailViewModel()
             {
                 Id = user.Id,
