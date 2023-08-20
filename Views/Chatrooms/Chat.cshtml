@@ -1,4 +1,5 @@
-﻿@using ChatRooms.ViewModels;
+﻿@using ChatRooms.Helpers;
+@using ChatRooms.ViewModels;
 @model ChatViewModel
 
 @{
@@ -25,13 +26,16 @@
                             <div class="d-flex flex-row justify-content-start">
                                 <div>
                                 <ul id="messagesList" style="overflow-anchor: none;">
-                                  
+                                        @foreach (Message message in Model.Messages)
+                                        {
+                                            var timeStamp = FormatTime.FormatTimeStamp(message.TimeStamp, DateTime.Now);
+                                        <li>@Html.Raw($"{Model.UserName} {timeStamp} {message.Content}")</li>
+                                        }
                                 </ul>
                                 <div id="anchor" style="overflow-anchor: auto; height: 1px;"></div>
                                    
                                 </div>
                             </div>
-                       
                     </div>
 
                     <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
@@ -51,7 +55,6 @@
         </div>
     </div>
 </section>
-
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
 <script src="https://cdn.tiny.cloud/1/vn4al8wrt0tehfuzhq2hhee80ufojm8bp90wb8onjk7rwjta/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>

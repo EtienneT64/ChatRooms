@@ -58,12 +58,14 @@ namespace ChatRooms.Controllers
         [Authorize]
         public async Task<IActionResult> Chat(int id)
         {
-            var messages = await _messageRepository.GetMessagesByChatroomId(id);
+            var messages = await _messageRepository.GetMessagesByChatroomIdTake(id, 25);
             var chatroom = await _chatroomRepository.GetByIdAsync(id);
-
+            var userId = HttpContext.User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
             var chatViewModel = new ChatViewModel
             {
-                UserId = HttpContext.User.GetUserId(),
+                UserId = userId,
+                UserName = user.UserName,
                 ChatroomId = id,
                 ChatroomName = chatroom.Name,
                 Messages = messages,

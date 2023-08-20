@@ -4,19 +4,17 @@
     {
         public static string FormatTimeStamp(DateTime messageTime, DateTime currentTime)
         {
-            //DateTime currentTime = DateTime.Now;
-
             if (messageTime.Date == currentTime.Date)
             {
-                return "Today at " + messageTime.ToString("HH:mm");
+                return "Today at " + messageTime.ToString("h:mm tt").ToUpper();
             }
             else if (messageTime.Date == currentTime.Date.AddDays(-1))
             {
-                return "Yesterday at " + messageTime.ToString("HH:mm");
+                return "Yesterday at " + messageTime.ToString("h:mm tt").ToUpper();
             }
             else
             {
-                return messageTime.ToString("MMM dd yyyy, HH:mm");
+                return messageTime.ToString("MM/dd/yyyy h:mm tt").ToUpper();
             }
         }
     }

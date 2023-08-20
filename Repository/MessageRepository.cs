@@ -46,6 +46,13 @@ namespace ChatRooms.Repository
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Message>> GetMessagesByChatroomIdTake(int? id, int amount)
+        {
+            return await _context.Messages
+                .Where(message => message.ChatroomId == id)
+                .Take(amount).ToListAsync();
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();
