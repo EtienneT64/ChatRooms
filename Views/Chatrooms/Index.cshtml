@@ -9,6 +9,10 @@
     <h1 class="display-4">Chatrooms</h1>
 </div>
 
+<div class="text-center">
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" id="sortButton" class="btn btn-primary">Sort by @Html.DisplayNameFor(model => model.Name)</a>
+</div>
+
 <div class="album py-5 bg-light">
     <div class="container">
 

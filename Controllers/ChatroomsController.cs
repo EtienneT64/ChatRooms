@@ -27,10 +27,26 @@ namespace ChatRooms.Controllers
 
         // GET: Chatrooms
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            IEnumerable<Chatroom> chatrooms = await _chatroomRepository.GetAll();
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var chatrooms = await _chatroomRepository.GetAll();
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    chatrooms = chatrooms.OrderByDescending(c => c.Name);
+                    break;
+                default:
+                    chatrooms = chatrooms.OrderBy(c => c.Name);
+                    break;
+            }
             return View(chatrooms);
+
+
+
+            //IEnumerable<Chatroom> chatrooms = await _chatroomRepository.GetAll();
+            //return View(chatrooms);
         }
 
         // GET: Chatrooms/Details/1
