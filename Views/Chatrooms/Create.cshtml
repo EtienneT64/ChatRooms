@@ -1,4 +1,5 @@
-﻿@model ChatRooms.Models.Chatroom
+﻿@using ChatRooms.ViewModels;
+@model CreateChatroomViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -10,8 +11,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form method="post" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OwnerId" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -26,6 +28,11 @@
                 <label asp-for="MsgLengthLimit" class="control-label"></label>
                 <input asp-for="MsgLengthLimit" class="form-control" />
                 <span asp-validation-for="MsgLengthLimit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -108,6 +108,44 @@ namespace ChatRooms.Controllers
             return View(chatViewModel);
         }
 
+        // GET: Chatrooms/Create
+        [Authorize]
+        public async Task<IActionResult> Create()
+        {
+            var currUserId = HttpContext.User.GetUserId();
+            var createChatroomVM = new CreateChatroomViewModel { OwnerId = currUserId };
+            return View(createChatroomVM);
+        }
+
+        // POST: Chatrooms/Create
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateChatroomViewModel chatroomVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _photoService.AddPhotoAsync(chatroomVM.Image);
+
+                var chatroom = new Chatroom
+                {
+                    Name = chatroomVM.Name,
+                    Description = chatroomVM.Description,
+                    MsgLengthLimit = chatroomVM.MsgLengthLimit,
+                    ChatroomImageUrl = result.Url.ToString(),
+                    OwnerId = chatroomVM.OwnerId,
+                };
+                _chatroomRepository.Add(chatroom);
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Photo upload failed");
+            }
+
+            return View(chatroomVM);
+        }
+
         // GET: Chatrooms/Edit/1
         public async Task<IActionResult> Edit(int? id)
         {
