@@ -36,6 +36,27 @@ namespace ChatRooms.Repository
 
             return pinnedChatrooms;
         }
+
+        public IQueryable<Chatroom> GetAllUserOwnedChatroomsQuery()
+        {
+            var currUser = _httpContextAccessor.HttpContext.User.GetUserId();
+            var userOwnedChatrooms = _context.Chatrooms.Where(c => c.OwnerId == currUser);
+            return userOwnedChatrooms;
+        }
+
+        public IQueryable<Chatroom> GetAllUserPinnedChatroomsQuery()
+        {
+            var currUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+            var userPinnedChatroomIds = _context.UserPinnedChatrooms
+                .Where(upc => upc.UserId == currUserId.ToString())
+                .Select(upc => upc.ChatroomId);
+
+            var pinnedChatrooms = _context.Chatrooms
+                .Where(c => userPinnedChatroomIds.Contains(c.Id));
+
+            return pinnedChatrooms;
+        }
+
         public async Task<User> GetUserById(string id)
         {
             return await _context.Users.FindAsync(id);
