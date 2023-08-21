@@ -39,7 +39,6 @@ namespace ChatRooms.Data
                     {
                         Id = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
                         UserName = "etienneT",
-                        UserNameColor = "#FFD700",
                         //ProfileImageUrl = xyz
                     };
                     await userManager.CreateAsync(newAdminUser, "Password@64");
@@ -55,7 +54,6 @@ namespace ChatRooms.Data
                     {
                         Id = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                         UserName = "liamV",
-                        UserNameColor = "#0000FF",
                         //ProfileImageUrl = xyz
                     };
                     await userManager.CreateAsync(newAppUser, "Password@64");
@@ -71,7 +69,6 @@ namespace ChatRooms.Data
                     {
                         Id = "a6e31363-fc72-4f7e-9238-7f6cada1e68c",
                         UserName = "test",
-                        UserNameColor = "#0000FF",
                         //ProfileImageUrl = xyz
                     };
                     await userManager.CreateAsync(newAppUser2, "Password@64");

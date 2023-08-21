@@ -21,7 +21,6 @@ namespace ChatRooms.Controllers
         private void MapUserEdit(User user, EditUserDashboardViewModel editVM, ImageUploadResult photoResult)
         {
             user.Id = editVM.Id;
-            user.UserNameColor = editVM.DisplayNameColor;
             user.ProfileImageUrl = photoResult.Url.ToString();
         }
         public async Task<IActionResult> Index()
@@ -42,7 +41,6 @@ namespace ChatRooms.Controllers
             var editUserViewModel = new EditUserDashboardViewModel()
             {
                 Id = currUserId,
-                DisplayNameColor = user.UserNameColor,
                 ProfileImageUrl = user.ProfileImageUrl
             };
             return View(editUserViewModel);
