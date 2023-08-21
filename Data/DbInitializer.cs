@@ -142,6 +142,14 @@ namespace ChatRooms.Data
                             MsgLengthLimit = 269,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
                          },
+                           new Chatroom()
+                        {
+                            Name = "Baldurs Gate 7",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692532380/ka3n1304vzib1u8ctsvd.webp",
+                            Description = "Dungeons and dragons game with roll playing and dice rolling",
+                            MsgLengthLimit = 269,
+                            OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
+                         },
 
                     });
                     context.SaveChanges();
