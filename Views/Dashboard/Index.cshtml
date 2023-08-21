@@ -3,7 +3,7 @@
 @inject SignInManager<User> SignInManager
 @model DashboardViewModel
 @{
-	ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Dashboard";
 }
 
 <h1 class="display-4 fw-normal">User Dashboard</h1>
@@ -11,28 +11,94 @@
 <a type="button" class="btn btn-primary" asp-area="" asp-controller="Dashboard" asp-action="EditUserProfile">Edit User Profile</a>
 <div class="album py-5 bg-light">
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <!-- Chatrooms Column -->
+        <div class="row row-cols-1">
+            <!-- Owned Chatrooms Column -->
             <div class="col">
-                <h2>User Chatrooms</h2>
-                <ul class="list-group">
-                    @foreach (var chatroom in Model.OwnedChatrooms)
-                    {
-                        <li class="list-group-item">@chatroom.Name</li>
-                    }
-                </ul>
-            </div>
+                <h2>User Owned Chatrooms</h2>
 
-            <!-- Pinned Chatrooms Column -->
-            <div class="col">
-                <h2>Pinned Chatrooms</h2>
-                <ul class="list-group">
-                    @foreach (var pinnedChatroom in Model.PinnedChatrooms)
-                    {
-                        <li class="list-group-item">@pinnedChatroom.Name</li>
-                    }
-                </ul>
-            </div>
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Find by name: <input type="text" name="SearchStringOwned" value="@ViewData["CurrentFilterOwned"]" />
+                            <input type="submit" value="Search" class="btn btn-default" /> |
+                            <a asp-action="Index">Back to Full List</a>
+                        </p>
+                    </div>
+                </form>
+
+                <div class="text-left">
+                    <a asp-action="Index" class="btn btn-primary" asp-route-sortOrderOwned="@ViewData["NameSortParmOwned"]" asp-route-currentFilterOwned="@ViewData["CurrentFilterOwned"]">Sort by name</a>
+                </div>
+
+                <div class="album py-5 bg-light">
+                    <div class="container">
+
+                        <div class="col">
+                            @foreach (var item in Model.OwnedChatrooms)
+                            {
+                                <div class="col-md-4">
+                                    <div class="card mb-4 box-shadow">
+                                        @if (@item.ChatroomImageUrl != null)
+                                        {
+                                            <img class="card-img-top" src="@item.ChatroomImageUrl" alt="Chatroom Banner">
+                                        }
+                                        else
+                                        {
+                                            <img class="card-img-top" src="~/images/banner-placeholder.png" alt="Card image cap">
+                                        }
+
+                                        <div class="card-body">
+                                            <h2 class="text-left">@item.Name</h2>
+                                            <p class="card-text">@item.Description</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="btn-group">
+                                                    <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+                                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
+                                                    <a asp-controller="Messages" asp-action="Save" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Pin</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        @{
+                            var prevDisabled = !Model.OwnedChatrooms.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.OwnedChatrooms.HasNextPage ? "disabled" : "";
+                        }
+
+                        <a asp-action="Index"
+                           asp-route-sortOrderOwned="@ViewData["CurrentSortOwned"]"
+                           asp-route-pageNumberOwned="@(Model.OwnedChatrooms.PageIndex - 1)"
+                           asp-route-currentFilterOwned="@ViewData["CurrentFilterOwned"]"
+                           class="btn btn-default @prevDisabled">
+                            Previous
+                        </a>
+                        <a asp-action="Index"
+                           asp-route-sortOrderOwned="@ViewData["CurrentSortOwned"]"
+                           asp-route-pageNumberOwned="@(Model.OwnedChatrooms.PageIndex + 1)"
+                           asp-route-currentFilterOwned="@ViewData["CurrentFilterOwned"]"
+                           class="btn btn-default @nextDisabled">
+                            Next
+                        </a>
+
+                    </div>
+                </div>
+
+            
         </div>
     </div>
+</div>
+</div>
+
+<!-- Pinned Chatrooms Column -->
+<div class="col">
+    <h2>User Pinned Chatrooms</h2>
+    <ul class="list-group">
+        @foreach (var pinnedChatroom in Model.PinnedChatrooms)
+        {
+            <li class="list-group-item">@pinnedChatroom.Name</li>
+        }
+    </ul>
 </div>
