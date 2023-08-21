@@ -1,6 +1,7 @@
-﻿@using Microsoft.AspNetCore.Identity;
+﻿@using ChatRooms.Helpers;
+@using Microsoft.AspNetCore.Identity;
 @inject UserManager<User> UserManager
-@model IEnumerable<Chatroom>
+@model PaginatedList<ChatRooms.Models.Chatroom>
 @{
     ViewData["Title"] = "Chatrooms";
 }
@@ -9,8 +10,18 @@
     <h1 class="display-4">Chatrooms</h1>
 </div>
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
 <div class="text-center">
-    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" id="sortButton" class="btn btn-primary">Sort by @Html.DisplayNameFor(model => model.Name)</a>
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Sort by Name</a>
 </div>
 
 <div class="album py-5 bg-light">
@@ -45,5 +56,26 @@
                 </div>
             }
         </div>
+
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @nextDisabled">
+            Next
+        </a>
+
     </div>
 </div>

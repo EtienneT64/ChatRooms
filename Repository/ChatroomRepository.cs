@@ -30,6 +30,13 @@ namespace ChatRooms.Repository
             return await _context.Chatrooms.ToListAsync();
         }
 
+        public IQueryable<Chatroom> GetAllQuery()
+        {
+            var chatrooms = from c in _context.Chatrooms
+                            select c;
+            return chatrooms;
+        }
+
         public async Task<Chatroom> GetByIdAsync(int? id)
         {
             return await _context.Chatrooms.FirstOrDefaultAsync(i => i.Id == id);

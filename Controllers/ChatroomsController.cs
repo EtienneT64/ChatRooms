@@ -1,10 +1,12 @@
-﻿using ChatRooms.Hubs;
+﻿using ChatRooms.Helpers;
+using ChatRooms.Hubs;
 using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Controllers
 {
@@ -27,10 +29,28 @@ namespace ChatRooms.Controllers
 
         // GET: Chatrooms
         [Authorize]
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            var chatrooms = await _chatroomRepository.GetAll();
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var chatrooms = _chatroomRepository.GetAllQuery();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                chatrooms = chatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()) || c.Description.ToUpper().Contains(searchString.ToUpper()));
+            }
 
             switch (sortOrder)
             {
@@ -41,12 +61,9 @@ namespace ChatRooms.Controllers
                     chatrooms = chatrooms.OrderBy(c => c.Name);
                     break;
             }
-            return View(chatrooms);
 
-
-
-            //IEnumerable<Chatroom> chatrooms = await _chatroomRepository.GetAll();
-            //return View(chatrooms);
+            int pageSize = 3;
+            return View(await PaginatedList<Chatroom>.CreateAsync(chatrooms.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Chatrooms/Details/1
