@@ -62,7 +62,7 @@ namespace ChatRooms.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 6;
             return View(await PaginatedList<Chatroom>.CreateAsync(chatrooms.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
