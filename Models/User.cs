@@ -10,5 +10,6 @@ namespace ChatRooms.Models
         public string? ProfileImageUrl { get; set; }
         public ICollection<Message>? Messages { get; set; }
         public ICollection<Chatroom>? Chatrooms { get; set; }
+        public ICollection<UserPinnedChatroom>? PinnedChatrooms { get; set; }
     }
 }

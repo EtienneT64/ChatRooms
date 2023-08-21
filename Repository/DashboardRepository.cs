@@ -15,16 +15,26 @@ namespace ChatRooms.Repository
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<List<Chatroom>> GetAllUserChatrooms()
+        public async Task<List<Chatroom>> GetAllUserOwnedChatrooms()
         {
-            throw new NotImplementedException();
+            var currUser = _httpContextAccessor.HttpContext.User.GetUserId();
+            var userOwnedChatrooms = _context.Chatrooms.Where(c => c.OwnerId == currUser);
+            return await userOwnedChatrooms.ToListAsync();
         }
 
-        public async Task<List<Message>> GetAllUserMessages()
+        public async Task<List<Chatroom>> GetAllUserPinnedChatrooms()
         {
-            var currUser = _httpContextAccessor.HttpContext?.User;
-            var userMessages = _context.Messages.Where(c => c.User.Id == currUser.ToString());
-            return userMessages.ToList();
+            var currUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+            var userPinnedChatroomIds = await _context.UserPinnedChatrooms
+                .Where(upc => upc.UserId == currUserId.ToString())
+                .Select(upc => upc.ChatroomId)
+                .ToListAsync();
+
+            var pinnedChatrooms = await _context.Chatrooms
+                .Where(c => userPinnedChatroomIds.Contains(c.Id))
+                .ToListAsync();
+
+            return pinnedChatrooms;
         }
         public async Task<User> GetUserById(string id)
         {

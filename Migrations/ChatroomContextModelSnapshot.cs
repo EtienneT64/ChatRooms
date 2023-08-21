@@ -133,7 +133,8 @@ namespace ChatRooms.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -144,10 +145,6 @@ namespace ChatRooms.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("UserNameColor")
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
 
                     b.HasKey("Id");
 
@@ -160,6 +157,21 @@ namespace ChatRooms.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("ChatRooms.Models.UserPinnedChatroom", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ChatroomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ChatroomId");
+
+                    b.HasIndex("ChatroomId");
+
+                    b.ToTable("UserPinnedChatrooms");
                 });
 
             modelBuilder.Entity("ChatroomUser", b =>
@@ -327,6 +339,25 @@ namespace ChatRooms.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ChatRooms.Models.UserPinnedChatroom", b =>
+                {
+                    b.HasOne("ChatRooms.Models.Chatroom", "Chatroom")
+                        .WithMany()
+                        .HasForeignKey("ChatroomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChatRooms.Models.User", "User")
+                        .WithMany("PinnedChatrooms")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chatroom");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ChatroomUser", b =>
                 {
                     b.HasOne("ChatRooms.Models.Chatroom", null)
@@ -401,6 +432,8 @@ namespace ChatRooms.Migrations
             modelBuilder.Entity("ChatRooms.Models.User", b =>
                 {
                     b.Navigation("Messages");
+
+                    b.Navigation("PinnedChatrooms");
                 });
 #pragma warning restore 612, 618
         }

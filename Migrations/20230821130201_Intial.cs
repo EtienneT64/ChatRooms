@@ -30,8 +30,7 @@ namespace ChatRooms.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserNameColor = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
-                    ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfileImageUrl = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -227,6 +226,30 @@ namespace ChatRooms.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserPinnedChatrooms",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ChatroomId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPinnedChatrooms", x => new { x.UserId, x.ChatroomId });
+                    table.ForeignKey(
+                        name: "FK_UserPinnedChatrooms_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserPinnedChatrooms_Chatrooms_ChatroomId",
+                        column: x => x.ChatroomId,
+                        principalTable: "Chatrooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -286,6 +309,11 @@ namespace ChatRooms.Migrations
                 name: "IX_Messages_UserId",
                 table: "Messages",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPinnedChatrooms_ChatroomId",
+                table: "UserPinnedChatrooms",
+                column: "ChatroomId");
         }
 
         /// <inheritdoc />
@@ -311,6 +339,9 @@ namespace ChatRooms.Migrations
 
             migrationBuilder.DropTable(
                 name: "Messages");
+
+            migrationBuilder.DropTable(
+                name: "UserPinnedChatrooms");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
