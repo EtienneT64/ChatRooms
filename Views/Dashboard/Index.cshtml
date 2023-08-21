@@ -54,7 +54,7 @@
                                                 <div class="btn-group">
                                                     <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
                                                     <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
-                                                    <a asp-controller="Messages" asp-action="Save" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Pin</a>
+                                                    <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Pin</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -133,7 +133,7 @@
                                                     <div class="btn-group">
                                                         <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
                                                         <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
-                                                        <a asp-controller="Messages" asp-action="Save" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Pin</a>
+                                                    <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Pin</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,5 +168,8 @@
     </div>
 </div>
 </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/pin.js"></script>
 
 

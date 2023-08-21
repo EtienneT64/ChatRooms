@@ -22,7 +22,7 @@ namespace ChatRooms.Services
             var userPinnedChatroom = new UserPinnedChatroom
             {
                 UserId = userId,
-                ChatroomId = chatroomId
+                ChatroomId = chatroomId,
             };
 
             _context.UserPinnedChatrooms.Add(userPinnedChatroom);

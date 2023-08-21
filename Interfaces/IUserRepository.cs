@@ -6,6 +6,7 @@ namespace ChatRooms.Interfaces
     {
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(string id);
+        Task<User> GetUserByIdAsyncNoTracking(string? id);
         bool Add(User user);
         bool Update(User user);
         bool Delete(User user);

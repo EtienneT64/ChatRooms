@@ -270,9 +270,9 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Pin(int id)
         {
             var currUser = HttpContext.User.GetUserId();
-            _chatroomService.PinChatroomAsync(currUser, id);
+            await _chatroomService.PinChatroomAsync(currUser, id);
 
-            return RedirectToAction("Index");
+            return Ok();
         }
 
     }

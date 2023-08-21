@@ -35,6 +35,11 @@ namespace ChatRooms.Repository
             return await _context.Users.FindAsync(id);
         }
 
+        public async Task<User> GetUserByIdAsyncNoTracking(string? id)
+        {
+            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();
