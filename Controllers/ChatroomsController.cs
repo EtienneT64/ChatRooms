@@ -17,14 +17,16 @@ namespace ChatRooms.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IHubContext<ChatHub> _chatHubContext;
         private readonly IPhotoService _photoService;
+        private readonly IChatroomService _chatroomService;
 
-        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext, IPhotoService photoService)
+        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext, IPhotoService photoService, IChatroomService chatroomService)
         {
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
             _userRepository = userRepository;
             _chatHubContext = chatHubContext;
             _photoService = photoService;
+            _chatroomService = chatroomService;
         }
 
         // GET: Chatrooms
@@ -64,7 +66,12 @@ namespace ChatRooms.Controllers
             }
 
             int pageSize = 6;
-            return View(await PaginatedList<Chatroom>.CreateAsync(chatrooms.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+            var chatroomVM = new ChatroomIndexViewModel()
+            {
+                Chatrooms = await PaginatedList<Chatroom>.CreateAsync(chatrooms.AsNoTracking(), pageNumber ?? 1, pageSize)
+            };
+            return View(chatroomVM);
         }
 
         // GET: Chatrooms/Details/1
@@ -255,6 +262,17 @@ namespace ChatRooms.Controllers
 
             _chatroomRepository.Delete(chatRoomDetails);
             return RedirectToAction("Index");
+        }
+
+        // POST: Chatrooms/Delete/1
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Pin(int id, ChatroomIndexViewModel chatroomVM)
+        {
+            var currUser = HttpContext.User.GetUserId();
+            _chatroomService.PinChatroomAsync(currUser, id);
+
+            return View(chatroomVM);
         }
 
     }

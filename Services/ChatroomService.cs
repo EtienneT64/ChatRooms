@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Services
 {
-    public class ChatroomService
+    public class ChatroomService : IChatroomService
     {
         private readonly IChatroomRepository _chatroomRepository;
         private readonly IUserRepository _userRepository;
