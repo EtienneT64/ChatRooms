@@ -49,9 +49,8 @@
                                 <div class="btn-group">
                                     <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
                                     <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
-                                    <form asp-area="" asp-controller="Chatrooms" asp-action="Pin" >
-                                        <a asp-controller="Chatrooms" asp-action="Pin" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Pin</a>
-                                    </form>
+                                     <a asp-controller="Chatrooms" asp-action="Pin" asp-route-id="@item.Id" id="pinButton" class="btn btn-sm btn-outline-secondary">Pin</a>
+                                   
                                    
                                 </div>
                             </div>

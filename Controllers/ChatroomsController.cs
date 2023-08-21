@@ -267,12 +267,12 @@ namespace ChatRooms.Controllers
         // POST: Chatrooms/Delete/1
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Pin(int id, ChatroomIndexViewModel chatroomVM)
+        public async Task<IActionResult> Pin(int id)
         {
             var currUser = HttpContext.User.GetUserId();
             _chatroomService.PinChatroomAsync(currUser, id);
 
-            return View(chatroomVM);
+            return RedirectToAction("Index");
         }
 
     }
