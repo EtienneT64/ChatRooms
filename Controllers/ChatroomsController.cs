@@ -49,7 +49,8 @@ namespace ChatRooms.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                chatrooms = chatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()) || c.Description.ToUpper().Contains(searchString.ToUpper()));
+                chatrooms = chatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()));
+                //chatrooms = chatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()) || c.Description.ToUpper().Contains(searchString.ToUpper()));
             }
 
             switch (sortOrder)
