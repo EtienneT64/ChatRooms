@@ -2,7 +2,7 @@
 
 namespace ChatRooms.ViewModels
 {
-    public class RegisterViewModel
+    public class AccountRegisterViewModel
     {
         [Display(Name = "Username"), Required(ErrorMessage = "Username is required")]
         public string UserName { get; set; }

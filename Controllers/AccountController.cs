@@ -21,13 +21,13 @@ namespace ChatRooms.Controllers
         // GET: Account/Login
         public IActionResult Login()
         {
-            var response = new LoginViewModel();
+            var response = new AccountLoginViewModel();
             return View(response);
         }
 
         // POST: Account/Login
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(AccountLoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid) return View(loginViewModel);
 
@@ -58,13 +58,13 @@ namespace ChatRooms.Controllers
         // GET: Account/Register
         public IActionResult Register()
         {
-            var response = new RegisterViewModel();
+            var response = new AccountRegisterViewModel();
             return View(response);
         }
 
         // POST: Account/Register
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register(AccountRegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid) return View(registerViewModel);
 

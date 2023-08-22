@@ -15,14 +15,16 @@ namespace ChatRooms.Controllers
         private readonly IMessageRepository _messageRepository;
 
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserController(IUserRepository userRepository, IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IPhotoService photoService, UserManager<User> userManager)
+        public UserController(IUserRepository userRepository, IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IPhotoService photoService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userRepository = userRepository;
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
             _photoService = photoService;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: User
@@ -146,6 +148,7 @@ namespace ChatRooms.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

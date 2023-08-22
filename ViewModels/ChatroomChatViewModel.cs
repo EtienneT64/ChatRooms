@@ -2,7 +2,7 @@
 
 namespace ChatRooms.ViewModels
 {
-    public class ChatViewModel
+    public class ChatroomChatViewModel
     {
         public string UserId { get; set; }
         public string? UserName { get; set; }

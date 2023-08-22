@@ -1,4 +1,6 @@
-﻿namespace ChatRooms.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ChatRooms.ViewModels
 {
     public class ChatroomDetailsViewModel
     {
@@ -9,7 +11,8 @@
         public string? ChatroomImageUrl { get; set; }
         public string? OwnerUserName { get; set; }
         public string OwnerId { get; set; }
-        public IFormFile? Image { get; set; }
+        [Required]
+        public IFormFile Image { get; set; }
 
     }
 }

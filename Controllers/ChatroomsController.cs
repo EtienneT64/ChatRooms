@@ -103,7 +103,7 @@ namespace ChatRooms.Controllers
             var chatroom = await _chatroomRepository.GetByIdAsync(id);
             var userId = HttpContext.User.GetUserId();
             var user = await _userRepository.GetUserByIdAsync(userId);
-            var chatViewModel = new ChatViewModel
+            var chatViewModel = new ChatroomChatViewModel
             {
                 UserId = userId,
                 UserName = user.UserName,
@@ -120,7 +120,7 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Create()
         {
             var currUserId = HttpContext.User.GetUserId();
-            var createChatroomVM = new CreateChatroomViewModel { OwnerId = currUserId };
+            var createChatroomVM = new ChatroomCreateViewModel { OwnerId = currUserId };
             return View(createChatroomVM);
         }
 
@@ -128,10 +128,15 @@ namespace ChatRooms.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateChatroomViewModel chatroomVM)
+        public async Task<IActionResult> Create(ChatroomCreateViewModel chatroomVM)
         {
             if (ModelState.IsValid)
             {
+                if (chatroomVM.Image == null)
+                {
+                    return View("Create", chatroomVM);
+                }
+
                 var result = await _photoService.AddThumbnailAsync(chatroomVM.Image);
 
                 var chatroom = new Chatroom
@@ -198,6 +203,10 @@ namespace ChatRooms.Controllers
                 return View("Error");
             }
 
+            if (chatRoomDetailsVM.Image == null)
+            {
+                return View("Edit", chatRoomDetailsVM);
+            }
             var photoResult = await _photoService.AddThumbnailAsync(chatRoomDetailsVM.Image);
 
             if (photoResult.Error != null)

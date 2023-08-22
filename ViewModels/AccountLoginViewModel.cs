@@ -2,7 +2,7 @@
 
 namespace ChatRooms.ViewModels
 {
-    public class LoginViewModel
+    public class AccountLoginViewModel
     {
         [Display(Name = "Username")]
         [Required(ErrorMessage = "Username is required")]

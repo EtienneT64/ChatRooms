@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ChatRooms.ViewModels
 {
-    public class CreateChatroomViewModel
+    public class ChatroomCreateViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
