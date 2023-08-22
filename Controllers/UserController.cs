@@ -2,6 +2,7 @@
 using ChatRooms.Models;
 using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatRooms.Controllers
@@ -11,10 +12,14 @@ namespace ChatRooms.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IPhotoService _photoService;
 
-        public UserController(IUserRepository userRepository, IPhotoService photoService)
+        private readonly UserManager<User> _userManager;
+
+        public UserController(IUserRepository userRepository, IPhotoService photoService, UserManager<User> userManager)
         {
             _userRepository = userRepository;
             _photoService = photoService;
+
+            _userManager = userManager;
         }
 
 
@@ -59,8 +64,11 @@ namespace ChatRooms.Controllers
                 return View("Edit", userVM);
             }
 
-            var user = await _userRepository.GetUserByIdAsyncNoTracking(id);
+            //var user = await _userRepository.GetUserByIdAsyncNoTracking(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null) return View("Error");
+
+            _context.Entry(user).Reload();
 
             var photoResult = await _photoService.AddProfilePictureAsync(userVM.Image);
 
@@ -70,19 +78,23 @@ namespace ChatRooms.Controllers
                 return View(userVM);
             }
 
-            if (!string.IsNullOrEmpty(userVM.ProfileImageUrl))
+            if (!string.IsNullOrEmpty(user.ProfileImageUrl))
             {
-                _ = _photoService.DeletePhotoAsync(userVM.ProfileImageUrl);
+                _ = _photoService.DeletePhotoAsync(user.ProfileImageUrl);
             }
 
-            var editedUser = new User
-            {
-                Id = id,
-                UserName = userVM.UserName,
-                ProfileImageUrl = photoResult.Url.ToString(),
-            };
+            //var editedUser = new User
+            //{
+            //    Id = id,
+            //    UserName = userVM.UserName,
+            //    ProfileImageUrl = photoResult.Url.ToString(),
+            //};
 
-            _userRepository.Update(user);
+            user.UserName = userVM.UserName;
+            user.ProfileImageUrl = photoResult.Url.ToString();
+
+            await _userManager.UpdateAsync(user);
+            //_userRepository.Update(editedUser);
 
             return RedirectToAction("Index");
         }
