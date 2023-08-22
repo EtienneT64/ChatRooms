@@ -5,8 +5,12 @@
 	ViewData["Title"] = "Sign up";
 }
 
+<div class="offset-md-4">
+<h1>Register</h1>
+</div>
+
 <div class="row">
-    <div class="col-md-6 offset-3">
+    <div class="col-md-6 offset-md-4">
         <p>
             <h4>Sign up for a new account</h4>
         </p>
@@ -19,7 +23,7 @@
         }
 
         <div class="row">
-            <div class="col-md-8 offset-2">
+            <div class="col-md-8">
                 <form asp-action="Register">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
