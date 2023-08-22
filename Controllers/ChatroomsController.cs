@@ -137,7 +137,7 @@ namespace ChatRooms.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _photoService.AddPhotoAsync(chatroomVM.Image);
+                var result = await _photoService.AddThumbnailAsync(chatroomVM.Image);
 
                 var chatroom = new Chatroom
                 {
@@ -202,7 +202,7 @@ namespace ChatRooms.Controllers
                 return View("Error");
             }
 
-            var photoResult = await _photoService.AddPhotoAsync(chatRoomDetailsVM.Image);
+            var photoResult = await _photoService.AddThumbnailAsync(chatRoomDetailsVM.Image);
 
             if (photoResult.Error != null)
             {

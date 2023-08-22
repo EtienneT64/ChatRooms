@@ -133,8 +133,7 @@ namespace ChatRooms.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfileImageUrl")
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -172,6 +171,23 @@ namespace ChatRooms.Migrations
                     b.HasIndex("ChatroomId");
 
                     b.ToTable("UserPinnedChatrooms");
+                });
+
+            modelBuilder.Entity("ChatRooms.ViewModels.UserViewModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserViewModel");
                 });
 
             modelBuilder.Entity("ChatroomUser", b =>

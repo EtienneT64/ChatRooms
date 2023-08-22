@@ -1,6 +1,6 @@
 ﻿namespace ChatRooms.ViewModels
 {
-    public class EditUserDashboardViewModel
+    public class UserEditProfileViewModel
     {
         public string? Id { get; set; }
         public string? ProfileImageUrl { get; set; }

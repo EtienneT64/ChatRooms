@@ -30,7 +30,7 @@ namespace ChatRooms.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProfileImageUrl = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
+                    ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -66,6 +66,19 @@ namespace ChatRooms.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Chatrooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserViewModel",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserViewModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -342,6 +355,9 @@ namespace ChatRooms.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserPinnedChatrooms");
+
+            migrationBuilder.DropTable(
+                name: "UserViewModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

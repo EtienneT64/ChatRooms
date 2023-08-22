@@ -15,3 +15,5 @@ This is to ensure messages adhere to the chatroom rules, use JavaScript file
 # Create User Dashboard
 
 # Add chatroom pinning functionality
+
+# Add render validatin scripts

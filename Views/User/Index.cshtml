@@ -1,41 +1,53 @@
 ﻿@using ChatRooms.ViewModels;
-@model List<UserViewModel>
+@model UserViewModel
 
-<section class="flush-with-above">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <table class="table table-hover align-items-center table-borderless">
-                    <tbody>
-                        @foreach (var user in Model)
-                        {
-                            <tr class="bg-white">
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <img alt="Image profile avatar" src="" class="avatar">
-                                        <div class="media-body">
-                                            <span class="h6 mb-0">@user.UserName</span>
-                                        </div>
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Profile</h1>
+</div>
+
+<section class="vh-100" style="background-color: #9de2ff;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-md-9 col-lg-7 col-xl-5">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-4">
+                        <div class="d-flex text-black">
+                            <div class="flex-shrink-0">
+                                <img src="@Model.ProfileImageUrl"
+                                     alt="Generic placeholder image" class="img-fluid"
+                                     style="width: 180px; border-radius: 10px;">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-1">@Model.UserName</h5>
+                                <p class="mb-2 pb-1" style="color: #2b2a2a;">Senior Journalist</p>
+                                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                                     style="background-color: #efefef;">
+                                    <div>
+                                        <p class="small text-muted mb-1">Owned Chatrooms</p>
+                                        <p class="mb-0">2</p>
                                     </div>
-                                </th>
-                                <td>
-                                    <a class="btn btn-outline-primary" asp-controller="User" asp-action="Detail" asp-route-id="@user.Id">
-                                        View Profile
-                                    </a>
-                                </td>
-
-                            </tr>
-                            <tr class="table-divider">
-                                <th></th>
-                                <td></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                    <div class="px-3">
+                                        <p class="small text-muted mb-1">Pinned Chatrooms</p>
+                                        <p class="mb-0">5</p>
+                                    </div>
+                                    <div>
+                                        <p class="small text-muted mb-1">Total Messages</p>
+                                        <p class="mb-0">100</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex pt-1">
+                                    <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">Edit</button>
+                                    <button type="button" class="btn btn-primary flex-grow-1">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--end of col-->
         </div>
-        <!--end of row-->
     </div>
-    <!--end of container-->
 </section>

@@ -1,6 +1,7 @@
 ﻿using ChatRooms.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ChatRooms.ViewModels;
 
 namespace ChatRooms.Data
 {
@@ -31,5 +32,6 @@ namespace ChatRooms.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Chatroom> Chatrooms { get; set; }
         public DbSet<UserPinnedChatroom> UserPinnedChatrooms { get; set; }
+        public DbSet<ChatRooms.ViewModels.UserViewModel> UserViewModel { get; set; } = default!;
     }
 }
