@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
 <div class="text-left">
@@ -12,3 +12,9 @@
     <h2>Have fun chatting!</h2>
     <p>Please <a asp-area="" asp-controller="Account" asp-action="Register">create an account</a> or <a asp-area="" asp-controller="Account" asp-action="Login">login</a> to continue.</p>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

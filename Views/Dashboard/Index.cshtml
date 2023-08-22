@@ -102,95 +102,101 @@
 
            
         
-                <!-- Pinned Chatrooms Column -->
-                <div class="col-md-6">
-                    <h2>Pinned Chatrooms</h2>
+            <!-- Pinned Chatrooms Column -->
+            <div class="col-md-6">
+                <h2>Pinned Chatrooms</h2>
 
-                    <form asp-action="Index" method="get">
-                        <div class="form-actions no-color">
-                            <p>
-                                Find by name: <input type="text" name="SearchStringPinned" value="@ViewData["CurrentFilterPinned"]" />
-                                <input type="submit" value="Search" class="btn btn-default" /> |
-                                <a asp-action="Index">Back to Full List</a>
-                            </p>
-                        </div>
-                    </form>
-
-                    <div class="text-left">
-                        <a asp-action="Index" class="btn btn-primary" asp-route-sortOrderPinned="@ViewData["NameSortParmPinned"]" asp-route-currentFilterPinned="@ViewData["CurrentFilterPinned"]">Sort by name</a>
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Find by name: <input type="text" name="SearchStringPinned" value="@ViewData["CurrentFilterPinned"]" />
+                            <input type="submit" value="Search" class="btn btn-default" /> |
+                            <a asp-action="Index">Back to Full List</a>
+                        </p>
                     </div>
+                </form>
 
-                    <div class="album py-5 bg-light">
-                        <div class="container">
+                <div class="text-left">
+                    <a asp-action="Index" class="btn btn-primary" asp-route-sortOrderPinned="@ViewData["NameSortParmPinned"]" asp-routecurrentFilterPinned="@ViewD["CurrentFilterPinned"]">Sort by name</a>
+                </div>
 
-                            <div class="col">
-                                @foreach (var item in Model.PinnedChatrooms)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="card mb-4 box-shadow">
-                                            @if (@item.ChatroomImageUrl != null)
-                                            {
-                                                <img class="card-img-top" src="@item.ChatroomImageUrl" alt="Chatroom Banner">
-                                            }
-                                            else
-                                            {
-                                                <img class="card-img-top" src="~/images/banner-placeholder.png" alt="Card image cap">
-                                            }
+                <div class="album py-5 bg-light">
+                    <div class="container">
 
-                                            <div class="card-body">
-                                                <h2 class="text-left">@item.Name</h2>
-                                                <p class="card-text">@item.Description</p>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
-                                                        <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
-                                                    @{
-                                                        if (Model.PinnedChatroomsQuery != null && Model.PinnedChatroomsQuery.Contains(item))
-                                                        {
-                                                            <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Unpin</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Pin</a>
-                                                        }
+                        <div class="col">
+                            @foreach (var item in Model.PinnedChatrooms)
+                            {
+                                <div class="col-md-4">
+                                    <div class="card mb-4 box-shadow">
+                                        @if (@item.ChatroomImageUrl != null)
+                                        {
+                                            <img class="card-img-top" src="@item.ChatroomImageUrl" alt="Chatroom Banner">
+                                        }
+                                        else
+                                        {
+                                            <img class="card-img-top" src="~/images/banner-placeholder.png" alt="Card image cap">
+                                        }
+
+                                        <div class="card-body">
+                                            <h2 class="text-left">@item.Name</h2>
+                                            <p class="card-text">@item.Description</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="btn-group">
+                                                    <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btnsmbtnoutlinesecondary">Details</a>
+                                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-smbtnoutlinesecondary">Join<a>
+                                                @{
+                                                    if (Model.PinnedChatroomsQuery != null && Model.PinnedChatroomsQuery.Contains(item))
+                                                    {
+                                                        <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Unpin</a>
                                                     }
-                                                    </div>
+                                                    else
+                                                    {
+                                                        <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Pin</a>
+                                                    }
+                                                }
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                }
-                            </div>
-
-                            @{
-                                var prevDisabledPinned = !Model.PinnedChatrooms.HasPreviousPage ? "disabled" : "";
-                                var nextDisabledPinned = !Model.PinnedChatrooms.HasNextPage ? "disabled" : "";
+                                </div>
                             }
-
-                            <a asp-action="Index"
-                               asp-route-sortOrderPinned="@ViewData["CurrentSortPinned"]"
-                               asp-route-pageNumberPinned="@(Model.PinnedChatrooms.PageIndex - 1)"
-                               asp-route-currentFilterPinned="@ViewData["CurrentFilterPinned"]"
-                               class="btn btn-default @prevDisabledPinned">
-                                Previous
-                            </a>
-                            <a asp-action="Index"
-                               asp-route-sortOrderPinned="@ViewData["CurrentSortPinned"]"
-                               asp-route-pageNumberPinned="@(Model.PinnedChatrooms.PageIndex + 1)"
-                               asp-route-currentFilterPinned="@ViewData["CurrentFilterPinned"]"
-                               class="btn btn-default @nextDisabledPinned">
-                                Next
-                            </a>
-
                         </div>
+
+                        @{
+                            var prevDisabledPinned = !Model.PinnedChatrooms.HasPreviousPage ? "disabled" : "";
+                            var nextDisabledPinned = !Model.PinnedChatrooms.HasNextPage ? "disabled" : "";
+                        }
+
+                        <a asp-action="Index"
+                           asp-route-sortOrderPinned="@ViewData["CurrentSortPinned"]"
+                           asp-route-pageNumberPinned="@(Model.PinnedChatrooms.PageIndex - 1)"
+                           asp-route-currentFilterPinned="@ViewData["CurrentFilterPinned"]"
+                           class="btn btn-default @prevDisabledPinned">
+                            Previous
+                        </a>
+                        <a asp-action="Index"
+                           asp-route-sortOrderPinned="@ViewData["CurrentSortPinned"]"
+                           asp-route-pageNumberPinned="@(Model.PinnedChatrooms.PageIndex + 1)"
+                           asp-route-currentFilterPinned="@ViewData["CurrentFilterPinned"]"
+                           class="btn btn-default @nextDisabledPinned">
+                            Next
+                        </a>
+
                     </div>
+                </div>
 
     </div>
 </div>
 </div>
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/js/pin.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/pin.js"></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
 

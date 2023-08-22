@@ -1,7 +1,5 @@
 ﻿@using ChatRooms.Helpers;
 @using ChatRooms.ViewModels;
-@using Microsoft.AspNetCore.Identity;
-@inject UserManager<User> UserManager
 @model ChatroomIndexViewModel
 @{
     ViewData["Title"] = "Chatrooms";
@@ -93,3 +91,9 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/pin.js"></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -7,3 +7,9 @@
 </div>
 
 <p>Please note: All messages are public and stored unencrypted in a database. Therefore please do not share any personal or private information. Chat responsibly!</p>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
