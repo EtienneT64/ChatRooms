@@ -68,8 +68,6 @@ namespace ChatRooms.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user == null) return View("Error");
 
-            _context.Entry(user).Reload();
-
             var photoResult = await _photoService.AddProfilePictureAsync(userVM.Image);
 
             if (photoResult.Error != null)
