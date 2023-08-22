@@ -1,5 +1,5 @@
 ﻿@using ChatRooms.ViewModels;
-@model UserViewModel
+@model UserIndexViewModel
 
 @{
     ViewData["Title"] = "Profile";
@@ -33,20 +33,20 @@
                                      style="background-color: #efefef;">
                                     <div>
                                         <p class="small text-muted mb-1">Owned Chatrooms</p>
-                                        <p class="mb-0">2</p>
+                                        <p class="mb-0">@Model.OwnedChatrooms</p>
                                     </div>
                                     <div class="px-3">
                                         <p class="small text-muted mb-1">Pinned Chatrooms</p>
-                                        <p class="mb-0">5</p>
+                                        <p class="mb-0">@Model.PinnedChatrooms</p>
                                     </div>
                                     <div>
                                         <p class="small text-muted mb-1">Total Messages</p>
-                                        <p class="mb-0">100</p>
+                                        <p class="mb-0">@Model.UserMessages</p>
                                     </div>
                                 </div>
                                 <div class="d-flex pt-1">
                                     <a asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-primary flex-grow-1">Edit</a>
-                                    <a type="button" class="btn btn-danger me-1 flex-grow-1">Delete</a>
+                                    <a asp-area="" asp-controller="User" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger me-1 flex-grow-1">Delete</a>
                                    
                                 </div>
                             </div>

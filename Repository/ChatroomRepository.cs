@@ -57,6 +57,20 @@ namespace ChatRooms.Repository
             return await _context.Chatrooms.AsNoTracking().FirstOrDefaultAsync(i => i.Name == chatroomName);
         }
 
+        public bool DeleteChatroomsByUserId(string id)
+        {
+            var userChatrooms = _context.Chatrooms.Where(c => c.OwnerId == id);
+            _context.Chatrooms.RemoveRange(userChatrooms);
+            return Save();
+        }
+
+        public bool DeletePinnedChatroomsByUserId(string id)
+        {
+            var userPinnedChatrooms = _context.UserPinnedChatrooms.Where(upc => upc.UserId == id);
+            _context.UserPinnedChatrooms.RemoveRange(userPinnedChatrooms);
+            return Save();
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();

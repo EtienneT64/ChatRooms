@@ -69,7 +69,7 @@ namespace ChatRooms.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserViewModel",
+                name: "UserEditViewModel",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -357,7 +357,7 @@ namespace ChatRooms.Migrations
                 name: "UserPinnedChatrooms");
 
             migrationBuilder.DropTable(
-                name: "UserViewModel");
+                name: "UserEditViewModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

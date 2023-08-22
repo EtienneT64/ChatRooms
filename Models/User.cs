@@ -2,7 +2,6 @@
 
 namespace ChatRooms.Models
 {
-
     public class User : IdentityUser
     {
         public string? ProfileImageUrl { get; set; }

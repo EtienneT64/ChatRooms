@@ -176,7 +176,7 @@ namespace ChatRooms.Migrations
                     b.ToTable("UserPinnedChatrooms");
                 });
 
-            modelBuilder.Entity("ChatRooms.ViewModels.UserViewModel", b =>
+            modelBuilder.Entity("ChatRooms.ViewModels.UserEditViewModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -190,7 +190,7 @@ namespace ChatRooms.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserViewModel");
+                    b.ToTable("UserEditViewModel");
                 });
 
             modelBuilder.Entity("ChatroomUser", b =>

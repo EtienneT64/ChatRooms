@@ -53,6 +53,13 @@ namespace ChatRooms.Repository
                 .Take(amount).ToListAsync();
         }
 
+        public bool DeleteMessagesByUserId(string id)
+        {
+            var userMessages = _context.Messages.Where(m => m.UserId == id);
+            _context.Messages.RemoveRange(userMessages);
+            return Save();
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();

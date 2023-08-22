@@ -10,6 +10,8 @@ namespace ChatRooms.Interfaces
         Task<IEnumerable<Message>> GetMessagesByChatroomId(int? id);
         Task<IEnumerable<Message>> GetMessagesByChatroomIdTake(int? id, int amount);
 
+        bool DeleteMessagesByUserId(string id);
+
         bool Add(Message message);
         bool Update(Message message);
         bool Delete(Message message);

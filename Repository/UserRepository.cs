@@ -40,6 +40,25 @@ namespace ChatRooms.Repository
             return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public int CountMessagesByUserId(string id)
+        {
+            var userMessages = _context.Messages.Where(m => m.UserId == id);
+            return userMessages.Count();
+        }
+
+        public int CountChatroomsByUserId(string id)
+        {
+            var userChatrooms = _context.Chatrooms.Where(c => c.OwnerId == id);
+            return userChatrooms.Count();
+        }
+
+        public int CountPinnedChatroomsByUserId(string id)
+        {
+            var userPinnedChatrooms = _context.UserPinnedChatrooms.Where(upc => upc.UserId == id);
+            return userPinnedChatrooms.Count();
+        }
+
+
         public bool Save()
         {
             var saved = _context.SaveChanges();

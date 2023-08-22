@@ -11,6 +11,9 @@ namespace ChatRooms.Interfaces
         Task<Chatroom> GetByNameAsync(string? chatroomName);
         Task<Chatroom> GetByNameAsyncNoTracking(string? chatroomName);
 
+        bool DeleteChatroomsByUserId(string id);
+        bool DeletePinnedChatroomsByUserId(string id);
+
         bool Add(Chatroom chatroom);
         bool Update(Chatroom chatroom);
         bool Delete(Chatroom chatroom);
