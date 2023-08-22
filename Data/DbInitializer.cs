@@ -39,7 +39,7 @@ namespace ChatRooms.Data
                     {
                         Id = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
                         UserName = "etienneT",
-                        //ProfileImageUrl = xyz
+                        ProfileImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692713456/u0mfbpyi0nnltpj4gg16.png"
                     };
                     await userManager.CreateAsync(newAdminUser, "Password@64");
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
@@ -54,7 +54,7 @@ namespace ChatRooms.Data
                     {
                         Id = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
                         UserName = "liamV",
-                        //ProfileImageUrl = xyz
+                        ProfileImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692714244/pvjnhty0f2sywne9taaz.jpg"
                     };
                     await userManager.CreateAsync(newAppUser, "Password@64");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
@@ -69,7 +69,7 @@ namespace ChatRooms.Data
                     {
                         Id = "a6e31363-fc72-4f7e-9238-7f6cada1e68c",
                         UserName = "test",
-                        //ProfileImageUrl = xyz
+                        ProfileImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692714457/gjc1mwvb17ghky7dvi1u.png"
                     };
                     await userManager.CreateAsync(newAppUser2, "Password@64");
                     await userManager.AddToRoleAsync(newAppUser2, UserRoles.User);
@@ -117,34 +117,52 @@ namespace ChatRooms.Data
                          },
                         new Chatroom()
                         {
-                            Name = "Baldurs Gate 4",
-                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692532380/ka3n1304vzib1u8ctsvd.webp",
-                            Description = "Dungeons and dragons game with roll playing and dice rolling",
-                            MsgLengthLimit = 269,
+                            Name = "CSGO",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692713521/y49mo720z4uwmjilpsdh.jpg",
+                            Description = "The best shooter ever",
+                            MsgLengthLimit = 0,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
                          },
                          new Chatroom()
                         {
-                            Name = "Baldurs Gate 5",
-                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692532380/ka3n1304vzib1u8ctsvd.webp",
-                            Description = "Dungeons and dragons game with roll playing and dice rolling",
-                            MsgLengthLimit = 269,
+                            Name = "Minecraft",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692713542/i6tnfgzrxuycdd1nvdpn.webp",
+                            Description = "This game never gets old",
+                            MsgLengthLimit = 0,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
                          },
                            new Chatroom()
                         {
-                            Name = "Baldurs Gate 6",
-                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692532380/ka3n1304vzib1u8ctsvd.webp",
-                            Description = "Dungeons and dragons game with roll playing and dice rolling",
-                            MsgLengthLimit = 269,
+                            Name = "Terraria",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692713574/ufqxs7ruwuqh5dlft5zq.webp",
+                            Description = "2D Action-packed Awesomeness",
+                            MsgLengthLimit = 0,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
                          },
                            new Chatroom()
                         {
-                            Name = "Baldurs Gate 7",
-                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692532380/ka3n1304vzib1u8ctsvd.webp",
-                            Description = "Dungeons and dragons game with roll playing and dice rolling",
-                            MsgLengthLimit = 269,
+                            Name = "CS2",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692713593/r85yoxynl5wokv6cgjab.jpg",
+                            Description = "When will this game come out",
+                            MsgLengthLimit = 0,
+                            OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
+                         },
+
+                           new Chatroom()
+                        {
+                            Name = "Dragon Ball",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692713622/guonhiywx2147h18wr7d.png",
+                            Description = "Best anime no questions asked",
+                            MsgLengthLimit = 0,
+                            OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
+                         },
+
+                           new Chatroom()
+                        {
+                            Name = "Age of empires 4",
+                            ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692713653/jeo3i4lxunol5xhjy4z1.webp",
+                            Description = "Realtime Strategy game, much better than Civ 6",
+                            MsgLengthLimit = 0,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
                          },
 
@@ -152,37 +170,37 @@ namespace ChatRooms.Data
                     context.SaveChanges();
                 }
                 //Messages
-                if (!context.Messages.Any())
-                {
-                    context.Messages.AddRange(new List<Message>()
-                    {
-                        new Message()
-                        {
-                            Content = "Hello everyone, how is it going!",
-                            Length = "Hello everyone, how is it going!".Length,
-                            TimeStamp = DateTime.Parse("2023/08/01"),
-                            UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
-                            ChatroomId=1,
-                        },
-                         new Message()
-                        {
-                            Content = "It not growing so great, my website is a disaster!",
-                            Length = "It not growing so great, my website is a disaster!".Length,
-                            TimeStamp = DateTime.Parse("2023/08/02"),
-                            UserId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
-                            ChatroomId=1,
-                        },
-                           new Message()
-                        {
-                            Content = "Sucks to suck hey",
-                            Length = "Sucks to suck hey".Length,
-                            TimeStamp = DateTime.Parse("2023/08/03"),
-                            UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
-                            ChatroomId=1,
-                        },
-                    });
-                    context.SaveChanges();
-                }
+                //if (!context.Messages.Any())
+                //{
+                //    context.Messages.AddRange(new List<Message>()
+                //    {
+                //        new Message()
+                //        {
+                //            Content = "<p>Hello everyone, how is it going!</p>",
+                //            Length = "Hello everyone, how is it going!".Length,
+                //            TimeStamp = DateTime.Parse("2023/08/01"),
+                //            UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
+                //            ChatroomId=1,
+                //        },
+                //         new Message()
+                //        {
+                //            Content = "<p>It not growing so great, my website is a disaster!</p>",
+                //            Length = "It not growing so great, my website is a disaster!".Length,
+                //            TimeStamp = DateTime.Parse("2023/08/02"),
+                //            UserId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602",
+                //            ChatroomId=1,
+                //        },
+                //           new Message()
+                //        {
+                //            Content = "<p>Sucks to suck hey</p>",
+                //            Length = "Sucks to suck hey".Length,
+                //            TimeStamp = DateTime.Parse("2023/08/03"),
+                //            UserId = "bbd74782-525a-4c59-9700-5a0b728bf0c6",
+                //            ChatroomId=1,
+                //        },
+                //    });
+                //context.SaveChanges();
+                //}
             }
         }
     }
