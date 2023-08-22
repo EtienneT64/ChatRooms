@@ -58,7 +58,6 @@ namespace ChatRooms.Repository
             return userPinnedChatrooms.Count();
         }
 
-
         public bool Save()
         {
             var saved = _context.SaveChanges();
