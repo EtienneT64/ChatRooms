@@ -54,7 +54,7 @@ namespace ChatRooms.Controllers
                     break;
             }
 
-            int pageSizeOwned = 3;
+            int pageSizeOwned = 2;
 
             ViewData["CurrentSortPinned"] = sortOrderPinned;
             ViewData["NameSortParmPinned"] = String.IsNullOrEmpty(sortOrderPinned) ? "pinned_name_desc" : "";
@@ -88,7 +88,7 @@ namespace ChatRooms.Controllers
                     break;
             }
 
-            int pageSizePinned = 3;
+            int pageSizePinned = 2;
 
             var dashboardViewModel = new DashboardViewModel()
             {

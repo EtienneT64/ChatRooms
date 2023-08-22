@@ -18,8 +18,9 @@ namespace ChatRooms.Controllers
         private readonly IHubContext<ChatHub> _chatHubContext;
         private readonly IPhotoService _photoService;
         private readonly IChatroomService _chatroomService;
+        private readonly IDashboardRepository _dashboardRepository;
 
-        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext, IPhotoService photoService, IChatroomService chatroomService)
+        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext, IPhotoService photoService, IChatroomService chatroomService, IDashboardRepository dashboardRepository)
         {
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
@@ -27,6 +28,7 @@ namespace ChatRooms.Controllers
             _chatHubContext = chatHubContext;
             _photoService = photoService;
             _chatroomService = chatroomService;
+            _dashboardRepository = dashboardRepository;
         }
 
         // GET: Chatrooms
@@ -264,13 +266,23 @@ namespace ChatRooms.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: Chatrooms/Delete/1
+        // POST: Chatrooms/Pin/1
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Pin(int id)
         {
             var currUser = HttpContext.User.GetUserId();
-            await _chatroomService.PinChatroomAsync(currUser, id);
+            var chatroom = await _chatroomRepository.GetByIdAsync(id);
+            var pinnedChatrooms = _dashboardRepository.GetAllUserPinnedChatroomsQuery();
+
+            if (await pinnedChatrooms.ContainsAsync(chatroom))
+            {
+                await _chatroomService.UnpinChatroomAsync(currUser, id);
+            }
+            else
+            {
+                await _chatroomService.PinChatroomAsync(currUser, id);
+            }
 
             return Ok();
         }

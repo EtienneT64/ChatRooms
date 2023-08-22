@@ -8,11 +8,12 @@
             type: "POST",
             url: "/Chatrooms/Pin/" + itemId,
             success: function (result) {
-                // Handle the success response here
+            
                 console.log("Pin successful!");
+                location.reload();
             },
             error: function (error) {
-                // Handle the error response here
+           
                 console.log("Pin failed:", error);
             }
         });
