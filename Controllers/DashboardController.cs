@@ -2,6 +2,7 @@
 using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using ChatRooms.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,16 +11,14 @@ namespace ChatRooms.Controllers
     public class DashboardController : Controller
     {
         private readonly IDashboardRepository _dashboardRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IPhotoService _photoService;
 
-        public DashboardController(IDashboardRepository dashboardRepositiory, IHttpContextAccessor httpContextAccessor, IPhotoService photoService)
+        public DashboardController(IDashboardRepository dashboardRepository)
         {
-            _dashboardRepository = dashboardRepositiory;
-            _httpContextAccessor = httpContextAccessor;
-            _photoService = photoService;
+            _dashboardRepository = dashboardRepository;
         }
 
+        // GET: Dashboard
+        [Authorize]
         public async Task<IActionResult> Index(string sortOrderOwned, string currentFilterOwned, string searchStringOwned, int? pageNumberOwned, string sortOrderPinned, string currentFilterPinned, string searchStringPinned, int? pageNumberPinned)
         {
             ViewData["CurrentSortOwned"] = sortOrderOwned;
@@ -41,7 +40,6 @@ namespace ChatRooms.Controllers
             if (!String.IsNullOrEmpty(searchStringOwned))
             {
                 userOwnedChatrooms = userOwnedChatrooms.Where(c => c.Name.ToUpper().Contains(searchStringOwned.ToUpper()));
-                //userOwnedChatrooms = userOwnedChatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()) || c.Description.ToUpper().Contains(searchString.ToUpper()));
             }
 
             switch (sortOrderOwned)
@@ -75,7 +73,6 @@ namespace ChatRooms.Controllers
             if (!String.IsNullOrEmpty(searchStringPinned))
             {
                 userPinnedChatrooms = userPinnedChatrooms.Where(c => c.Name.ToUpper().Contains(searchStringPinned.ToUpper()));
-                //userOwnedChatrooms = userOwnedChatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()) || c.Description.ToUpper().Contains(searchString.ToUpper()));
             }
 
             switch (sortOrderPinned)

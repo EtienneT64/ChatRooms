@@ -1,5 +1,4 @@
-﻿using ChatRooms.Interfaces;
-using ChatRooms.Models;
+﻿using ChatRooms.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,14 +7,13 @@ namespace ChatRooms.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUserRepository _userRepository;
 
-        public HomeController(ILogger<HomeController> logger, IUserRepository userRepository)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _userRepository = userRepository;
         }
 
+        // GET: Home
         public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -25,6 +23,7 @@ namespace ChatRooms.Controllers
             return View();
         }
 
+        // GET: Home/Privacy
         public IActionResult Privacy()
         {
             return View();

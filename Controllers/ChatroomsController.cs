@@ -1,11 +1,9 @@
 ﻿using ChatRooms.Helpers;
-using ChatRooms.Hubs;
 using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatRooms.Controllers
@@ -15,17 +13,15 @@ namespace ChatRooms.Controllers
         private readonly IChatroomRepository _chatroomRepository;
         private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IHubContext<ChatHub> _chatHubContext;
         private readonly IPhotoService _photoService;
         private readonly IChatroomService _chatroomService;
         private readonly IDashboardRepository _dashboardRepository;
 
-        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IHubContext<ChatHub> chatHubContext, IPhotoService photoService, IChatroomService chatroomService, IDashboardRepository dashboardRepository)
+        public ChatroomsController(IChatroomRepository chatroomRepository, IMessageRepository messageRepository, IUserRepository userRepository, IPhotoService photoService, IChatroomService chatroomService, IDashboardRepository dashboardRepository)
         {
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
             _userRepository = userRepository;
-            _chatHubContext = chatHubContext;
             _photoService = photoService;
             _chatroomService = chatroomService;
             _dashboardRepository = dashboardRepository;
@@ -54,7 +50,6 @@ namespace ChatRooms.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 chatrooms = chatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()));
-                //chatrooms = chatrooms.Where(c => c.Name.ToUpper().Contains(searchString.ToUpper()) || c.Description.ToUpper().Contains(searchString.ToUpper()));
             }
 
             switch (sortOrder)
@@ -159,6 +154,7 @@ namespace ChatRooms.Controllers
         }
 
         // GET: Chatrooms/Edit/1
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             var chatroom = await _chatroomRepository.GetByIdAsync(id);

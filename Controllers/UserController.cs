@@ -21,13 +21,12 @@ namespace ChatRooms.Controllers
             _userRepository = userRepository;
             _chatroomRepository = chatroomRepository;
             _messageRepository = messageRepository;
-
             _photoService = photoService;
-
             _userManager = userManager;
         }
 
-
+        // GET: User
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var currUser = HttpContext.User.GetUserId();
@@ -51,6 +50,7 @@ namespace ChatRooms.Controllers
         }
 
         // GET: User/Edit/1
+        [Authorize]
         public async Task<IActionResult> Edit(string? id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
@@ -76,7 +76,6 @@ namespace ChatRooms.Controllers
                 return View("Edit", userVM);
             }
 
-            //var user = await _userRepository.GetUserByIdAsyncNoTracking(id);
             var user = await _userManager.FindByIdAsync(id);
             if (user == null) return View("Error");
 
@@ -93,13 +92,6 @@ namespace ChatRooms.Controllers
                 _ = _photoService.DeletePhotoAsync(user.ProfileImageUrl);
             }
 
-            //var editedUser = new User
-            //{
-            //    Id = id,
-            //    UserName = userVM.UserName,
-            //    ProfileImageUrl = photoResult.Url.ToString(),
-            //};
-
             try
             {
                 user.UserName = userVM.UserName;
@@ -109,18 +101,12 @@ namespace ChatRooms.Controllers
             }
             catch (Exception ex)
             {
+                return View("Error");
             }
-
-
-            //_userRepository.Update(editedUser);
 
             return RedirectToAction("Index");
         }
 
-        //public async Task<IActionResult> Delete(string id)
-        //{
-
-        //}
 
         // GET: User/Delete/1
         [Authorize]
@@ -128,7 +114,6 @@ namespace ChatRooms.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null) return View("Error");
-
 
             var userVM = new UserEditViewModel
             {
@@ -158,7 +143,7 @@ namespace ChatRooms.Controllers
             }
             catch (Exception ex)
             {
-
+                return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction("Index", "Home");

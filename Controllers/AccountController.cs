@@ -1,6 +1,7 @@
 ﻿using ChatRooms.Data;
 using ChatRooms.Models;
 using ChatRooms.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,17 +12,20 @@ namespace ChatRooms.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ChatroomContext context)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
         }
+
+        // GET: Account/Login
         public IActionResult Login()
         {
             var response = new LoginViewModel();
             return View(response);
         }
 
+        // POST: Account/Login
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -51,12 +55,14 @@ namespace ChatRooms.Controllers
             return View(loginViewModel);
         }
 
+        // GET: Account/Register
         public IActionResult Register()
         {
             var response = new RegisterViewModel();
             return View(response);
         }
 
+        // POST: Account/Register
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
@@ -83,6 +89,8 @@ namespace ChatRooms.Controllers
             return View(registerViewModel);
         }
 
+        // POST: Account/Logout
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
