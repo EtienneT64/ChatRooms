@@ -69,9 +69,12 @@ namespace ChatRooms.Controllers
 
             int pageSize = 6;
 
+            var pinnedChatrooms = _dashboardRepository.GetAllUserPinnedChatroomsQuery();
             var chatroomVM = new ChatroomIndexViewModel()
             {
-                Chatrooms = await PaginatedList<Chatroom>.CreateAsync(chatrooms.AsNoTracking(), pageNumber ?? 1, pageSize)
+                Chatrooms = await PaginatedList<Chatroom>.CreateAsync(chatrooms.AsNoTracking(), pageNumber ?? 1, pageSize),
+                PinnedChatrooms = pinnedChatrooms,
+
             };
             return View(chatroomVM);
         }
