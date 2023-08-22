@@ -23,7 +23,7 @@
     <a asp-action="Index" class="btn btn-primary" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Sort by name</a>
 </div>
 
-<div class="album py-5 bg-light">
+<div class="container2">
     <div class="container">
 
         <div class="row">
@@ -45,16 +45,16 @@
                             <p class="card-text">@item.Description</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
-                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Join</a>
+                                    <a asp-controller="Chatrooms" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" style="color:white">Details</a>
+                                    <a asp-controller="Chatrooms" asp-action="Chat" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" style="color:white">Join</a>
                                     @{
                                         if (Model.PinnedChatrooms != null && Model.PinnedChatrooms.Contains(item))
                                         {
-                                            <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Unpin</a>
+                                            <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary" style="color:white">Unpin</a>
                                         }
                                         else
                                         {
-                                            <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary">Pin</a>
+                                            <a href="#" data-id="@item.Id" class="pinButton btn btn-sm btn-outline-secondary" style="color:white">Pin</a>
                                         }
                                     }
                                  
