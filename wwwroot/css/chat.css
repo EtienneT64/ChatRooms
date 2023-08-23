@@ -1,0 +1,18 @@
+﻿.avatar-container {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	overflow: hidden;
+	display: inline-block;
+	margin-right: 10px; /* Adjust as needed */
+}
+
+	.avatar-container img {
+		width: 100%;
+		height: auto;
+	}
+
+.message-content {
+	display: inline-block;
+	vertical-align: top;
+}

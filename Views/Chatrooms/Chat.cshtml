@@ -6,6 +6,8 @@
     ViewData["Title"] = Model.ChatroomName + " Chat";
 }
 
+<link rel="stylesheet" href="~/css/chat.css" />
+
 <div class="text-center">
     <h1 class="display-4">@Model.ChatroomName</h1>
 </div>
@@ -28,14 +30,18 @@
                             <div class="d-flex flex-row justify-content-start">
                                 <div>
                                 <ul id="messagesList" style="overflow-anchor: none;">
-                                        @foreach (Message message in Model.Messages)
-                                        {
-                                            var timeStamp = FormatTime.FormatTimeStamp(message.TimeStamp, DateTime.Now);
+                                    @foreach (Message message in Model.Messages)
+                                    {
+                                        var timeStamp = FormatTime.FormatTimeStamp(message.TimeStamp, DateTime.Now);
                                         <li>
-                                            <img src="@Model.ProfileImageUrl"
-                                                 alt="User Profile Picture" style="width: 45px; height: 100%;">@Html.Raw($"{Model.UserName} {timeStamp} {message.Content}")
+                                            <div class="avatar-container">
+                                                <img src="@Model.ProfileImageUrl" alt="User Profile Picture" />
+                                            </div>
+                                            <div class="message-content">
+                                                @Html.Raw($"{message.UserId} {timeStamp} {message.Content}")
+                                            </div>
                                         </li>
-                                        }
+                                    }
                                 </ul>
                                 <div id="anchor" style="overflow-anchor: auto; height: 1px;"></div>
                                    
