@@ -13,7 +13,7 @@
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center h-100">
             <div class="col col-md-9 col-lg-7 col-xl-5">
-                <div class="card" style="border-radius: 15px; background-color: #6E6E6E;">
+                <div class="card" style="border-radius: 15px; background-color: rgb(68, 68, 68);">
                     <div class="card-body p-4">
                         <div class="d-flex text-black" >
                             <div class="flex-shrink-0">
@@ -27,25 +27,27 @@
                                 }
                             </div>
                             <div class="flex-grow-1 ms-3" >
-                                <h5 class="mb-1">@Model.UserName</h5>
-                                <p class="mb-2 pb-1" style="color: #2b2a2a;">Resident Chatter</p>
+                                <h5 class="mb-1" style="color: white; font-weight: bold;font-size: 1.1em;">
+                                    @Model.UserName
+                                </h5>
+                                <p class="mb-2 pb-1" style="color: #f2f2f2;">Resident Chatter</p>
                                 <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                                     style="background-color: #6E6E6E;">
+                                     style="background-color: #303030">
                                     <div>
-                                        <p class="small text-muted mb-1">Owned Chatrooms</p>
-                                        <p class="mb-0">@Model.OwnedChatrooms</p>
+                                        <p class="small mb-1" style="color: whitesmoke">Owned Chatrooms</p>
+                                        <p class="mb-0" style="color: white; font-weight: bold;">@Model.OwnedChatrooms</p>
                                     </div>
                                     <div class="px-3">
-                                        <p class="small text-muted mb-1">Pinned Chatrooms</p>
-                                        <p class="mb-0">@Model.PinnedChatrooms</p>
+                                        <p class="small mb-1" style="color: whitesmoke">Pinned Chatrooms</p>
+                                        <p class="mb-0" style="color: white; font-weight: bold;">@Model.PinnedChatrooms</p>
                                     </div>
                                     <div>
-                                        <p class="small text-muted mb-1">Total Messages</p>
-                                        <p class="mb-0">@Model.UserMessages</p>
+                                        <p class="small mb-1" style="color: whitesmoke">Total Messages</p>
+                                        <p class="mb-0" style="color: white; font-weight: bold;">@Model.UserMessages</p>
                                     </div>
                                 </div>
                                 <div class="d-flex pt-1">
-                                    <a asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-primary flex-grow-1">Edit</a>
+                                    <a asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-primary flex-grow-1" style="margin-right: 10px">Edit</a>
                                     <a asp-area="" asp-controller="User" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger me-1 flex-grow-1">Delete</a>
                                    
                                 </div>
