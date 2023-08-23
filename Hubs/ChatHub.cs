@@ -24,15 +24,25 @@ namespace ChatRooms.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, chatroomName);
 
             var user = await _userRepository.GetUserByNameAsync(Context.User.Identity.Name);
+            string userImageUrl = user.ProfileImageUrl;
+            string userName = user.UserName;
+            string joinMessage = $"has joined the Chat {chatroomName}";
+            string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
 
-            await Clients.Group(chatroomName).SendAsync("Send", $"{user.UserName} has joined the ChatRoom {chatroomName}.");
+            await Clients.Group(chatroomName).SendAsync("Send", userImageUrl, userName, joinMessage, timeStamp);
         }
 
         public async Task LeaveRoom(string chatroomName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomName);
 
-            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has left the ChatRoom {chatroomName}.");
+            var user = await _userRepository.GetUserByNameAsync(Context.User.Identity.Name);
+            string userImageUrl = user.ProfileImageUrl;
+            string userName = user.UserName;
+            string leaveMessage = $"has left the Chat {chatroomName}";
+            string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
+
+            await Clients.Group(chatroomName).SendAsync("Send", userImageUrl, userName, leaveMessage, timeStamp);
         }
 
 
