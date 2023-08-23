@@ -54,8 +54,6 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
 
             alert("Message length exceeds the maximum limit of " + msgLengthLimit + " characters.");
 
-            tinyMCE.activeEditor.setContent('');
-
             // Set focus on the TinyMCE editor
             tinymce.activeEditor.focus();
             return;
