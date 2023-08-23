@@ -8,7 +8,7 @@
     toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
         'bullist numlist checklist outdent indent | removeformat | code table help',
     skin: "oxide-dark",
-    content_css: "dark",
+    content_css: "dark, /css/tinymce.css",
     height: '260px',
     newline_behavior: 'linebreak',
 });

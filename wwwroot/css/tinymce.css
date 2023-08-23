@@ -1,0 +1,28 @@
+﻿body {
+	color-scheme: dark;
+}
+
+div {
+	word-wrap: break-word;
+}
+
+p {
+	word-wrap: break-word;
+}
+
+/* TinyMCE specific rules */
+body.mceContentBody {
+	color-scheme: dark;
+}
+
+.mceContentBody div {
+	word-wrap: break-word !important; /* FF requires a important here */
+}
+
+.mceContentBody p {
+	word-wrap: break-word !important; /* FF requires a important here */
+}
+
+#messageContent p {
+	word-wrap: break-word;
+}

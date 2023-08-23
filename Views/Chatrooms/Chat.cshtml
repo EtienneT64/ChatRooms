@@ -26,7 +26,7 @@
                         </a>
                     </div>
 
-                    <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px; max-height: 600px; overflow-y: auto;">
+                    <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px; max-height: 600px; overflow-y: auto; word-wrap: break-word;">
                             <div class="d-flex flex-row justify-content-start">
                                 <div>
                                 <ul id="messagesList" style="overflow-anchor: none; list-style: none; padding: 0;">
@@ -37,11 +37,11 @@
                                             <div class="avatar-container">
                                                 <img src="@message.User?.ProfileImageUrl" alt="User Profile Picture" />
                                             </div>
-                                            <div class="message-content">
+                                            <div class="message-content" style="word-wrap: break-word">
                                                 <span class="user-name">@message.User?.UserName</span>
                                                 <span class="time-stamp">@timeStamp</span>
                                                 <br />
-                                                <div class="user-message">@Html.Raw(message.Content)</div>
+                                                <div class="user-message" style="word-wrap: break-word">@Html.Raw(message.Content)</div>
                                             </div>
                                         </li>
                                     }
