@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /*!
  * Bootswatch v5.3.1 (https://bootswatch.com)
  * Theme: darkly
@@ -2387,11 +2387,11 @@ progress {
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
-	color: #303030;
+	color: #fff;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	background-color: #fff;
+	background-color: #303030;
 	background-clip: padding-box;
 	border: var(--bs-border-width) solid #222;
 	border-radius: var(--bs-border-radius);
@@ -2413,9 +2413,9 @@ progress {
 	}
 
 .form-control:focus {
-	color: #303030;
-	background-color: #fff;
-	border-color: #9badbf;
+	color: #fff;
+	background-color: #303030;
+	border-color: #000;
 	outline: 0;
 	box-shadow: 0 0 0 0.25rem rgba(55, 90, 127, 0.25);
 }
@@ -8308,7 +8308,7 @@ textarea.form-control-lg {
 }
 
 .border-top {
-	border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+	/* border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important; */
 }
 
 .border-top-0 {
@@ -8324,7 +8324,7 @@ textarea.form-control-lg {
 }
 
 .border-bottom {
-	border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+	/* border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important; */
 }
 
 .border-bottom-0 {
@@ -13820,4 +13820,6 @@ textarea.form-control-lg {
 .tooltip {
 	--bs-tooltip-bg: var(--bs-tertiary-bg);
 	--bs-tooltip-color: var(--bs-emphasis-color);
+}
+;
 }
