@@ -23,7 +23,9 @@ namespace ChatRooms.Hubs
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatroomName);
 
-            await Clients.Group(chatroomName).SendAsync("Send", $"{Context.User.Identity.Name} has joined the ChatRoom {chatroomName}.");
+            var user = await _userRepository.GetUserByNameAsync(Context.User.Identity.Name);
+
+            await Clients.Group(chatroomName).SendAsync("Send", $"{user.UserName} has joined the ChatRoom {chatroomName}.");
         }
 
         public async Task LeaveRoom(string chatroomName)

@@ -40,6 +40,17 @@ namespace ChatRooms.Repository
             return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async Task<User> GetUserByNameAsync(string? userName)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+        }
+
+        public async Task<User> GetUserByNameAsyncNoTracking(string? userName)
+        {
+            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.UserName == userName);
+        }
+
+
         public int CountMessagesByUserId(string id)
         {
             var userMessages = _context.Messages.Where(m => m.UserId == id);

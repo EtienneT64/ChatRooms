@@ -7,6 +7,8 @@ namespace ChatRooms.Interfaces
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(string id);
         Task<User> GetUserByIdAsyncNoTracking(string? id);
+        Task<User> GetUserByNameAsync(string? userName);
+        Task<User> GetUserByNameAsyncNoTracking(string? userName);
 
         int CountMessagesByUserId(string id);
         int CountChatroomsByUserId(string id);
