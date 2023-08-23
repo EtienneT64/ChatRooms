@@ -42,6 +42,7 @@ namespace ChatRooms.Repository
         public async Task<IEnumerable<Message>> GetMessagesByChatroomId(int? id)
         {
             return await _context.Messages
+                .Include(m => m.User)
                 .Where(message => message.ChatroomId == id)
                 .ToListAsync();
         }
@@ -49,6 +50,7 @@ namespace ChatRooms.Repository
         public async Task<IEnumerable<Message>> GetMessagesByChatroomIdTake(int? id, int amount)
         {
             return await _context.Messages
+                .Include(m => m.User)
                 .Where(message => message.ChatroomId == id)
                 .Take(amount).ToListAsync();
         }

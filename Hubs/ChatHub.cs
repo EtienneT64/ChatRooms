@@ -38,19 +38,24 @@ namespace ChatRooms.Hubs
         {
             var chatroom = await _chatroomRepository.GetByNameAsync(chatroomName);
             var user = await _userRepository.GetUserByIdAsync(userId);
-            var newMessage = new Message
+            if (chatroom != null && user != null)
             {
-                Content = messageContent,
-                Length = messageContent.Length,
-                TimeStamp = DateTime.Now,
-                UserId = userId,
-                ChatroomId = chatroom.Id,
-            };
+                var newMessage = new Message
+                {
+                    Content = messageContent,
+                    Length = messageContent.Length,
+                    TimeStamp = DateTime.Now,
+                    UserId = userId,
+                    ChatroomId = chatroom.Id,
+                    User = user,
+                };
 
-            _messageRepository.Add(newMessage);
 
-            string messageTimeStamp = FormatTime.FormatTimeStamp(newMessage.TimeStamp, DateTime.Now);
-            await Clients.Group(chatroomName).SendAsync("ReceiveMessage", user.ProfileImageUrl, user.UserName, messageTimeStamp, messageContent);
+                _messageRepository.Add(newMessage);
+
+                string messageTimeStamp = FormatTime.FormatTimeStamp(newMessage.TimeStamp, DateTime.Now);
+                await Clients.Group(chatroomName).SendAsync("ReceiveMessage", user.ProfileImageUrl, user.UserName, messageTimeStamp, newMessage.Content);
+            }
         }
     }
 }
