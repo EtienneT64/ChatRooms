@@ -43,24 +43,6 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
     }
 });
 
-//connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
-//    const li = document.createElement("li");
-//    const avatarContainer = document.createElement("div");
-//    avatarContainer.classList.add("avatar-container");
-//    const avatarImg = document.createElement("img");
-//    avatarImg.src = userImage;
-//    avatarImg.alt = "User Profile Picture";
-//    avatarContainer.appendChild(avatarImg);
-//    li.appendChild(avatarContainer);
-
-//    const messageContentDiv = document.createElement("div");
-//    messageContentDiv.classList.add("message-content");
-//    messageContentDiv.innerHTML = `${user} ${timeStamp} ${message}`;
-//    li.appendChild(messageContentDiv);
-
-//    document.getElementById("messagesList").appendChild(li);
-//});
-
 connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
     const li = document.createElement("li");
     const avatarContainer = document.createElement("div");
@@ -98,13 +80,6 @@ connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
 
     document.getElementById("messagesList").appendChild(li);
 });
-
-
-//connection.on("ReceiveSystemMessage", (userImageUrl, userName, joinMessage, timeStamp) => {
-//    const li = document.createElement("li");
-//    document.getElementById("messagesList").appendChild(li);
-//    li.innerHTML = `${joinMessage}`;
-//});
 
 connection.on("ReceiveSystemMessage", (userImage, user, message, timeStamp) => {
     const li = document.createElement("li");
