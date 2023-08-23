@@ -111,7 +111,7 @@
 	--bs-highlight-bg: #fdebd0;
 	--bs-border-width: 1px;
 	--bs-border-style: solid;
-	--bs-border-color: #dee2e6;
+	--bs-border-color: #303030;
 	--bs-border-color-translucent: rgba(0, 0, 0, 0.175);
 	--bs-border-radius: 0.375rem;
 	--bs-border-radius-sm: 0.25rem;
@@ -8324,7 +8324,7 @@ textarea.form-control-lg {
 }
 
 .border-bottom {
-	/* border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important; */
+	border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 }
 
 .border-bottom-0 {
