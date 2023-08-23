@@ -78,35 +78,55 @@ namespace ChatRooms.Controllers
                 return View("Edit", userVM);
             }
 
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null) return View("Error");
-
-            var photoResult = await _photoService.AddProfilePictureAsync(userVM.Image);
-
-            if (photoResult.Error != null)
+            if (userVM.Image == null)
             {
-                ModelState.AddModelError("Image", "Photo upload failed");
-                return View(userVM);
-            }
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null) return View("Error");
 
-            if (!string.IsNullOrEmpty(user.ProfileImageUrl))
+                try
+                {
+                    user.UserName = userVM.UserName;
+                    await _userManager.UpdateAsync(user);
+                }
+                catch (Exception ex)
+                {
+                    return View("Error");
+                }
+
+                return RedirectToAction("Index");
+            }
+            else
             {
-                _ = _photoService.DeletePhotoAsync(user.ProfileImageUrl);
-            }
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null) return View("Error");
 
-            try
-            {
-                user.UserName = userVM.UserName;
-                user.ProfileImageUrl = photoResult.Url.ToString();
+                var photoResult = await _photoService.AddProfilePictureAsync(userVM.Image);
 
-                await _userManager.UpdateAsync(user);
-            }
-            catch (Exception ex)
-            {
-                return View("Error");
-            }
+                if (photoResult.Error != null)
+                {
+                    ModelState.AddModelError("Image", "Photo upload failed");
+                    return View(userVM);
+                }
 
-            return RedirectToAction("Index");
+                if (!string.IsNullOrEmpty(user.ProfileImageUrl))
+                {
+                    _ = _photoService.DeletePhotoAsync(user.ProfileImageUrl);
+                }
+
+                try
+                {
+                    user.UserName = userVM.UserName;
+                    user.ProfileImageUrl = photoResult.Url.ToString();
+
+                    await _userManager.UpdateAsync(user);
+                }
+                catch (Exception ex)
+                {
+                    return View("Error");
+                }
+
+                return RedirectToAction("Index");
+            }
         }
 
 
