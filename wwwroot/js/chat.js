@@ -61,7 +61,7 @@ connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
     document.getElementById("messagesList").appendChild(li);
 });
 
-connection.on("Send", (userImageUrl, userName, joinMessage, timeStamp) => {
+connection.on("ReceiveSystemMessage", (userImageUrl, userName, joinMessage, timeStamp) => {
     const li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
     li.innerHTML = `${joinMessage}`;

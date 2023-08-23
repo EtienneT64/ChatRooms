@@ -29,7 +29,7 @@ namespace ChatRooms.Hubs
             string joinMessage = $"has joined the {chatroomName} Chat";
             string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
 
-            await Clients.Group(chatroomName).SendAsync("Send", userImageUrl, userName, joinMessage, timeStamp);
+            await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, joinMessage, timeStamp);
         }
 
         public async Task LeaveRoom(string chatroomName)
@@ -42,7 +42,7 @@ namespace ChatRooms.Hubs
             string leaveMessage = $"has left the {chatroomName} Chat";
             string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
 
-            await Clients.Group(chatroomName).SendAsync("Send", userImageUrl, userName, leaveMessage, timeStamp);
+            await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, leaveMessage, timeStamp);
         }
 
 
