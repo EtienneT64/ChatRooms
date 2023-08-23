@@ -6,6 +6,7 @@ namespace ChatRooms.ViewModels
     {
         public string UserId { get; set; }
         public string? UserName { get; set; }
+        public string? ProfileImageUrl { get; set; }
         public int? ChatroomId { get; set; }
         public string? ChatroomName { get; set; }
         public string? MessageContent { get; set; }

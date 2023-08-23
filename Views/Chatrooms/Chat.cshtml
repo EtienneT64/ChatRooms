@@ -31,7 +31,10 @@
                                         @foreach (Message message in Model.Messages)
                                         {
                                             var timeStamp = FormatTime.FormatTimeStamp(message.TimeStamp, DateTime.Now);
-                                        <li>@Html.Raw($"{Model.UserName} {timeStamp} {message.Content}")</li>
+                                        <li>
+                                            <img src="@Model.ProfileImageUrl"
+                                                 alt="User Profile Picture" style="width: 45px; height: 100%;">@Html.Raw($"{Model.UserName} {timeStamp} {message.Content}")
+                                        </li>
                                         }
                                 </ul>
                                 <div id="anchor" style="overflow-anchor: auto; height: 1px;"></div>

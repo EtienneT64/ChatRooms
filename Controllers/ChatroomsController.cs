@@ -107,6 +107,7 @@ namespace ChatRooms.Controllers
             {
                 UserId = userId,
                 UserName = user.UserName,
+                ProfileImageUrl = user.ProfileImageUrl,
                 ChatroomId = id,
                 ChatroomName = chatroom.Name,
                 Messages = messages,
