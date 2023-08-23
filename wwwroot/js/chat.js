@@ -43,7 +43,7 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
     }
 });
 
-connection.on("ReceiveMessage", (user, timeStamp, message) => {
+connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
     const li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
     li.innerHTML = `${user} ${timeStamp} ${message}`;

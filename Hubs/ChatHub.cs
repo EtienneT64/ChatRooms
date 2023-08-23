@@ -11,11 +11,13 @@ namespace ChatRooms.Hubs
     {
         private readonly IMessageRepository _messageRepository;
         private readonly IChatroomRepository _chatroomRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ChatHub(IMessageRepository messageRepository, IChatroomRepository chatroomRepository)
+        public ChatHub(IMessageRepository messageRepository, IChatroomRepository chatroomRepository, IUserRepository userRepository)
         {
             _messageRepository = messageRepository;
             _chatroomRepository = chatroomRepository;
+            _userRepository = userRepository;
         }
         public async Task JoinRoom(string chatroomName)
         {
@@ -35,6 +37,7 @@ namespace ChatRooms.Hubs
         public async Task SendMessageToGroup(string chatroomName, string userId, string messageContent)
         {
             var chatroom = await _chatroomRepository.GetByNameAsync(chatroomName);
+            var user = await _userRepository.GetUserByIdAsync(userId);
             var newMessage = new Message
             {
                 Content = messageContent,
@@ -47,7 +50,7 @@ namespace ChatRooms.Hubs
             _messageRepository.Add(newMessage);
 
             string messageTimeStamp = FormatTime.FormatTimeStamp(newMessage.TimeStamp, DateTime.Now);
-            await Clients.Group(chatroomName).SendAsync("ReceiveMessage", Context.User.Identity.Name, messageTimeStamp, messageContent);
+            await Clients.Group(chatroomName).SendAsync("ReceiveMessage", user.ProfileImageUrl, user.UserName, messageTimeStamp, messageContent);
         }
     }
 }

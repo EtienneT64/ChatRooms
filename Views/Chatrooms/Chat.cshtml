@@ -35,10 +35,10 @@
                                         var timeStamp = FormatTime.FormatTimeStamp(message.TimeStamp, DateTime.Now);
                                         <li>
                                             <div class="avatar-container">
-                                                <img src="@Model.ProfileImageUrl" alt="User Profile Picture" />
+                                                <img src="@message.User?.ProfileImageUrl" alt="User Profile Picture" />
                                             </div>
                                             <div class="message-content">
-                                                @Html.Raw($"{message.UserId} {timeStamp} {message.Content}")
+                                                @Html.Raw($"{message.User?.UserName} {timeStamp} {message.Content}")
                                             </div>
                                         </li>
                                     }
