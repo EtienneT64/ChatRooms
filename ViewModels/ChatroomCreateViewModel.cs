@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace ChatRooms.ViewModels
 {
@@ -11,7 +10,6 @@ namespace ChatRooms.ViewModels
         public int MsgLengthLimit { get; set; }
         public string? ChatroomImageUrl { get; set; }
         public string OwnerId { get; set; }
-        [Required]
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

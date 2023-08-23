@@ -135,21 +135,32 @@ namespace ChatRooms.Controllers
             {
                 if (chatroomVM.Image == null)
                 {
-                    return View("Create", chatroomVM);
+                    var chatroom = new Chatroom
+                    {
+                        Name = chatroomVM.Name,
+                        Description = chatroomVM.Description,
+                        MsgLengthLimit = chatroomVM.MsgLengthLimit,
+                        ChatroomImageUrl = chatroomVM.ChatroomImageUrl,
+                        OwnerId = chatroomVM.OwnerId,
+                    };
+                    _chatroomRepository.Add(chatroom);
+                    return RedirectToAction("Index", "Dashboard");
                 }
-
-                var result = await _photoService.AddThumbnailAsync(chatroomVM.Image);
-
-                var chatroom = new Chatroom
+                else
                 {
-                    Name = chatroomVM.Name,
-                    Description = chatroomVM.Description,
-                    MsgLengthLimit = chatroomVM.MsgLengthLimit,
-                    ChatroomImageUrl = result.Url.ToString(),
-                    OwnerId = chatroomVM.OwnerId,
-                };
-                _chatroomRepository.Add(chatroom);
-                return RedirectToAction("Index", "Dashboard");
+                    var result = await _photoService.AddThumbnailAsync(chatroomVM.Image);
+
+                    var chatroom = new Chatroom
+                    {
+                        Name = chatroomVM.Name,
+                        Description = chatroomVM.Description,
+                        MsgLengthLimit = chatroomVM.MsgLengthLimit,
+                        ChatroomImageUrl = result.Url.ToString(),
+                        OwnerId = chatroomVM.OwnerId,
+                    };
+                    _chatroomRepository.Add(chatroom);
+                    return RedirectToAction("Index", "Dashboard");
+                }
             }
             else
             {
@@ -206,34 +217,49 @@ namespace ChatRooms.Controllers
 
             if (chatRoomDetailsVM.Image == null)
             {
-                return View("Edit", chatRoomDetailsVM);
+                var chatroom = new Chatroom
+                {
+                    Id = id,
+                    Name = chatRoomDetailsVM.Name,
+                    Description = chatRoomDetailsVM.Description,
+                    MsgLengthLimit = chatRoomDetailsVM.MsgLengthLimit,
+                    ChatroomImageUrl = userChatroom.ChatroomImageUrl,
+                    OwnerId = chatRoomDetailsVM.OwnerId,
+                };
+
+                _chatroomRepository.Update(chatroom);
+
+                return RedirectToAction("Index");
             }
-            var photoResult = await _photoService.AddThumbnailAsync(chatRoomDetailsVM.Image);
-
-            if (photoResult.Error != null)
+            else
             {
-                ModelState.AddModelError("Image", "Photo upload failed");
-                return View(chatRoomDetailsVM);
+                var photoResult = await _photoService.AddThumbnailAsync(chatRoomDetailsVM.Image);
+
+                if (photoResult.Error != null)
+                {
+                    ModelState.AddModelError("Image", "Photo upload failed");
+                    return View(chatRoomDetailsVM);
+                }
+
+                if (!string.IsNullOrEmpty(userChatroom.ChatroomImageUrl))
+                {
+                    _ = _photoService.DeletePhotoAsync(userChatroom.ChatroomImageUrl);
+                }
+
+                var chatroom = new Chatroom
+                {
+                    Id = id,
+                    Name = chatRoomDetailsVM.Name,
+                    Description = chatRoomDetailsVM.Description,
+                    MsgLengthLimit = chatRoomDetailsVM.MsgLengthLimit,
+                    ChatroomImageUrl = photoResult.Url.ToString(),
+                    OwnerId = chatRoomDetailsVM.OwnerId,
+                };
+
+                _chatroomRepository.Update(chatroom);
+
+                return RedirectToAction("Index");
             }
-
-            if (!string.IsNullOrEmpty(userChatroom.ChatroomImageUrl))
-            {
-                _ = _photoService.DeletePhotoAsync(userChatroom.ChatroomImageUrl);
-            }
-
-            var chatroom = new Chatroom
-            {
-                Id = id,
-                Name = chatRoomDetailsVM.Name,
-                Description = chatRoomDetailsVM.Description,
-                MsgLengthLimit = chatRoomDetailsVM.MsgLengthLimit,
-                ChatroomImageUrl = photoResult.Url.ToString(),
-                OwnerId = chatRoomDetailsVM.OwnerId,
-            };
-
-            _chatroomRepository.Update(chatroom);
-
-            return RedirectToAction("Index");
         }
 
         // GET: Chatrooms/Delete/1
