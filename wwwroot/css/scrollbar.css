@@ -1,0 +1,19 @@
+﻿/* Customize the scrollbar track for WebKit-based browsers */
+::-webkit-scrollbar-track {
+	background-color: #333; /* Dark mode background color */
+}
+
+/* Customize the scrollbar thumb for WebKit-based browsers */
+::-webkit-scrollbar-thumb {
+	background-color: #555; /* Dark mode thumb color */
+}
+
+/* Customize the scrollbar track for Firefox */
+scrollbar-track {
+	background-color: #333; /* Dark mode background color */
+}
+
+/* Customize the scrollbar thumb for Firefox */
+scrollbar-thumb {
+	background-color: #555; /* Dark mode thumb color */
+}

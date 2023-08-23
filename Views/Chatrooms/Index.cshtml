@@ -21,7 +21,7 @@
             </div>
         </form>
 
-        <div class="text-left">
+        <div class="text-left" style="margin-bottom: 10px">
             <a asp-action="Index" class="btn btn-primary" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Sort by name</a>
         </div>
         <div class="row">
@@ -73,7 +73,8 @@
            asp-route-sortOrder="@ViewData["CurrentSort"]"
            asp-route-pageNumber="@(Model.Chatrooms.PageIndex - 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-default @prevDisabled">
+           class="btn btn-default @prevDisabled"
+            style="margin-right: 4px">
             Previous
         </a>
         <a asp-action="Index"

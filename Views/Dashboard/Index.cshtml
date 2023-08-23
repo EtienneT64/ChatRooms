@@ -81,7 +81,8 @@
                            asp-route-sortOrderOwned="@ViewData["CurrentSortOwned"]"
                            asp-route-pageNumberOwned="@(Model.OwnedChatrooms.PageIndex - 1)"
                            asp-route-currentFilterOwned="@ViewData["CurrentFilterOwned"]"
-                           class="btn btn-default @prevDisabledOwned">
+                           class="btn btn-default @prevDisabledOwned"
+                           style="margin-right: 4px">
                             Previous
                         </a>
                         <a asp-action="Index"
@@ -162,7 +163,8 @@
                            asp-route-sortOrderPinned="@ViewData["CurrentSortPinned"]"
                            asp-route-pageNumberPinned="@(Model.PinnedChatrooms.PageIndex - 1)"
                            asp-route-currentFilterPinned="@ViewData["CurrentFilterPinned"]"
-                           class="btn btn-default @prevDisabledPinned">
+                           class="btn btn-default @prevDisabledPinned"
+                            style="margin-right: 4px">
                             Previous
                         </a>
                         <a asp-action="Index"
