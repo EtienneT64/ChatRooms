@@ -9,6 +9,6 @@
             'bullist numlist checklist outdent indent | removeformat | code table help',
         skin: "oxide-dark",
         content_css: "dark",
-        height: '300px',
+        height: '260px',
         newline_behavior: 'linebreak',
     })
