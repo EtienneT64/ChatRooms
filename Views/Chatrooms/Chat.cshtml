@@ -29,7 +29,7 @@
                     <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px; max-height: 600px; overflow-y: auto;">
                             <div class="d-flex flex-row justify-content-start">
                                 <div>
-                                <ul id="messagesList" style="overflow-anchor: none;">
+                                <ul id="messagesList" style="overflow-anchor: none; list-style: none; padding: 0;">
                                     @foreach (Message message in Model.Messages)
                                     {
                                         var timeStamp = FormatTime.FormatTimeStamp(message.TimeStamp, DateTime.Now);
