@@ -38,7 +38,10 @@
                                                 <img src="@message.User?.ProfileImageUrl" alt="User Profile Picture" />
                                             </div>
                                             <div class="message-content">
-                                                @Html.Raw($"{message.User?.UserName} {timeStamp} {message.Content}")
+                                                <span class="user-name">@message.User?.UserName</span>
+                                                <span class="time-stamp">@timeStamp</span>
+                                                <br />
+                                                <div class="user-message">@Html.Raw(message.Content)</div>
                                             </div>
                                         </li>
                                     }
