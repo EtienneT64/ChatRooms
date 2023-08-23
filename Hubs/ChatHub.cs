@@ -26,7 +26,7 @@ namespace ChatRooms.Hubs
             var user = await _userRepository.GetUserByNameAsync(Context.User.Identity.Name);
             string userImageUrl = user.ProfileImageUrl;
             string userName = user.UserName;
-            string joinMessage = $"has joined the Chat {chatroomName}";
+            string joinMessage = $"has joined the {chatroomName} Chat";
             string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
 
             await Clients.Group(chatroomName).SendAsync("Send", userImageUrl, userName, joinMessage, timeStamp);
@@ -39,7 +39,7 @@ namespace ChatRooms.Hubs
             var user = await _userRepository.GetUserByNameAsync(Context.User.Identity.Name);
             string userImageUrl = user.ProfileImageUrl;
             string userName = user.UserName;
-            string leaveMessage = $"has left the Chat {chatroomName}";
+            string leaveMessage = $"has left the {chatroomName} Chat";
             string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
 
             await Clients.Group(chatroomName).SendAsync("Send", userImageUrl, userName, leaveMessage, timeStamp);

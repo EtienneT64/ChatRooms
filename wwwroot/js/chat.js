@@ -61,10 +61,10 @@ connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
     document.getElementById("messagesList").appendChild(li);
 });
 
-connection.on("Send", (message) => {
+connection.on("Send", (userImageUrl, userName, joinMessage, timeStamp) => {
     const li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
-    li.innerHTML = `${message}`;
+    li.innerHTML = `${joinMessage}`;
 });
 
 document.getElementById("leaveButton").addEventListener("click",(event) => {
