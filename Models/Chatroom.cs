@@ -14,7 +14,7 @@ namespace ChatRooms.Models
         [Required]
         public string? Description { get; set; }
         public int MsgLengthLimit { get; set; }
-        public string? ChatroomImageUrl { get; set; }
+        public string? ChatroomImageUrl { get; set; } = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692792846/huhbsufbxyvut0tx0nzy.png";
         public string OwnerId { get; set; }
 
         public ICollection<User>? Users { get; set; }
