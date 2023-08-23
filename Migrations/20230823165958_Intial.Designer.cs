@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatRooms.Migrations
 {
     [DbContext(typeof(ChatroomContext))]
-    [Migration("20230822113423_Intial")]
+    [Migration("20230823165958_Intial")]
     partial class Intial
     {
         /// <inheritdoc />
@@ -45,8 +45,7 @@ namespace ChatRooms.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("OwnerId")
                         .IsRequired()
@@ -174,23 +173,6 @@ namespace ChatRooms.Migrations
                     b.HasIndex("ChatroomId");
 
                     b.ToTable("UserPinnedChatrooms");
-                });
-
-            modelBuilder.Entity("ChatRooms.ViewModels.UserEditViewModel", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserEditViewModel");
                 });
 
             modelBuilder.Entity("ChatroomUser", b =>

@@ -4,8 +4,8 @@ namespace ChatRooms.ViewModels
 {
     public class AccountLoginViewModel
     {
+        [Required]
         [Display(Name = "Username")]
-        [Required(ErrorMessage = "Username is required")]
         public string UserName { get; set; }
         [Required]
         [DataType(DataType.Password)]
