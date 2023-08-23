@@ -43,6 +43,24 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
     }
 });
 
+//connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
+//    const li = document.createElement("li");
+//    const avatarContainer = document.createElement("div");
+//    avatarContainer.classList.add("avatar-container");
+//    const avatarImg = document.createElement("img");
+//    avatarImg.src = userImage;
+//    avatarImg.alt = "User Profile Picture";
+//    avatarContainer.appendChild(avatarImg);
+//    li.appendChild(avatarContainer);
+
+//    const messageContentDiv = document.createElement("div");
+//    messageContentDiv.classList.add("message-content");
+//    messageContentDiv.innerHTML = `${user} ${timeStamp} ${message}`;
+//    li.appendChild(messageContentDiv);
+
+//    document.getElementById("messagesList").appendChild(li);
+//});
+
 connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
     const li = document.createElement("li");
     const avatarContainer = document.createElement("div");
@@ -55,11 +73,32 @@ connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
 
     const messageContentDiv = document.createElement("div");
     messageContentDiv.classList.add("message-content");
-    messageContentDiv.innerHTML = `${user} ${timeStamp} ${message}`;
+
+    // Create separate elements for username, timestamp, and message
+    const userNameElement = document.createElement("span");
+    userNameElement.classList.add("user-name");
+    userNameElement.innerHTML = user;
+
+    const timeStampElement = document.createElement("span");
+    timeStampElement.classList.add("time-stamp");
+    timeStampElement.innerHTML = timeStamp;
+
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("user-message");
+    messageElement.innerHTML = message;
+
+    // Append elements to the message content div
+    messageContentDiv.appendChild(userNameElement);
+    messageContentDiv.appendChild(document.createTextNode(" ")); // Add space between username and timestamp
+    messageContentDiv.appendChild(timeStampElement);
+    messageContentDiv.appendChild(document.createElement("br")); // Line break
+    messageContentDiv.appendChild(messageElement);
+
     li.appendChild(messageContentDiv);
 
     document.getElementById("messagesList").appendChild(li);
 });
+
 
 //connection.on("ReceiveSystemMessage", (userImageUrl, userName, joinMessage, timeStamp) => {
 //    const li = document.createElement("li");
