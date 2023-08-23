@@ -110,6 +110,7 @@ namespace ChatRooms.Controllers
                 ProfileImageUrl = user.ProfileImageUrl,
                 ChatroomId = id,
                 ChatroomName = chatroom.Name,
+                MsgLengthLimit = chatroom.MsgLengthLimit,
                 Messages = messages,
             };
 

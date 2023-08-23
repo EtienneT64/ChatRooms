@@ -42,11 +42,24 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
 
     const chatroomName = document.getElementById("chatroomName").value;
     const userId = document.getElementById("userId").value;
+    const msgLengthLimit = document.getElementById("msgLengthLimit").value;
     const messageContentElement = document.getElementById('messageContent');
     let messageContent = tinymce.get('messageContent').getContent();
     const messageContentText = tinymce.activeEditor.getContent({ format: 'text' });
 
     if (filterOutTags(messageContent).trim() !== "") { // Check if message content is not empty or just whitespace
+        if (messageContentText.trim().length > msgLengthLimit && msgLengthLimit > 0) {
+
+            //display alert to user that the message exceed the maximum length
+
+            alert("Message length exceeds the maximum limit of " + msgLengthLimit + " characters.");
+
+            tinyMCE.activeEditor.setContent('');
+
+            // Set focus on the TinyMCE editor
+            tinymce.activeEditor.focus();
+            return;
+        }
         messageContent = filterOutBrTags(messageContent);
         connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch((err) => {
             return console.error(err.toString());

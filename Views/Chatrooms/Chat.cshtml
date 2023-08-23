@@ -57,8 +57,8 @@
                             <div class="form-group">
                                 <input type="hidden" id="chatroomName" name="ChatroomName" asp-for="@Model.ChatroomName" value="@Model.ChatroomName" />
                                 <input type="hidden" id="userId" name="UserId" asp-for="@Model.UserId" value="@Model.UserId" />
-                                <textarea type="text" id="messageContent" name="MessageContent" asp-for="@Model.MessageContent" class="form-control form-control-lg w-100"
-                                          placeholder="Type message" contenteditable="true"></textarea>
+                                <input type="hidden" id="msgLengthLimit" name="MsgLengthLimit" asp-for="@Model.MsgLengthLimit" value="@Model.MsgLengthLimit />
+                                <textarea type="text" id="messageContent" name="MessageContent" asp-for="@Model.MessageContent" class="form-control form-control-lg w-100" placeholder="Type message" contenteditable="true"></textarea>
                                 <span asp-validation-for="MessageContent" id="messageContentValidation" class="text-danger"></span>
                             </div>
                             <input type="button" id="sendButton" value="Send" class="btn btn-primary w-100" style="margin-top: 10px"/>
