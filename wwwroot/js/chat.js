@@ -61,10 +61,53 @@ connection.on("ReceiveMessage", (userImage, user, timeStamp, message) => {
     document.getElementById("messagesList").appendChild(li);
 });
 
-connection.on("ReceiveSystemMessage", (userImageUrl, userName, joinMessage, timeStamp) => {
+//connection.on("ReceiveSystemMessage", (userImageUrl, userName, joinMessage, timeStamp) => {
+//    const li = document.createElement("li");
+//    document.getElementById("messagesList").appendChild(li);
+//    li.innerHTML = `${joinMessage}`;
+//});
+
+connection.on("ReceiveSystemMessage", (userImage, user, message, timeStamp) => {
     const li = document.createElement("li");
+    li.classList.add("system-message"); // Add a class for styling system messages
+
+    const systemMessageDiv = document.createElement("div");
+    systemMessageDiv.classList.add("system-message-content");
+
+    const avatarContainer = document.createElement("div");
+    avatarContainer.classList.add("avatar-container");
+    const avatarImg = document.createElement("img");
+    avatarImg.src = userImage;
+    avatarImg.alt = "User Profile Picture";
+    avatarContainer.appendChild(avatarImg);
+    systemMessageDiv.appendChild(avatarContainer);
+
+    const contentContainer = document.createElement("div");
+    contentContainer.classList.add("content-container");
+
+    const userNameElement = document.createElement("span");
+    userNameElement.classList.add("user-name");
+    userNameElement.innerHTML = user;
+
+    const messageElement = document.createElement("span");
+    messageElement.classList.add("system-message-text");
+    messageElement.innerHTML = message;
+
+    const timeStampElement = document.createElement("span");
+    timeStampElement.classList.add("time-stamp");
+    timeStampElement.innerHTML = timeStamp;
+
+    contentContainer.appendChild(userNameElement);
+    contentContainer.appendChild(document.createTextNode(" "));
+    contentContainer.appendChild(messageElement);
+    contentContainer.appendChild(document.createTextNode(" "));
+    contentContainer.appendChild(timeStampElement);
+
+    systemMessageDiv.appendChild(contentContainer);
+
+    li.appendChild(systemMessageDiv);
+
     document.getElementById("messagesList").appendChild(li);
-    li.innerHTML = `${joinMessage}`;
 });
 
 document.getElementById("leaveButton").addEventListener("click",(event) => {
