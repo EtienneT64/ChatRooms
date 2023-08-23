@@ -3,6 +3,7 @@ using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace ChatRooms.Hubs
 {
@@ -23,26 +24,48 @@ namespace ChatRooms.Hubs
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatroomName);
 
-            var user = await _userRepository.GetUserByNameAsync(Context.User.Identity.Name);
-            string userImageUrl = user.ProfileImageUrl;
-            string userName = user.UserName;
-            string joinMessage = $"has joined the {chatroomName} Chat";
-            string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
+            // Find the claim associated with the user ID
+            var userIdClaim = Context.User.FindFirst(ClaimTypes.NameIdentifier);
 
-            await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, joinMessage, timeStamp);
+            if (userIdClaim != null)
+            {
+                var userId = userIdClaim.Value;
+                var user = await _userRepository.GetUserByIdAsync(userId);
+
+                if (user != null)
+                {
+                    string userImageUrl = user.ProfileImageUrl;
+                    string userName = user.UserName;
+                    string joinMessage = $"has joined the {chatroomName} Chat";
+                    string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
+
+                    await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, joinMessage, timeStamp);
+                }
+            }
         }
 
         public async Task LeaveRoom(string chatroomName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatroomName);
 
-            var user = await _userRepository.GetUserByNameAsync(Context.User.Identity.Name);
-            string userImageUrl = user.ProfileImageUrl;
-            string userName = user.UserName;
-            string leaveMessage = $"has left the {chatroomName} Chat";
-            string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
+            // Find the claim associated with the user ID
+            var userIdClaim = Context.User.FindFirst(ClaimTypes.NameIdentifier);
 
-            await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, leaveMessage, timeStamp);
+            if (userIdClaim != null)
+            {
+                var userId = userIdClaim.Value;
+                var user = await _userRepository.GetUserByIdAsync(userId);
+
+                if (user != null)
+                {
+                    string userImageUrl = user.ProfileImageUrl;
+                    string userName = user.UserName;
+                    string leaveMessage = $"has left the {chatroomName} Chat";
+                    string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
+
+                    await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, leaveMessage, timeStamp);
+                }
+            }
         }
 
 
