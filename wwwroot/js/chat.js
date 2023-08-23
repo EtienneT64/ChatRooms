@@ -1,5 +1,24 @@
 ﻿"use strict";
 
+function filterOutTags(inputString) {
+   const tagsRegex = /<br\s*\/?>|<\/br>|<p\s*\/?>|<\/p>|<h[1-6]\s*\/?>|<\/h[1-6]>|<pre\s*\/?>|<\/pre>/gi;
+
+    // Replace matching patterns with an empty string
+    const filteredString = inputString.replace(tagsRegex, '');
+
+    return filteredString;
+}
+
+function filterOutBrTags(inputString) {
+    // Regular expression to match <br></br> or <br>
+    const brTagRegex = /<br\s*\/?>|<\/br>/gi;
+
+    // Replace matching patterns with an empty string
+    const filteredString = inputString.replace(brTagRegex, '');
+
+    return filteredString;
+}
+
 const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 let userLeftByButton = false;
 
@@ -24,10 +43,11 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
     const chatroomName = document.getElementById("chatroomName").value;
     const userId = document.getElementById("userId").value;
     const messageContentElement = document.getElementById('messageContent');
-    const messageContent = tinymce.get('messageContent').getContent();
+    let messageContent = tinymce.get('messageContent').getContent();
     const messageContentText = tinymce.activeEditor.getContent({ format: 'text' });
 
-    if (messageContentText.trim() !== "") { // Check if message content is not empty or just whitespace
+    if (filterOutTags(messageContent).trim() !== "") { // Check if message content is not empty or just whitespace
+        messageContent = filterOutBrTags(messageContent);
         connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch((err) => {
             return console.error(err.toString());
         });
@@ -37,9 +57,11 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
 
         event.preventDefault();
     } else {
-        console.error("blank message")
-        //add red outline to message field
-        //maybe add error message
+        tinyMCE.activeEditor.setContent('');
+        console.error("blank message");
+
+        // Set focus on the TinyMCE editor
+        tinymce.activeEditor.focus();
     }
 });
 
