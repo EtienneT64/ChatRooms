@@ -230,7 +230,7 @@ namespace ChatRooms.Controllers
 
                 _chatroomRepository.Update(chatroom);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Dashboard");
             }
             else
             {
@@ -259,7 +259,7 @@ namespace ChatRooms.Controllers
 
                 _chatroomRepository.Update(chatroom);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Dashboard");
             }
         }
 
@@ -299,7 +299,7 @@ namespace ChatRooms.Controllers
             if (chatRoomDetails == null) return View("Error");
 
             _chatroomRepository.Delete(chatRoomDetails);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // POST: Chatrooms/Pin/1

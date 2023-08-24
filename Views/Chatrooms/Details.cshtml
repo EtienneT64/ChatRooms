@@ -39,7 +39,7 @@
         <a asp-action="Edit" asp-route-id="@Model?.Id" style="margin-right: 4px">Edit</a>
         <a asp-action="Delete" asp-route-id="@Model?.Id" style="margin-right: 4px">Delete</a>
     }
-    <a asp-action="Index" style="margin-right: 4px">Back to List</a>
+    <a asp-controller="Dashboard" asp-action="Index" style="margin-right: 4px">Back to List</a>
 </div>
 
 @section Scripts {
