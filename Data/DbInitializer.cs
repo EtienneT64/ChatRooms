@@ -170,7 +170,7 @@ namespace ChatRooms.Data
                             Name = "🎉 EmojiPalooza 🌈",
                             ChatroomImageUrl = "http://res.cloudinary.com/dzjsiibch/image/upload/v1692863067/t23oikpvy2gxuetddw20.jpg",
                             Description = "👋😄🤖🔤🔡🔠📝🔣🆗",
-                            MsgLengthLimit = 1,
+                            MsgLengthLimit = 2,
                             OwnerId = "bc100ece-cdd0-481a-b0a0-a8ec05dca602"
                          },
 
