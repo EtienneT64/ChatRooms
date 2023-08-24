@@ -36,22 +36,22 @@ namespace ChatRooms.Controllers
 
             if (user != null)
             {
-                //User is found, check password
+                // User is found, check password
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
                 if (passwordCheck)
                 {
-                    //Password correct, sign in
+                    // Password correct, sign in
                     var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                //Password is incorrect
+                // Password is incorrect
                 TempData["Error"] = "Wrong credentials. Please, try again";
                 return View(loginViewModel);
             }
-            //User not found
+            // User not found
             TempData["Error"] = "Wrong credentials. Please try again";
             return View(loginViewModel);
         }

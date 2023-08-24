@@ -2,7 +2,6 @@
 
 function filterOutTags(inputString) {
    const tagsRegex = /<br\s*\/?>|<\/br>|<p\s*\/?>|<\/p>|<h[1-6]\s*\/?>|<\/h[1-6]>|<pre\s*\/?>|<\/pre>/gi;
-
     // Replace matching patterns with an empty string
     const filteredString = inputString.replace(tagsRegex, '');
 
@@ -12,7 +11,6 @@ function filterOutTags(inputString) {
 function filterOutBrTags(inputString) {
     // Regular expression to match <br></br> or <br>
     const brTagRegex = /<br\s*\/?>|<\/br>/gi;
-
     // Replace matching patterns with an empty string
     const filteredString = inputString.replace(brTagRegex, '');
 
@@ -22,14 +20,12 @@ function filterOutBrTags(inputString) {
 const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 let userLeftByButton = false;
 
-//Disable the send button until connection is established.
+// Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
 connection.start().then(() => {
     document.getElementById("sendButton").disabled = false;
-
     const chatroomName = document.getElementById("chatroomName").value;
-
     connection.invoke("JoinRoom", chatroomName).catch((err) => {
         return console.error(err.toString());
     });
@@ -39,7 +35,6 @@ connection.start().then(() => {
 });
 
 document.getElementById("sendButton").addEventListener("click", (event) => {
-
     const chatroomName = document.getElementById("chatroomName").value;
     const userId = document.getElementById("userId").value;
     const msgLengthLimit = document.getElementById("msgLengthLimit").value;
@@ -49,21 +44,18 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
 
     if (filterOutTags(messageContent).trim() !== "") { // Check if message content is not empty or just whitespace
         if (messageContentText.trim().length > msgLengthLimit && msgLengthLimit > 0) {
-
-            //display alert to user that the message exceed the maximum length
-
+            // Display alert to user that the message exceed the maximum length
             alert("Message length exceeds the maximum limit of " + msgLengthLimit + " characters.");
-
             // Set focus on the TinyMCE editor
             tinymce.activeEditor.focus();
+
             return;
         }
         messageContent = filterOutBrTags(messageContent);
         connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch((err) => {
             return console.error(err.toString());
         });
-
-        //clear message
+        // Clear message
         tinyMCE.activeEditor.setContent('');
 
         event.preventDefault();

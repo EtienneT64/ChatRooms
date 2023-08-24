@@ -1,5 +1,6 @@
 html {
     font-size: 14px;
+    /* Use dark scrollbars*/
     color-scheme: dark;
 }
 
@@ -20,6 +21,7 @@ html {
 
 body {
     margin-bottom: 60px;
+    /* Use dark scrollbars*/
     color-scheme: dark;
 }
 .container2 {

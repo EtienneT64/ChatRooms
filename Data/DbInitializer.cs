@@ -20,7 +20,7 @@ namespace ChatRooms.Data
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                //Roles
+                // Roles
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
                 if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
@@ -28,7 +28,7 @@ namespace ChatRooms.Data
                 if (!await roleManager.RoleExistsAsync(UserRoles.User))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                //Users
+                // Users
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 string adminUserName = "etienneT";
 
@@ -84,7 +84,7 @@ namespace ChatRooms.Data
                 var context = serviceScope.ServiceProvider.GetService<ChatroomContext>();
 
                 context?.Database.EnsureCreated();
-
+                // Chatrooms
                 if (!context.Chatrooms.Any())
                 {
                     context.Chatrooms.AddRange(new List<Chatroom>()
@@ -177,7 +177,7 @@ namespace ChatRooms.Data
                     });
                     context.SaveChanges();
                 }
-                //Messages
+                // Messages
                 if (!context.Messages.Any())
                 {
                     context.Messages.AddRange(new List<Message>()

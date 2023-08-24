@@ -1,4 +1,5 @@
-﻿tinymce.init({
+﻿// Initializes the tinymce service
+tinymce.init({
     selector: '#messageContent',
     plugins: [
         'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',

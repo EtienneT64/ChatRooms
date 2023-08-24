@@ -19,10 +19,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IChatroomRepository, ChatroomRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
-
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IChatroomService, ChatroomService>();
-
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ChatroomContext>(options =>
 {
@@ -35,7 +33,6 @@ builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 // Configure Serilog logger to log to console and text file
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -44,10 +41,12 @@ Log.Logger = new LoggerConfiguration()
 
 var app = builder.Build();
 
+// Create the database and seed it
 DbInitializer.CreateDatabase(app);
 await DbInitializer.SeedUsersAndRolesAsync(app);
 DbInitializer.Initialize(app);
 
+// Call database creation and seeding through console
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
 {
     DbInitializer.CreateDatabase(app);
@@ -81,6 +80,7 @@ app.MapControllerRoute(
 name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// SignalR mappin the chathub
 app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

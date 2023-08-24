@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿// Calls the Pin action and reloads the page to update the pinned status
+$(document).ready(function () {
     $(".pinButton").click(function (e) {
         e.preventDefault();
 
