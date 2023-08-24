@@ -5,6 +5,7 @@ using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace ChatRooms.Controllers
 {
@@ -168,6 +169,8 @@ namespace ChatRooms.Controllers
                 ModelState.AddModelError("", "Photo upload failed");
             }
 
+            // Logging runtime exception
+            Log.Error("Unhandled exception occurred");
             return View(chatroomVM);
         }
 
@@ -176,7 +179,12 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             var chatroom = await _chatroomRepository.GetByIdAsync(id);
-            if (chatroom == null) return View("Error");
+            if (chatroom == null)
+            {
+                // Logging runtime exception
+                Log.Error("Chatroom is null");
+                return View("Error");
+            }
             var ownerId = chatroom.OwnerId;
 
             if (HttpContext.User.GetUserId() != ownerId)
@@ -213,6 +221,8 @@ namespace ChatRooms.Controllers
 
             if (userChatroom == null)
             {
+                // Logging runtime exception
+                Log.Error("Chatroom is null");
                 return View("Error");
             }
 
@@ -268,7 +278,13 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             var chatroom = await _chatroomRepository.GetByIdAsync(id);
-            if (chatroom == null) return View("Error");
+            if (chatroom == null)
+            {
+                // Logging runtime exception
+                Log.Error("Chatroom is null");
+                return View("Error");
+            }
+
             var ownerId = chatroom.OwnerId;
 
             if (HttpContext.User.GetUserId() != ownerId)
@@ -296,7 +312,12 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var chatRoomDetails = await _chatroomRepository.GetByIdAsync(id);
-            if (chatRoomDetails == null) return View("Error");
+            if (chatRoomDetails == null)
+            {
+                // Logging runtime exception
+                Log.Error("Chatroom is null");
+                return View("Error");
+            }
 
             _chatroomRepository.Delete(chatRoomDetails);
             return RedirectToAction("Index", "Dashboard");

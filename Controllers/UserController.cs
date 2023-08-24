@@ -4,6 +4,7 @@ using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace ChatRooms.Controllers
 {
@@ -56,7 +57,12 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Edit(string? id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
-            if (user == null) return View("Error");
+            if (user == null)
+            {
+                // Logging runtime exception
+                Log.Error("User is null");
+                return View("Error");
+            }
             var userVM = new UserEditViewModel()
             {
                 Id = user.Id,
@@ -81,7 +87,12 @@ namespace ChatRooms.Controllers
             if (userVM.Image == null)
             {
                 var user = await _userManager.FindByIdAsync(id);
-                if (user == null) return View("Error");
+                if (user == null)
+                {
+                    // Logging runtime exception
+                    Log.Error("User is null");
+                    return View("Error");
+                }
 
                 try
                 {
@@ -90,6 +101,8 @@ namespace ChatRooms.Controllers
                 }
                 catch (Exception ex)
                 {
+                    // Logging runtime exception
+                    Log.Error("Unhandled exception occurred", ex);
                     return View("Error");
                 }
 
@@ -98,7 +111,12 @@ namespace ChatRooms.Controllers
             else
             {
                 var user = await _userManager.FindByIdAsync(id);
-                if (user == null) return View("Error");
+                if (user == null)
+                {
+                    // Logging runtime exception
+                    Log.Error("User is null");
+                    return View("Error");
+                }
 
                 var photoResult = await _photoService.AddProfilePictureAsync(userVM.Image);
 
@@ -122,6 +140,8 @@ namespace ChatRooms.Controllers
                 }
                 catch (Exception ex)
                 {
+                    // Logging runtime exception
+                    Log.Error("Unhandled exception occurred", ex);
                     return View("Error");
                 }
 
@@ -135,7 +155,12 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> Delete(string? id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if (user == null) return View("Error");
+            if (user == null)
+            {
+                // Logging runtime exception
+                Log.Error("User is null");
+                return View("Error");
+            }
 
             var userVM = new UserEditViewModel
             {
@@ -153,7 +178,12 @@ namespace ChatRooms.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if (user == null) return View("Error");
+            if (user == null)
+            {
+                // Logging runtime exception
+                Log.Error("User is null");
+                return View("Error");
+            }
 
             try
             {
@@ -165,6 +195,8 @@ namespace ChatRooms.Controllers
             }
             catch (Exception ex)
             {
+                // Logging runtime exception
+                Log.Error("Unhandled exception occurred", ex);
                 return RedirectToAction("Error", "Home");
             }
 

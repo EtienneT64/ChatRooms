@@ -4,6 +4,7 @@ using ChatRooms.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace ChatRooms.Controllers
 {
@@ -86,6 +87,8 @@ namespace ChatRooms.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            // Logging runtime exception
+            Log.Error("Exception occurred while trying to create user");
             return View(registerViewModel);
         }
 
