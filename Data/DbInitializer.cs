@@ -11,7 +11,7 @@ namespace ChatRooms.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<ChatroomContext>();
 
-                context?.Database.EnsureDeleted();
+                //context?.Database.EnsureDeleted();
                 context?.Database.EnsureCreated();
             }
         }
