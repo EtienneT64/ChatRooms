@@ -2,6 +2,7 @@
 using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace ChatRooms.Services
 {
@@ -25,8 +26,16 @@ namespace ChatRooms.Services
                 ChatroomId = chatroomId,
             };
 
-            _context.UserPinnedChatrooms.Add(userPinnedChatroom);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.UserPinnedChatrooms.Add(userPinnedChatroom);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Logging runtime exception
+                Log.Error("Unhandled runtime exception occurred", ex);
+            }
         }
 
         public async Task UnpinChatroomAsync(string userId, int chatroomId)
@@ -38,6 +47,11 @@ namespace ChatRooms.Services
             {
                 _context.UserPinnedChatrooms.Remove(userPinnedChatroom);
                 await _context.SaveChangesAsync();
+            }
+            else
+            {
+                // Logging runtime exception
+                Log.Error("PinnedChatroom is null");
             }
         }
     }

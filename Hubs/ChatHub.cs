@@ -46,14 +46,12 @@ namespace ChatRooms.Hubs
                 {
                     // Logging runtime exception
                     Log.Error("User is null");
-                    throw new Exception("User is null");
                 }
             }
             else
             {
                 // Logging runtime exception
                 Log.Error("User is null");
-                throw new Exception("User is null");
             }
         }
 
@@ -82,14 +80,12 @@ namespace ChatRooms.Hubs
                 {
                     // Logging runtime exception
                     Log.Error("User is null");
-                    throw new Exception("User is null");
                 }
             }
             else
             {
                 // Logging runtime exception
                 Log.Error("User is null");
-                throw new Exception("User is null");
             }
         }
 
@@ -119,8 +115,7 @@ namespace ChatRooms.Hubs
             else
             {
                 // Logging runtime exception
-                Log.Error("User or/and Chatroom is null");
-                throw new Exception("User or/and Chatroom is null");
+                Log.Error("User or Chatroom is null");
             }
         }
     }

@@ -28,7 +28,6 @@ namespace ChatRooms.Services
             {
                 // Logging runtime exception
                 Log.Error("File is null");
-                throw new Exception("File is null");
             }
             if (file.Length > 0)
             {
@@ -50,7 +49,6 @@ namespace ChatRooms.Services
             {
                 // Logging runtime exception
                 Log.Error("File is null");
-                throw new Exception("File is null");
             }
             if (file.Length > 0)
             {
