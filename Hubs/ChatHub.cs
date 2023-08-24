@@ -3,6 +3,7 @@ using ChatRooms.Interfaces;
 using ChatRooms.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Serilog;
 using System.Security.Claims;
 
 namespace ChatRooms.Hubs
@@ -41,6 +42,18 @@ namespace ChatRooms.Hubs
 
                     await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, joinMessage, timeStamp);
                 }
+                else
+                {
+                    // Logging runtime exception
+                    Log.Error("User is null");
+                    throw new Exception("User is null");
+                }
+            }
+            else
+            {
+                // Logging runtime exception
+                Log.Error("User is null");
+                throw new Exception("User is null");
             }
         }
 
@@ -65,6 +78,18 @@ namespace ChatRooms.Hubs
 
                     await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, leaveMessage, timeStamp);
                 }
+                else
+                {
+                    // Logging runtime exception
+                    Log.Error("User is null");
+                    throw new Exception("User is null");
+                }
+            }
+            else
+            {
+                // Logging runtime exception
+                Log.Error("User is null");
+                throw new Exception("User is null");
             }
         }
 
@@ -90,6 +115,12 @@ namespace ChatRooms.Hubs
 
                 string messageTimeStamp = FormatTime.FormatTimeStamp(newMessage.TimeStamp, DateTime.Now);
                 await Clients.Group(chatroomName).SendAsync("ReceiveMessage", user.ProfileImageUrl, user.UserName, messageTimeStamp, newMessage.Content);
+            }
+            else
+            {
+                // Logging runtime exception
+                Log.Error("User or/and Chatroom is null");
+                throw new Exception("User or/and Chatroom is null");
             }
         }
     }

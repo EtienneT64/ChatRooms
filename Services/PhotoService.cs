@@ -3,6 +3,7 @@ using ChatRooms.Interfaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 namespace ChatRooms.Services
 {
@@ -23,6 +24,12 @@ namespace ChatRooms.Services
         public async Task<ImageUploadResult> AddThumbnailAsync(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
+            if (file == null)
+            {
+                // Logging runtime exception
+                Log.Error("File is null");
+                throw new Exception("File is null");
+            }
             if (file.Length > 0)
             {
                 using var stream = file.OpenReadStream();
@@ -39,6 +46,12 @@ namespace ChatRooms.Services
         public async Task<ImageUploadResult> AddProfilePictureAsync(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
+            if (file == null)
+            {
+                // Logging runtime exception
+                Log.Error("File is null");
+                throw new Exception("File is null");
+            }
             if (file.Length > 0)
             {
                 using var stream = file.OpenReadStream();
