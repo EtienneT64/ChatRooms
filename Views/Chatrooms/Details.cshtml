@@ -1,4 +1,5 @@
 ﻿@using ChatRooms.ViewModels;
+@using System.Security.Claims;
 @model ChatroomDetailsViewModel
 
 @{
@@ -34,10 +35,16 @@
     </dl>
 </div>
 <div>
-    @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.OwnerUserName)
+    @{
+        // Find the claim associated with the user ID
+        var userIdClaim = Context.User.FindFirst(ClaimTypes.NameIdentifier);
+        var userId = userIdClaim.Value;
+    
+    @if (User.Identity.IsAuthenticated && userId == Model.OwnerId)
     {
         <a asp-action="Edit" asp-route-id="@Model?.Id" style="margin-right: 4px">Edit</a>
         <a asp-action="Delete" asp-route-id="@Model?.Id" style="margin-right: 4px">Delete</a>
+    }
     }
     <a asp-controller="Dashboard" asp-action="Index" style="margin-right: 4px">Back to List</a>
 </div>
