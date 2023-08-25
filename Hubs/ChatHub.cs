@@ -41,6 +41,9 @@ namespace ChatRooms.Hubs
                     string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
 
                     await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, joinMessage, timeStamp);
+
+                    // Logging message to maintain log of conversation history
+                    Log.Information($"{userImageUrl} {userName} {joinMessage} {timeStamp}");
                 }
                 else
                 {
@@ -75,6 +78,9 @@ namespace ChatRooms.Hubs
                     string timeStamp = FormatTime.FormatTimeStamp(DateTime.Now, DateTime.Now);
 
                     await Clients.Group(chatroomName).SendAsync("ReceiveSystemMessage", userImageUrl, userName, leaveMessage, timeStamp);
+
+                    // Logging message to maintain log of conversation history
+                    Log.Information($"{userImageUrl} {userName} {leaveMessage} {timeStamp}");
                 }
                 else
                 {
@@ -106,11 +112,14 @@ namespace ChatRooms.Hubs
                     User = user,
                 };
 
-
                 _messageRepository.Add(newMessage);
+
 
                 string messageTimeStamp = FormatTime.FormatTimeStamp(newMessage.TimeStamp, DateTime.Now);
                 await Clients.Group(chatroomName).SendAsync("ReceiveMessage", user.ProfileImageUrl, user.UserName, messageTimeStamp, newMessage.Content);
+
+                // Logging message to maintain log of conversation history
+                Log.Information($"{user.ProfileImageUrl} {user.UserName} {messageTimeStamp} {newMessage.Content}");
             }
             else
             {
