@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App ChatRoomsHub
 on:
   push:
     branches:
-    - Feature5
+    - main
 env:
   AZURE_WEBAPP_NAME: ChatRoomsHub
   AZURE_WEBAPP_PACKAGE_PATH: .\published
