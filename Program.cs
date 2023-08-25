@@ -10,8 +10,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -28,10 +32,7 @@ builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IChatroomService, ChatroomService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
-builder.Services.AddDbContext<ChatroomContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextDev"));
-});
+
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ChatroomContext>();
 builder.Services.AddMemoryCache();
@@ -73,11 +74,19 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    builder.Services.AddDbContext<ChatroomContext>(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextDev"));
+    });
 }
 else
 {
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
+    builder.Services.AddDbContext<ChatroomContext>(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextProd"));
+    });
 }
 
 app.UseHttpsRedirection();
@@ -93,7 +102,7 @@ app.MapControllerRoute(
 name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// SignalR mappin the chathub
+// SignalR mapping the ChatHub
 app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

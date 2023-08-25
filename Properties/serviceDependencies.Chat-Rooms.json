@@ -5,7 +5,16 @@
       "secretStore": "AzureAppSettings",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/chat-rooms-db-server/databases/Chat-Rooms_db",
       "type": "mssql.azure",
-      "connectionId": "ChatRoomsContextDev"
+      "connectionId": "ChatRoomsContextDev",
+      "dynamicId": null
+    },
+    "secrets1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/Chat-Rooms/providers/Microsoft.ServiceLinker/linkers/VaultUri_04770DA1B1",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/ChatRoomsVault",
+      "type": "secrets.keyVault",
+      "connectionId": "VaultUri",
+      "dynamicId": null
     }
   }
 }
