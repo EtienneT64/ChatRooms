@@ -13,14 +13,6 @@ using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-//builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
-builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("secrets.json", optional: true, reloadOnChange: true)
-    .Build());
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
@@ -31,7 +23,10 @@ builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IChatroomService, ChatroomService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
-
+builder.Services.AddDbContext<ChatroomContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ChatroomContext>();
 builder.Services.AddMemoryCache();
@@ -40,9 +35,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-// Automatically perform database migration
-//builder.Services.BuildServiceProvider().GetService<ChatroomContext>().Database.Migrate();
 
 // Configure Serilog logger to log to console and text file
 Log.Logger = new LoggerConfiguration()
@@ -73,19 +65,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-    builder.Services.AddDbContext<ChatroomContext>(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextDev"));
-    });
 }
 else
 {
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
-    builder.Services.AddDbContext<ChatroomContext>(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextProd"));
-    });
 }
 
 app.UseHttpsRedirection();
