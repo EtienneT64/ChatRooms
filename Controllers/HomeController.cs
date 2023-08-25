@@ -1,6 +1,5 @@
 ﻿using ChatRooms.Models;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using System.Diagnostics;
 
 namespace ChatRooms.Controllers
@@ -27,7 +26,6 @@ namespace ChatRooms.Controllers
         // GET: Home/Privacy
         public IActionResult Privacy()
         {
-            Log.Information("Loading Privacy Page...");
             return View();
         }
 

@@ -13,10 +13,10 @@ using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
-//    .SetBasePath(Directory.GetCurrentDirectory())
-//    .AddJsonFile("secrets.json", optional: true, reloadOnChange: true)
-//    .Build());
+builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("secrets.json", optional: true, reloadOnChange: true)
+    .Build());
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -40,6 +40,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 // Configure Serilog logger to log to console and text file
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
