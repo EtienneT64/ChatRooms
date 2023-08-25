@@ -1,5 +1,6 @@
 ﻿using ChatRooms.Models;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System.Diagnostics;
 
 namespace ChatRooms.Controllers
@@ -13,13 +14,23 @@ namespace ChatRooms.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        // GET: Home
+        public async Task<IActionResult> Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                // Logging information: User Signed in
+                Log.Information("User is signed in, redirecting...");
+                return RedirectToAction("Index", "Dashboard");
+            }
+            Log.Information("Loading Home Page...");
             return View();
         }
 
+        // GET: Home/Privacy
         public IActionResult Privacy()
         {
+            Log.Information("Loading Privacy Page...");
             return View();
         }
 
