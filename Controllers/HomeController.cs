@@ -19,11 +19,8 @@ namespace ChatRooms.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                // Logging information: User Signed in
-                Log.Information("User is signed in, redirecting...");
                 return RedirectToAction("Index", "Dashboard");
             }
-            Log.Information("Loading Home Page...");
             return View();
         }
 
