@@ -30,7 +30,7 @@ builder.Services.AddScoped<IChatroomService, ChatroomService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ChatroomContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDbContextConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextDev"));
 });
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ChatroomContext>();
@@ -40,6 +40,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// Automatically perform database migration
+//builder.Services.BuildServiceProvider().GetService<ChatroomContext>().Database.Migrate();
 
 // Configure Serilog logger to log to console and text file
 Log.Logger = new LoggerConfiguration()
