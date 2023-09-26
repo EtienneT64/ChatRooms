@@ -19,7 +19,7 @@ following:
 
 ## Home Page
 
-<img src="https://i.imgur.com/6WFUZni.png" alt="Home Page"/>
+<img src="https://i.imgur.com/4M1Nl8p.png" alt="Home Page"/>
 
 ## Dashboard Page
 
@@ -27,7 +27,7 @@ following:
 
 ## Chatroom Create Page
 
-<img src="https://i.imgur.com/QjMxLgm.png" alt="Chatroom Create Page">
+<img src="https://i.imgur.com/1Y8k1Jv.png" alt="Chatroom Create Page">
 
 ## Chatroom Detail Page
 
@@ -39,9 +39,7 @@ following:
 
 ## Chat Page
 
-<img src="https://i.imgur.com/kY5b0uG.png" alt="Chat Page 1" />
-
-<img src="https://i.imgur.com/7dcvtU8.png" alt="Chat Page 2" />
+<img src="https://i.imgur.com/7tiwtMZ.png" alt="Chat Page 1" />
 
 ## Profile Page
 
