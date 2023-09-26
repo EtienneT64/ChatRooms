@@ -1,18 +1,9 @@
 ﻿"use strict";
 
 function filterOutTags(inputString) {
-   const tagsRegex = /<br\s*\/?>|<\/br>|<p\s*\/?>|<\/p>|<h[1-6]\s*\/?>|<\/h[1-6]>|<pre\s*\/?>|<\/pre>/gi;
+    const tagsRegex = /<br\s*\/?>|<\/br>|<p\s*\/?>|<\/p>|<h[1-6]\s*\/?>|<\/h[1-6]>|<pre\s*\/?>|<\/pre>/gi;
     // Replace matching patterns with an empty string
     const filteredString = inputString.replace(tagsRegex, '');
-
-    return filteredString;
-}
-
-function filterOutBrTags(inputString) {
-    // Regular expression to match <br></br> or <br>
-    const brTagRegex = /<br\s*\/?>|<\/br>/gi;
-    // Replace matching patterns with an empty string
-    const filteredString = inputString.replace(brTagRegex, '');
 
     return filteredString;
 }
@@ -51,7 +42,6 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
 
             return;
         }
-        messageContent = filterOutBrTags(messageContent);
         connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch((err) => {
             return console.error(err.toString());
         });
@@ -149,7 +139,7 @@ connection.on("ReceiveSystemMessage", (userImage, user, message, timeStamp) => {
     document.getElementById("messagesList").appendChild(li);
 });
 
-document.getElementById("leaveButton").addEventListener("click",(event) => {
+document.getElementById("leaveButton").addEventListener("click", (event) => {
     const chatroomName = document.getElementById("chatroomName").value;
     connection.invoke("LeaveRoom", chatroomName).catch((err) => {
         return console.error(err.toString());
@@ -168,6 +158,6 @@ window.addEventListener("beforeunload", (event) => {
             console.error(err.toString());
         });
     }
-   
+
 });
 
