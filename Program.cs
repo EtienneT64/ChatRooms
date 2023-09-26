@@ -25,7 +25,7 @@ builder.Services.AddScoped<IChatroomService, ChatroomService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ChatroomContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextDev"));
 });
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ChatroomContext>();
@@ -35,6 +35,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 // Configure Serilog logger to log to console and text file
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -84,7 +85,7 @@ app.MapControllerRoute(
 name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// SignalR mappin the chathub
+// SignalR mapping the ChatHub
 app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
