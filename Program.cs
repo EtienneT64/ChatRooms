@@ -25,7 +25,7 @@ builder.Services.AddScoped<IChatroomService, ChatroomService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ChatroomContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextProd"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ChatRoomsContextDev"));
 });
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ChatroomContext>();

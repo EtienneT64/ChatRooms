@@ -8,6 +8,10 @@ function filterOutTags(inputString) {
     return filteredString;
 }
 
+function removeConsecutiveBR(inputStr) {
+    return inputStr.replace(/(<br>)+/g, '<br>');
+}
+
 const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 let userLeftByButton = false;
 
@@ -42,6 +46,7 @@ document.getElementById("sendButton").addEventListener("click", (event) => {
 
             return;
         }
+        messageContent = removeConsecutiveBR(messageContent);
         connection.invoke("SendMessageToGroup", chatroomName, userId, messageContent).catch((err) => {
             return console.error(err.toString());
         });
